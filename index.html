@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VEYRA – Freeze-Dried Fruit</title>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- HERO SECTION -->
+  <header class="hero">
+    <div class="hero-container">
+
+      <!-- LEFT CONTENT -->
+      <div class="hero-content">
+        <span class="hero-eyebrow">FREEZE-DRIED FRUIT · KUWAIT</span>
+
+        <h1 class="hero-title">
+          Pure, crispy fruit —<br />
+          crafted for performance<br />
+          <span class="gold-underline">and everyday living.</span>
+        </h1>
+
+        <p>
+          No sugar. No preservatives. Just real freeze-dried fruit that fits
+          your gym, office, and family lifestyle.
+        </p>
+
+        <button class="cta-btn" id="waitlistBtn">
+          Join the Waiting List
+        </button>
+
+        <ul class="hero-points">
+          <li>100% Real Fruit</li>
+          <li>No Added Sugar</li>
+          <li>No Preservatives</li>
+        </ul>
+      </div>
+
+      <!-- RIGHT IMAGE -->
+      <div class="hero-image">
+        <img src="assets/product.png" alt="VEYRA Freeze Dried Fruits" />
+      </div>
+
+    </div>
+  </header>
+
+  <!-- MODAL (MOVED OUTSIDE HERO CONTEXT) -->
+  <div class="modal" id="waitlistModal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Join the Waiting List</h2>
+      <p>Be the first to know when VEYRA launches.</p>
+
+      <form>
+        <input type="email" placeholder="Enter your email" required />
+        <button type="submit">Notify Me</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
