@@ -1,4 +1,10 @@
 /* ======================================================
+   SHARED WAITLIST SCROLL ELEMENTS (DECLARE ONCE)
+====================================================== */
+const emailWaitlistSection = document.getElementById("email-waitlist");
+const emailInput = document.getElementById("emailWaitlistInput");
+
+/* ======================================================
    MODAL HANDLER (SHARED)
 ====================================================== */
 function toggleModal(modal, open) {
@@ -8,19 +14,28 @@ function toggleModal(modal, open) {
 }
 
 /* ======================================================
-   WAITLIST MODAL
+   SCROLL + AUTO-FOCUS EMAIL WAITLIST (TOP CTA)
 ====================================================== */
 const waitlistBtn = document.getElementById("waitlistBtn");
-const waitlistModal = document.getElementById("waitlistModal");
 
-if (waitlistBtn && waitlistModal) {
-  waitlistBtn.addEventListener("click", () => {
-    toggleModal(waitlistModal, true);
-  });
+if (waitlistBtn && emailWaitlistSection) {
+  waitlistBtn.addEventListener("click", (e) => {
+    e.preventDefault();
 
-  waitlistModal.addEventListener("click", (e) => {
-    if (e.target === waitlistModal) {
-      toggleModal(waitlistModal, false);
+    emailWaitlistSection.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+
+    if (emailInput) {
+      setTimeout(() => {
+        emailInput.focus();
+        emailInput.classList.add("email-glow");
+
+        setTimeout(() => {
+          emailInput.classList.remove("email-glow");
+        }, 1600);
+      }, 600);
     }
   });
 }
@@ -158,8 +173,9 @@ if (phoneInput) {
 }
 
 /* ======================================================
-   WHATSAPP FORM SUBMIT (FIXED)
+   WHATSAPP FORM SUBMIT (FINAL & WORKING)
 ====================================================== */
+
 const whatsappForm = document.querySelector(".whatsapp-form");
 
 if (whatsappForm) {
@@ -172,56 +188,89 @@ if (whatsappForm) {
 
     if (!name || !phone) return;
 
-    const payload = {
-      name: name,
-      phone: countryCode + phone
-    };
-
     fetch(
-      "https://script.google.com/macros/s/AKfycbxO9yHih_DOPqtVZEUCHoVNkqxQ6CLuzetow8W-_pakUmdw_0rg9zZ7vW5OOQDaBitH/exec",
+      "https://script.google.com/macros/s/AKfycbxamsuAn-GftmJxzgYXwVhrId6AG4gqcrVM-91Yc8bw6piR3dhMPXGiuZHGEI5zAXRA/exec",
       {
         method: "POST",
-        body: JSON.stringify(payload)
+        headers: {
+          "Content-Type": "application/json"
+        },
+        mode: "no-cors",
+        body: JSON.stringify({
+          name: name,
+          phone: countryCode + phone
+        })
       }
-    )
-      .then(res => res.json())
-      .then(() => {
-        const dialog = document.getElementById("successDialog");
-        const closeBtn = document.getElementById("closeSuccessDialog");
+    );
 
-        dialog.classList.add("active");
-        launchConfetti();
+    // SUCCESS UI (do NOT wait for response)
+    const dialog = document.getElementById("successDialog");
+    const closeBtn = document.getElementById("closeSuccessDialog");
 
-        const autoClose = setTimeout(() => {
-          dialog.classList.remove("active");
-          toggleModal(whatsappModal, false);
-          whatsappForm.reset();
-        }, 2500);
+    dialog.classList.add("active");
+    launchConfetti();
 
-        closeBtn.onclick = () => {
-          clearTimeout(autoClose);
-          dialog.classList.remove("active");
-          toggleModal(whatsappModal, false);
-          whatsappForm.reset();
-        };
-      })
-      .catch(() => {
-        const errorDialog = document.getElementById("errorDialog");
-        const closeErrorBtn = document.getElementById("closeErrorDialog");
+    const autoClose = setTimeout(() => {
+      dialog.classList.remove("active");
+      toggleModal(whatsappModal, false);
+      whatsappForm.reset();
+    }, 2500);
 
-        errorDialog.classList.add("active");
-
-        const autoClose = setTimeout(() => {
-          errorDialog.classList.remove("active");
-        }, 3000);
-
-        closeErrorBtn.onclick = () => {
-          clearTimeout(autoClose);
-          errorDialog.classList.remove("active");
-        };
-      });
+    closeBtn.onclick = () => {
+      clearTimeout(autoClose);
+      dialog.classList.remove("active");
+      toggleModal(whatsappModal, false);
+      whatsappForm.reset();
+    };
   });
 }
+
+
+/* ======================================================
+   EMAIL WAITLIST → GOOGLE SHEETS (SUCCESS DIALOG)
+====================================================== */
+
+const emailForm = document.querySelector(".email-form");
+
+if (emailForm && emailInput) {
+  emailForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const email = emailInput.value.trim();
+    if (!email) return;
+
+    fetch(
+      "https://script.google.com/macros/s/AKfycbxamsuAn-GftmJxzgYXwVhrId6AG4gqcrVM-91Yc8bw6piR3dhMPXGiuZHGEI5zAXRA/exec",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        mode: "no-cors",
+        body: JSON.stringify({ email })
+      }
+    );
+
+    // --- SUCCESS UI (same as WhatsApp) ---
+    const dialog = document.getElementById("successDialog");
+    const closeBtn = document.getElementById("closeSuccessDialog");
+
+    dialog.classList.add("active");
+    launchConfetti();
+
+    emailInput.value = "";
+
+    const autoClose = setTimeout(() => {
+      dialog.classList.remove("active");
+    }, 2500);
+
+    closeBtn.onclick = () => {
+      clearTimeout(autoClose);
+      dialog.classList.remove("active");
+    };
+  });
+}
+
 
 /* ======================================================
    CONFETTI BURST
@@ -246,100 +295,4 @@ function launchConfetti() {
       confetti.remove();
     }, 2000);
   }
-}
-
-/* ======================================================
-   MOBILE-ONLY JS ADDITIONS
-====================================================== */
-
-/* ---------- DETECT MOBILE ---------- */
-const isMobile = window.matchMedia("(max-width: 900px)").matches;
-
-/* ---------- DISABLE HERO PARALLAX ON MOBILE ---------- */
-/* Reason: saves battery + avoids jank on low-end phones */
-if (isMobile) {
-  const heroImage = document.querySelector(".hero-image img");
-  if (heroImage) {
-    heroImage.style.transform = "none";
-    window.onmousemove = null;
-  }
-}
-
-/* ---------- PREVENT BACKGROUND SCROLL WHEN ANY MODAL IS OPEN ---------- */
-/* (Mobile browsers are more aggressive with scroll bleed) */
-const allModals = document.querySelectorAll(".modal");
-
-allModals.forEach(modal => {
-  if (!modal) return;
-
-  const observer = new MutationObserver(() => {
-    const isVisible = modal.style.display === "flex";
-    document.body.style.overflow = isVisible ? "hidden" : "";
-  });
-
-  observer.observe(modal, { attributes: true, attributeFilter: ["style"] });
-});
-
-/* ---------- AUTO-FOCUS FIRST INPUT IN MODALS (MOBILE UX BOOST) ---------- */
-function autoFocusModalInput(modalId) {
-  if (!isMobile) return;
-
-  const modal = document.getElementById(modalId);
-  if (!modal) return;
-
-  const input = modal.querySelector("input");
-  if (!input) return;
-
-  setTimeout(() => {
-    input.focus();
-  }, 300);
-}
-
-const waitlistBtnMobile = document.getElementById("waitlistBtn");
-if (waitlistBtnMobile) {
-  waitlistBtnMobile.addEventListener("click", () => {
-    autoFocusModalInput("waitlistModal");
-  });
-}
-
-const whatsappBtnMobile = document.getElementById("openWhatsappForm");
-if (whatsappBtnMobile) {
-  whatsappBtnMobile.addEventListener("click", () => {
-    autoFocusModalInput("whatsappModal");
-  });
-}
-
-/* ---------- ENSURE COUNTRY DROPDOWN DOES NOT OVERFLOW SCREEN ---------- */
-if (isMobile) {
-  const countryDropdown = document.getElementById("countryDropdown");
-  if (countryDropdown) {
-    countryDropdown.style.maxHeight = "220px";
-    countryDropdown.style.overflowY = "auto";
-  }
-}
-
-/* ---------- SOFT KEYBOARD FRIENDLY VIEWPORT FIX ---------- */
-/* Prevents layout jump when keyboard opens on mobile */
-if (isMobile) {
-  const viewportHeight = window.innerHeight;
-  window.addEventListener("resize", () => {
-    if (window.innerHeight < viewportHeight * 0.75) {
-      document.body.classList.add("keyboard-open");
-    } else {
-      document.body.classList.remove("keyboard-open");
-    }
-  });
-}
-
-/* ---------- TOUCH FRIENDLY BUTTON FEEDBACK ---------- */
-if (isMobile) {
-  document.querySelectorAll("button").forEach(btn => {
-    btn.addEventListener("touchstart", () => {
-      btn.style.transform = "scale(0.96)";
-    });
-
-    btn.addEventListener("touchend", () => {
-      btn.style.transform = "";
-    });
-  });
 }
