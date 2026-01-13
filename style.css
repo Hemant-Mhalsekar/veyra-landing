@@ -1,3 +1,10 @@
+/* PERF PATCH – safe */
+.hero-image img,
+.snack-products img,
+.use-card {
+  will-change: transform;
+}
+
 /* ======================================================
    RESET & BASE
 ====================================================== */
@@ -923,5 +930,211 @@ button:active {
   100% {
     transform: translateY(120vh) rotate(360deg);
     opacity: 0;
+  }
+}
+
+/* ======================================================
+   MOBILE RESPONSIVE ADDITIONS ONLY
+====================================================== */
+
+/* ---------- GLOBAL MOBILE HELPERS ---------- */
+@media (max-width: 900px) {
+
+  .mobile-stack {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 24px;
+    text-align: center;
+  }
+
+  .mobile-center {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+
+  .mobile-grid {
+    grid-template-columns: 1fr !important;
+    gap: 32px;
+  }
+}
+
+/* ---------- HERO SECTION ---------- */
+@media (max-width: 900px) {
+
+  .hero {
+    padding: 80px 6% 60px;
+    min-height: auto;
+  }
+
+  .hero-container {
+    flex-direction: column;
+  }
+
+  .hero-content {
+    max-width: 100%;
+  }
+
+  .hero-title {
+    font-size: 38px;
+    line-height: 1.2;
+  }
+
+  .hero-content p {
+    font-size: 16px;
+  }
+
+  .cta-btn {
+    width: 100%;
+    max-width: 320px;
+    margin-top: 10px;
+  }
+
+  .hero-points {
+    margin-top: 28px;
+  }
+
+  .hero-image img {
+    max-width: 300px;
+    margin-left: 0;
+    margin-top: 40px;
+  }
+}
+
+/* ---------- SNACK PROBLEM ---------- */
+@media (max-width: 900px) {
+
+  .snack-problem {
+    padding: 80px 6%;
+  }
+
+  .snack-hero {
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .snack-text h2 {
+    font-size: 32px;
+  }
+
+  .snack-text p {
+    font-size: 16px;
+  }
+
+  .snack-products {
+    justify-content: center;
+  }
+
+  .snack-products img {
+    max-width: 100px;
+  }
+
+  .snack-divider {
+    margin: 50px 0;
+  }
+}
+
+/* ---------- PROBLEM GRID ---------- */
+@media (max-width: 900px) {
+
+  .problem-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .problem-item p {
+    font-size: 15px;
+  }
+}
+
+/* ---------- USE CASES ---------- */
+@media (max-width: 900px) {
+
+  .use-cases {
+    padding: 80px 6%;
+  }
+
+  .use-cards {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .use-card img {
+    height: 200px;
+  }
+}
+
+/* ---------- FRUIT TRANSFORMATION ---------- */
+@media (max-width: 900px) {
+
+  .fruit-transform {
+    gap: 18px;
+  }
+
+  .arrow {
+    font-size: 26px;
+  }
+
+  .transform-text {
+    font-size: 18px;
+    margin-top: 20px;
+  }
+}
+
+/* ---------- EARLY ACCESS ---------- */
+@media (max-width: 900px) {
+
+  .early-access {
+    padding: 80px 6%;
+  }
+
+  .early-container h3 {
+    font-size: 24px;
+  }
+
+  .email-form {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .email-form input,
+  .email-form button {
+    width: 100%;
+  }
+}
+
+/* ---------- WHATSAPP MODAL ---------- */
+@media (max-width: 600px) {
+
+  .modal-content {
+    padding: 28px 22px;
+  }
+
+  .phone-group {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .country-selector {
+    width: 100%;
+  }
+
+  .selected-country {
+    width: 100%;
+  }
+}
+
+/* ---------- FOOTER ---------- */
+@media (max-width: 900px) {
+
+  .footer-top,
+  .footer-bottom {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .dot {
+    display: none;
   }
 }
