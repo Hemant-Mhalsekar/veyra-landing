@@ -26,3 +26,15 @@ window.addEventListener("click", (e) => {
 window.addEventListener("scroll", () => {
   hero.style.setProperty("--bg-shift", `${window.scrollY * 0.15}px`);
 });
+
+
+document.querySelectorAll(".problem-item").forEach((item, index) => {
+  item.style.opacity = 0;
+  item.style.transform = "translateY(20px)";
+
+  setTimeout(() => {
+    item.style.transition = "all 0.6s ease";
+    item.style.opacity = 1;
+    item.style.transform = "translateY(0)";
+  }, index * 200);
+});

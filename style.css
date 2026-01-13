@@ -185,6 +185,151 @@ body {
   cursor: pointer;
 }
 
+/* SNACK PROBLEM SECTION */
+.snack-problem {
+  background: radial-gradient(
+    circle at top,
+    #0a3d2f,
+    #041f18
+  );
+  padding: 100px 8%;
+  color: #ffffff;
+}
+
+.snack-container {
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* TOP HERO */
+.snack-hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 60px;
+}
+
+.snack-text h2 {
+  font-size: 44px;
+  line-height: 1.2;
+  margin-bottom: 18px;
+}
+
+.snack-text p {
+  font-size: 18px;
+  color: #d9e7e2;
+  margin-bottom: 26px;
+}
+
+.snack-cta {
+  background: #d6c06f;
+  color: #052f24;
+  border: none;
+  padding: 14px 28px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.snack-cta:hover {
+  box-shadow: 0 15px 30px rgba(214, 192, 111, 0.4);
+}
+
+.snack-note {
+  display: block;
+  margin-top: 10px;
+  font-size: 13px;
+  color: #cfe3dd;
+}
+
+/* PRODUCT STACK */
+.snack-products {
+  display: flex;
+  gap: 20px;
+}
+
+.snack-products img {
+  max-width: 130px;
+  filter: drop-shadow(0 20px 30px rgba(0,0,0,0.5));
+  transition: transform 0.3s ease;
+}
+
+.snack-products img:hover {
+  transform: translateY(-6px);
+}
+
+/* DIVIDER */
+.snack-divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(214, 192, 111, 0.4),
+    transparent
+  );
+  margin: 70px 0;
+}
+
+/* PROBLEM SECTION */
+.snack-problems h3 {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 50px;
+}
+
+.problem-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+
+.problem-item {
+  text-align: center;
+}
+
+.problem-item img {
+  max-width: 80px;
+  margin-bottom: 16px;
+  opacity: 0.9;
+}
+
+.problem-item p {
+  font-size: 15px;
+  color: #d9e7e2;
+}
+
+/* FOOTER LINE */
+.snack-footer {
+  text-align: center;
+  margin-top: 60px;
+  font-size: 16px;
+  color: #d6c06f;
+  font-weight: 500;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .snack-hero {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .snack-text h2 {
+    font-size: 36px;
+  }
+
+  .snack-products {
+    margin-top: 30px;
+  }
+
+  .problem-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}
+
+
 /* ANIMATIONS */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(16px); }
