@@ -4,115 +4,93 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>VEYRA – Freeze-Dried Fruit</title>
-
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
 
-  <!-- HERO SECTION -->
-  <header class="hero">
-    <div class="hero-container">
+<!-- ================= HERO ================= -->
+<header class="hero">
+  <div class="hero-container">
 
-      <!-- LEFT CONTENT -->
-      <div class="hero-content">
-        <span class="hero-eyebrow">FREEZE-DRIED FRUIT · KUWAIT</span>
+    <div class="hero-content">
+      <span class="hero-eyebrow">FREEZE-DRIED FRUIT · KUWAIT</span>
 
-        <h1 class="hero-title">
-          Pure, crispy fruit —<br />
-          crafted for performance<br />
-          <span class="gold-underline">and everyday living.</span>
-        </h1>
+      <h1 class="hero-title">
+        Pure, crispy fruit —<br />
+        crafted for performance<br />
+        <span class="gold-underline">and everyday living.</span>
+      </h1>
 
-        <p>
-          No sugar. No preservatives. Just real freeze-dried fruit that fits
-          your gym, office, and family lifestyle.
-        </p>
+      <p>
+        No sugar. No preservatives. Just real freeze-dried fruit that fits
+        your gym, office, and family lifestyle.
+      </p>
 
-        <button class="cta-btn" id="waitlistBtn">
-          Join the Waiting List
-        </button>
+      <button class="cta-btn" id="waitlistBtn">Join the Waiting List</button>
 
-        <ul class="hero-points">
-          <li>100% Real Fruit</li>
-          <li>No Added Sugar</li>
-          <li>No Preservatives</li>
-        </ul>
-      </div>
-
-      <!-- RIGHT IMAGE -->
-      <div class="hero-image">
-        <img src="assets/product.png" alt="VEYRA Freeze Dried Fruits" />
-      </div>
-
+      <ul class="hero-points">
+        <li>100% Real Fruit</li>
+        <li>No Added Sugar</li>
+        <li>No Preservatives</li>
+      </ul>
     </div>
-  </header>
 
-  <!-- MODAL (MOVED OUTSIDE HERO CONTEXT) -->
-  <div class="modal" id="waitlistModal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <h2>Join the Waiting List</h2>
-      <p>Be the first to know when VEYRA launches.</p>
-
-      <form>
-        <input type="email" placeholder="Enter your email" required />
-        <button type="submit">Notify Me</button>
-      </form>
+    <div class="hero-image">
+      <img src="assets/product.png" alt="VEYRA Freeze Dried Fruits" />
     </div>
+
   </div>
+</header>
 
-  <section class="snack-problem">
+<!-- ================= WAITLIST MODAL ================= -->
+<div class="modal" id="waitlistModal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>Join the Waiting List</h2>
+    <p>Be the first to know when VEYRA launches.</p>
+    <form>
+      <input type="email" placeholder="Enter your email" required />
+      <button type="submit">Notify Me</button>
+    </form>
+  </div>
+</div>
+
+<!-- ================= SNACK PROBLEM ================= -->
+<section class="snack-problem">
   <div class="snack-container">
 
-    <!-- TOP CONTENT -->
     <div class="snack-hero">
       <div class="snack-text">
-        <h2>
-          Real fruit. Zero nonsense.<br />
-          Built for real life.
-        </h2>
-
-        <p>
-          Freeze-dried fruit snacks for gym days, workdays,
-          and everything in between.
-        </p>
-
-        <button class="snack-cta">
-          Get 10% Early Access
-        </button>
-
-        <small class="snack-note">
-          Join our private WhatsApp
-        </small>
+        <h2>Real fruit. Zero nonsense.<br />Built for real life.</h2>
+        <p>Freeze-dried fruit snacks for gym days, workdays, and everything in between.</p>
+        <button class="snack-cta">Get 10% Early Access</button>
+        <small class="snack-note">Join our private WhatsApp</small>
       </div>
 
       <div class="snack-products">
-        <img src="assets/product-red.png" alt="VEYRA Strawberry" />
-        <img src="assets/product-yellow.png" alt="VEYRA Mango" />
-        <img src="assets/product-dark.png" alt="VEYRA Mixed Berries" />
+        <img src="assets/product-red.png" />
+        <img src="assets/product-yellow.png" />
+        <img src="assets/product-dark.png" />
       </div>
     </div>
 
-    <!-- DIVIDER -->
     <div class="snack-divider"></div>
 
-    <!-- PROBLEM STATEMENTS -->
     <div class="snack-problems">
       <h3>The Snack Problem No One Talks About</h3>
 
       <div class="problem-grid">
         <div class="problem-item">
-          <img src="assets/problem-sugar.png" alt="">
+          <img src="assets/problem-sugar.png" />
           <p>Snacks marketed as healthy,<br />loaded with sugar.</p>
         </div>
-
         <div class="problem-item">
-          <img src="assets/problem-crash.png" alt="">
+          <img src="assets/problem-crash.png" />
           <p>Energy that spikes…<br />then crashes.</p>
         </div>
-
         <div class="problem-item">
-          <img src="assets/problem-messy.png" alt="">
+          <img src="assets/problem-messy.png" />
           <p>Messy, inconvenient food<br />you stop carrying.</p>
         </div>
       </div>
@@ -125,67 +103,51 @@
   </div>
 </section>
 
-
+<!-- ================= USE CASES ================= -->
 <section class="use-cases">
   <div class="use-container">
 
-    <!-- TOP CARDS -->
     <div class="use-cards">
       <div class="use-card">
-        <img src="assets/use-gym.jpg" alt="For the Gym">
+        <img src="assets/use-gym.jpg" />
         <h4>For the Gym</h4>
         <p>Fast fuel. No bloating. No crash.</p>
       </div>
-
       <div class="use-card">
-        <img src="assets/use-desk.jpg" alt="At Your Desk">
+        <img src="assets/use-desk.jpg" />
         <h4>At Your Desk</h4>
         <p>Clean energy without killing focus.</p>
       </div>
-
       <div class="use-card">
-        <img src="assets/use-go.jpg" alt="On the Go">
+        <img src="assets/use-go.jpg" />
         <h4>On the Go</h4>
         <p>A snack you don’t have to justify.</p>
       </div>
     </div>
 
-    <!-- TRANSFORMATION -->
     <div class="fruit-transform">
-
       <div class="fruit-side">
-        <img src="assets/fruits-fresh.png" alt="Fresh Fruit">
+        <img src="assets/fruits-fresh.png" />
         <span>Fresh fruit</span>
       </div>
-
-      <div class="arrow">
-        →
-      </div>
-
+      <span class="arrow">→</span>
       <div class="fruit-side">
-        <img src="assets/fruits-dried.png" alt="Freeze Dried Fruit">
+        <img src="assets/fruits-dried.png" />
         <span>Freeze-dried cubes</span>
       </div>
-
-      <div class="arrow">
-        →
-      </div>
-
+      <span class="arrow">→</span>
       <div class="fruit-side">
-        <img src="assets/product-stack.png" alt="VEYRA Products">
+        <img src="assets/product-stack.png" />
         <span>VEYRA packs</span>
       </div>
-
     </div>
 
-    <p class="transform-text">
-      Same fruit. <span>Smarter form.</span>
-    </p>
+    <p class="transform-text">Same fruit. <span>Smarter form.</span></p>
 
   </div>
 </section>
 
-<!-- EARLY ACCESS SECTION -->
+<!-- ================= EARLY ACCESS ================= -->
 <section class="early-access">
   <div class="early-container">
 
@@ -210,14 +172,12 @@
       <button>Unlock Early Access</button>
     </div>
 
-    <small class="trust-text">
-      No spam. One launch email. That’s it.
-    </small>
+    <small class="trust-text">No spam. One launch email.</small>
 
   </div>
 </section>
 
-<!-- WHATSAPP FORM MODAL -->
+<!-- ================= WHATSAPP MODAL ================= -->
 <div class="modal" id="whatsappModal">
   <div class="modal-content">
     <span class="close" id="closeWhatsappForm">&times;</span>
@@ -226,22 +186,44 @@
     <p>Get early access updates and launch alerts.</p>
 
     <form class="whatsapp-form">
-      <input type="text" placeholder="Your name" required />
-      <input type="tel" placeholder="Phone number (e.g. +965…)" required />
-      <button type="submit">Request WhatsApp Invite</button>
-    </form>
+      <input class="input-field" placeholder="Your name" required />
 
-    <small class="form-note">
-      We’ll only message you for launch updates.
-    </small>
+      <div class="phone-group">
+        <div class="country-selector" id="countrySelector">
+          <button type="button" class="selected-country" id="selectedCountry" data-code="+965">
+            🇰🇼 +965
+          </button>
+
+          <div class="country-dropdown" id="countryDropdown">
+            <input class="country-search" placeholder="Search country..." />
+            <ul class="country-list">
+              <li data-code="+965" data-label="🇰🇼 +965">🇰🇼 Kuwait</li>
+              <li data-code="+91" data-label="🇮🇳 +91">🇮🇳 India</li>
+              <li data-code="+971" data-label="🇦🇪 +971">🇦🇪 UAE</li>
+              <li data-code="+1" data-label="🇺🇸 +1">🇺🇸 USA</li>
+            </ul>
+          </div>
+        </div>
+
+          <input
+            type="tel"
+            class="input-field phone-input"
+            placeholder="Phone number"
+            inputmode="numeric"
+            pattern="[0-9]*"
+            maxlength="15"
+            required
+          />
+      </div>
+
+      <button class="submit-btn">Request WhatsApp Invite</button>
+      <small class="form-note">We’ll only message you for launch updates.</small>
+    </form>
   </div>
 </div>
 
-  <script src="script.js"></script>
-</body>
 <footer class="site-footer">
   <div class="footer-container">
-
     <div class="footer-top">
       <span>Launching soon in Kuwait</span>
       <span class="dot">•</span>
@@ -255,8 +237,30 @@
       <span class="dot">•</span>
       <a href="#">Terms of Service</a>
     </div>
-
   </div>
 </footer>
 
+<script src="script.js"></script>
+    <!-- SUCCESS DIALOG -->
+    <div class="success-dialog" id="successDialog">
+      <div class="success-card">
+        <h3>🎉 You’re on the list!</h3>
+        <p>We’ll notify you as soon as VEYRA launches.</p>
+        <button id="closeSuccessDialog">Awesome</button>
+      </div>
+    </div>
+
+    <!-- ERROR DIALOG -->
+    <div class="error-dialog" id="errorDialog">
+      <div class="error-card">
+        <h3>⚠️ Something went wrong</h3>
+        <p>Please try again in a moment.</p>
+        <button id="closeErrorDialog">Got it</button>
+      </div>
+    </div>
+
+    <!-- CONFETTI -->
+    <div class="confetti-container" id="confettiContainer"></div>
+
+</body>
 </html>
