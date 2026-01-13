@@ -90,9 +90,10 @@
           and everything in between.
         </p>
 
-        <button class="snack-cta">
+        <button class="snack-cta" id="earlyAccessScrollBtn">
           Get 10% Early Access
         </button>
+
 
         <small class="snack-note">
           Join our private WhatsApp
@@ -203,7 +204,7 @@
 </section>
 
 <!-- ================= EARLY ACCESS ================= -->
-<section class="early-access">
+<section class="early-access" id="email-waitlist">
   <div class="early-container">
 
     <h3>Early members get rewarded.</h3>
@@ -214,21 +215,24 @@
       <li>✔ 10% launch-only pricing</li>
     </ul>
 
-    <button class="whatsapp-btn" id="openWhatsappForm">
-      Join the WhatsApp Group
+    <button class="cta-btn whatsapp-btn" id="openWhatsappForm">
+      Join the Waiting List
     </button>
 
     <div class="divider"></div>
 
     <p class="email-text">Prefer email updates?</p>
 
-    <div class="email-form mobile-stack">
+    <form class="email-form mobile-stack">
+
       <input
         type="email"
+        id="emailWaitlistInput"
         placeholder="Enter your email"
+        required
       />
-      <button>Unlock Early Access</button>
-    </div>
+      <button type="submit">Unlock Early Access</button>
+    </form>
 
     <small class="trust-text">
       No spam. One launch email.
