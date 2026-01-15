@@ -3,21 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
   <title>VEYRA – Freeze-Dried Fruit</title>
-
   <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
 
 <!-- ================= HERO ================= -->
-<header class="hero">
+<header class="hero reveal">
   <div class="hero-container">
 
-    <!-- MOBILE STACK WRAPPER (ADDED – NO EFFECT YET) -->
     <div class="hero-left mobile-stack">
-
       <div class="hero-content">
         <span class="hero-eyebrow">FREEZE-DRIED FRUIT · KUWAIT</span>
 
@@ -33,7 +29,7 @@
         </p>
 
         <button class="cta-btn" id="waitlistBtn">
-          Join the Waiting List
+          Get 10% Early Access
         </button>
 
         <ul class="hero-points">
@@ -42,15 +38,10 @@
           <li>No Preservatives</li>
         </ul>
       </div>
-
     </div>
 
-    <!-- HERO IMAGE -->
-    <div class="hero-image mobile-center">
-      <img
-        src="assets/product.png"
-        alt="VEYRA Freeze Dried Fruits"
-      />
+    <div class="hero-image mobile-center reveal">
+      <img src="assets/product.png" alt="VEYRA Freeze Dried Fruits" />
     </div>
 
   </div>
@@ -63,18 +54,14 @@
     <h2>Join the Waiting List</h2>
     <p>Be the first to know when VEYRA launches.</p>
     <form>
-      <input
-        type="email"
-        placeholder="Enter your email"
-        required
-      />
-      <button type="submit">Notify Me</button>
+      <input type="email" placeholder="Enter your email" required />
+      <button type="submit">Get 10% Early Access</button>
     </form>
   </div>
 </div>
 
 <!-- ================= SNACK PROBLEM ================= -->
-<section class="snack-problem">
+<section class="snack-problem reveal">
   <div class="snack-container">
 
     <div class="snack-hero mobile-stack">
@@ -94,13 +81,12 @@
           Get 10% Early Access
         </button>
 
-
         <small class="snack-note">
           Join our private WhatsApp
         </small>
       </div>
 
-      <div class="snack-products mobile-center">
+      <div class="snack-products mobile-center reveal">
         <img src="assets/product-red.png" alt="" />
         <img src="assets/product-yellow.png" alt="" />
         <img src="assets/product-dark.png" alt="" />
@@ -110,35 +96,24 @@
 
     <div class="snack-divider"></div>
 
-    <div class="snack-problems">
+    <div class="snack-problems reveal">
       <h3>The Snack Problem No One Talks About</h3>
 
       <div class="problem-grid mobile-grid">
-
-        <div class="problem-item">
+        <div class="problem-item reveal">
           <img src="assets/problem-sugar.png" alt="" />
-          <p>
-            Snacks marketed as healthy,<br />
-            loaded with sugar.
-          </p>
+          <p>Snacks marketed as healthy,<br />loaded with sugar.</p>
         </div>
 
-        <div class="problem-item">
+        <div class="problem-item reveal">
           <img src="assets/problem-crash.png" alt="" />
-          <p>
-            Energy that spikes…<br />
-            then crashes.
-          </p>
+          <p>Energy that spikes…<br />then crashes.</p>
         </div>
 
-        <div class="problem-item">
+        <div class="problem-item reveal">
           <img src="assets/problem-messy.png" alt="" />
-          <p>
-            Messy, inconvenient food<br />
-            you stop carrying.
-          </p>
+          <p>Messy, inconvenient food<br />you stop carrying.</p>
         </div>
-
       </div>
 
       <p class="snack-footer">
@@ -150,32 +125,30 @@
 </section>
 
 <!-- ================= USE CASES ================= -->
-<section class="use-cases">
+<section class="use-cases reveal">
   <div class="use-container">
 
     <div class="use-cards mobile-stack">
-
-      <div class="use-card">
+      <div class="use-card reveal">
         <img src="assets/use-gym.jpg" alt="" />
         <h4>For the Gym</h4>
         <p>Fast fuel. No bloating. No crash.</p>
       </div>
 
-      <div class="use-card">
+      <div class="use-card reveal">
         <img src="assets/use-desk.jpg" alt="" />
         <h4>At Your Desk</h4>
         <p>Clean energy without killing focus.</p>
       </div>
 
-      <div class="use-card">
+      <div class="use-card reveal">
         <img src="assets/use-go.jpg" alt="" />
         <h4>On the Go</h4>
         <p>A snack you don’t have to justify.</p>
       </div>
-
     </div>
 
-    <div class="fruit-transform mobile-center">
+    <div class="fruit-transform mobile-center reveal">
       <div class="fruit-side">
         <img src="assets/fruits-fresh.png" alt="" />
         <span>Fresh fruit</span>
@@ -204,7 +177,7 @@
 </section>
 
 <!-- ================= EARLY ACCESS ================= -->
-<section class="early-access" id="email-waitlist">
+<section class="early-access reveal" id="email-waitlist">
   <div class="early-container">
 
     <h3>Early members get rewarded.</h3>
@@ -216,22 +189,21 @@
     </ul>
 
     <button class="cta-btn whatsapp-btn" id="openWhatsappForm">
-      Join the Waiting List
+      Get 10% Early Access
     </button>
 
     <div class="divider"></div>
 
     <p class="email-text">Prefer email updates?</p>
 
+    <!-- FORM KEPT INTACT (button intentionally removed visually) -->
     <form class="email-form mobile-stack">
-
       <input
         type="email"
         id="emailWaitlistInput"
         placeholder="Enter your email"
         required
       />
-      <button type="submit">Unlock Early Access</button>
     </form>
 
     <small class="trust-text">
@@ -244,19 +216,13 @@
 <!-- ================= WHATSAPP MODAL ================= -->
 <div class="modal" id="whatsappModal">
   <div class="modal-content">
-
     <span class="close" id="closeWhatsappForm">&times;</span>
-
     <h2>Join the WhatsApp Group</h2>
     <p>Get early access updates and launch alerts.</p>
 
     <form class="whatsapp-form">
 
-      <input
-        class="input-field"
-        placeholder="Your name"
-        required
-      />
+      <input class="input-field" placeholder="Your name" required />
 
       <div class="phone-group mobile-stack">
 
@@ -271,15 +237,11 @@
           </button>
 
           <div class="country-dropdown" id="countryDropdown">
-            <input
-              class="country-search"
-              placeholder="Search country..."
-            />
+            <input class="country-search" placeholder="Search country..." />
             <ul class="country-list">
               <li data-code="+965" data-label="🇰🇼 +965">🇰🇼 Kuwait</li>
               <li data-code="+91" data-label="🇮🇳 +91">🇮🇳 India</li>
               <li data-code="+971" data-label="🇦🇪 +971">🇦🇪 UAE</li>
-              <li data-code="+1" data-label="🇺🇸 +1">🇺🇸 USA</li>
             </ul>
           </div>
         </div>
@@ -296,7 +258,7 @@
       </div>
 
       <button class="submit-btn">
-        Request WhatsApp Invite
+        Get 10% Early Access
       </button>
 
       <small class="form-note">
@@ -308,7 +270,7 @@
 </div>
 
 <!-- ================= FOOTER ================= -->
-<footer class="site-footer">
+<footer class="site-footer reveal">
   <div class="footer-container">
 
     <div class="footer-top mobile-stack">
@@ -316,9 +278,7 @@
       <span class="dot">•</span>
       <span>Fulfilled locally</span>
       <span class="dot">•</span>
-      <a href="mailto:support@veyra.com">
-        support@veyra.com
-      </a>
+      <a href="mailto:support@veyra.com">support@veyra.com</a>
     </div>
 
     <div class="footer-bottom mobile-stack">

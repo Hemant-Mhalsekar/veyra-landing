@@ -14,29 +14,42 @@ function toggleModal(modal, open) {
 }
 
 /* ======================================================
-   SCROLL + AUTO-FOCUS EMAIL WAITLIST (TOP CTA)
+   SCROLL + AUTO-FOCUS EMAIL WAITLIST (SHARED FUNCTION)
 ====================================================== */
 const waitlistBtn = document.getElementById("waitlistBtn");
+const earlyAccessScrollBtn = document.getElementById("earlyAccessScrollBtn");
 
-if (waitlistBtn && emailWaitlistSection) {
+function scrollToEmailWaitlist() {
+  if (!emailWaitlistSection) return;
+
+  emailWaitlistSection.scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
+
+  if (emailInput) {
+    setTimeout(() => {
+      emailInput.focus();
+      emailInput.classList.add("email-glow");
+
+      setTimeout(() => {
+        emailInput.classList.remove("email-glow");
+      }, 1600);
+    }, 600);
+  }
+}
+
+if (waitlistBtn) {
   waitlistBtn.addEventListener("click", (e) => {
     e.preventDefault();
+    scrollToEmailWaitlist();
+  });
+}
 
-    emailWaitlistSection.scrollIntoView({
-      behavior: "smooth",
-      block: "start"
-    });
-
-    if (emailInput) {
-      setTimeout(() => {
-        emailInput.focus();
-        emailInput.classList.add("email-glow");
-
-        setTimeout(() => {
-          emailInput.classList.remove("email-glow");
-        }, 1600);
-      }, 600);
-    }
+if (earlyAccessScrollBtn) {
+  earlyAccessScrollBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    scrollToEmailWaitlist();
   });
 }
 
@@ -94,25 +107,57 @@ if (hero) {
 }
 
 /* ======================================================
-   SCROLL REVEAL (INTERSECTION OBSERVER)
+   SCROLL REVEAL (DIRECTION-BASED + REPEATABLE)
 ====================================================== */
 const revealElements = document.querySelectorAll(".reveal");
+
+let lastScrollY = window.scrollY;
+let scrollDirection = "down";
+
+window.addEventListener("scroll", () => {
+  if (window.scrollY > lastScrollY) {
+    scrollDirection = "down";
+  } else {
+    scrollDirection = "up";
+  }
+  lastScrollY = window.scrollY;
+});
 
 if (revealElements.length > 0) {
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          entry.target.classList.add("active");
-          observer.unobserve(entry.target);
+
+          // remove old direction classes
+          entry.target.classList.remove("from-up", "from-down");
+
+          // apply direction
+          if (scrollDirection === "down") {
+            entry.target.classList.add("from-down");
+          } else {
+            entry.target.classList.add("from-up");
+          }
+
+          // trigger animation
+          requestAnimationFrame(() => {
+            entry.target.classList.add("active");
+          });
+
+        } else {
+          entry.target.classList.remove("active");
         }
       });
     },
-    { threshold: 0.15 }
+    {
+      threshold: 0.15,
+      rootMargin: "0px 0px -10% 0px" // mobile-friendly
+    }
   );
 
   revealElements.forEach(el => observer.observe(el));
 }
+
 
 /* ======================================================
    SEARCHABLE COUNTRY SELECTOR
@@ -173,9 +218,8 @@ if (phoneInput) {
 }
 
 /* ======================================================
-   WHATSAPP FORM SUBMIT (FINAL & WORKING)
+   WHATSAPP FORM SUBMIT
 ====================================================== */
-
 const whatsappForm = document.querySelector(".whatsapp-form");
 
 if (whatsappForm) {
@@ -192,9 +236,7 @@ if (whatsappForm) {
       "https://script.google.com/macros/s/AKfycbxamsuAn-GftmJxzgYXwVhrId6AG4gqcrVM-91Yc8bw6piR3dhMPXGiuZHGEI5zAXRA/exec",
       {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
         mode: "no-cors",
         body: JSON.stringify({
           name: name,
@@ -203,7 +245,6 @@ if (whatsappForm) {
       }
     );
 
-    // SUCCESS UI (do NOT wait for response)
     const dialog = document.getElementById("successDialog");
     const closeBtn = document.getElementById("closeSuccessDialog");
 
@@ -214,7 +255,7 @@ if (whatsappForm) {
       dialog.classList.remove("active");
       toggleModal(whatsappModal, false);
       whatsappForm.reset();
-    }, 2500);
+    }, 4500);
 
     closeBtn.onclick = () => {
       clearTimeout(autoClose);
@@ -225,11 +266,9 @@ if (whatsappForm) {
   });
 }
 
-
 /* ======================================================
-   EMAIL WAITLIST → GOOGLE SHEETS (SUCCESS DIALOG)
+   EMAIL WAITLIST SUBMIT
 ====================================================== */
-
 const emailForm = document.querySelector(".email-form");
 
 if (emailForm && emailInput) {
@@ -243,15 +282,12 @@ if (emailForm && emailInput) {
       "https://script.google.com/macros/s/AKfycbxamsuAn-GftmJxzgYXwVhrId6AG4gqcrVM-91Yc8bw6piR3dhMPXGiuZHGEI5zAXRA/exec",
       {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
         mode: "no-cors",
         body: JSON.stringify({ email })
       }
     );
 
-    // --- SUCCESS UI (same as WhatsApp) ---
     const dialog = document.getElementById("successDialog");
     const closeBtn = document.getElementById("closeSuccessDialog");
 
@@ -262,7 +298,7 @@ if (emailForm && emailInput) {
 
     const autoClose = setTimeout(() => {
       dialog.classList.remove("active");
-    }, 2500);
+    }, 4500);
 
     closeBtn.onclick = () => {
       clearTimeout(autoClose);
@@ -271,15 +307,14 @@ if (emailForm && emailInput) {
   });
 }
 
-
 /* ======================================================
-   CONFETTI BURST
+   CONFETTI
 ====================================================== */
 function launchConfetti() {
   const container = document.getElementById("confettiContainer");
   if (!container) return;
 
-  const CONFETTI_COUNT = 18;
+  const CONFETTI_COUNT = 25;
 
   for (let i = 0; i < CONFETTI_COUNT; i++) {
     const confetti = document.createElement("div");
