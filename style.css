@@ -37,7 +37,7 @@ button:active {
   display: flex;
   align-items: center;
   padding: 60px 8%;
-  background: radial-gradient(circle at center, #0a3d2f, #041f18);
+  background: radial-gradient(circle at center, #1b6b4a, #135A3A);
   position: relative;
   overflow: hidden;
 }
@@ -1156,4 +1156,45 @@ button:active {
 .reveal.active {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* Snack section CTA text (replaces button) */
+.snack-cta-text {
+  font-size: 16px;
+  font-weight: 600;
+  color: #d6c06f;
+  margin-top: 10px;
+}
+
+/* Highlight transformation section */
+.fruit-transform {
+  background: rgba(255, 255, 255, 0.06);
+  padding: 28px 36px;
+  border-radius: 20px;
+  box-shadow:
+    0 20px 40px rgba(0,0,0,0.35),
+    inset 0 0 0 1px rgba(255,255,255,0.08);
+}
+
+/* Emphasize arrows */
+.fruit-transform .arrow {
+  font-size: 36px;
+  color: #f6e6a1;
+  text-shadow: 0 0 12px rgba(246,230,161,0.45);
+}
+
+/* Make labels pop */
+.fruit-side span {
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+/* Slight glow on images */
+.fruit-side img {
+  transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+.fruit-side:hover img {
+  transform: translateY(-4px) scale(1.04);
+  filter: drop-shadow(0 20px 30px rgba(246,230,161,0.35));
 }
