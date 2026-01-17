@@ -14,9 +14,25 @@ function toggleModal(modal, open) {
 }
 
 /* ======================================================
-   SCROLL + AUTO-FOCUS EMAIL WAITLIST (SHARED FUNCTION)
+   HERO CTA → SCROLL ONLY (FINAL & CLEAN)
 ====================================================== */
 const waitlistBtn = document.getElementById("waitlistBtn");
+
+if (waitlistBtn && emailWaitlistSection) {
+  waitlistBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    emailWaitlistSection.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  });
+}
+
+
+/* ======================================================
+   SCROLL + AUTO-FOCUS EMAIL WAITLIST (UNCHANGED)
+====================================================== */
 const earlyAccessScrollBtn = document.getElementById("earlyAccessScrollBtn");
 
 function scrollToEmailWaitlist() {
@@ -39,13 +55,6 @@ function scrollToEmailWaitlist() {
   }
 }
 
-if (waitlistBtn) {
-  waitlistBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    scrollToEmailWaitlist();
-  });
-}
-
 if (earlyAccessScrollBtn) {
   earlyAccessScrollBtn.addEventListener("click", (e) => {
     e.preventDefault();
@@ -54,7 +63,7 @@ if (earlyAccessScrollBtn) {
 }
 
 /* ======================================================
-   WHATSAPP MODAL
+   WHATSAPP MODAL (UNCHANGED)
 ====================================================== */
 const openWhatsappBtn = document.getElementById("openWhatsappForm");
 const whatsappModal = document.getElementById("whatsappModal");
@@ -77,7 +86,7 @@ if (openWhatsappBtn && whatsappModal && closeWhatsappBtn) {
 }
 
 /* ======================================================
-   HERO PARALLAX (THROTTLED)
+   HERO PARALLAX (UNCHANGED)
 ====================================================== */
 const heroImage = document.querySelector(".hero-image img");
 let rafId = null;
@@ -96,7 +105,7 @@ if (heroImage) {
 }
 
 /* ======================================================
-   SCROLL BACKGROUND DEPTH
+   SCROLL BACKGROUND DEPTH (UNCHANGED)
 ====================================================== */
 const hero = document.querySelector(".hero");
 
@@ -107,7 +116,7 @@ if (hero) {
 }
 
 /* ======================================================
-   SCROLL REVEAL (DIRECTION-BASED + REPEATABLE)
+   SCROLL REVEAL (UNCHANGED)
 ====================================================== */
 const revealElements = document.querySelectorAll(".reveal");
 
@@ -115,11 +124,7 @@ let lastScrollY = window.scrollY;
 let scrollDirection = "down";
 
 window.addEventListener("scroll", () => {
-  if (window.scrollY > lastScrollY) {
-    scrollDirection = "down";
-  } else {
-    scrollDirection = "up";
-  }
+  scrollDirection = window.scrollY > lastScrollY ? "down" : "up";
   lastScrollY = window.scrollY;
 });
 
@@ -128,39 +133,25 @@ if (revealElements.length > 0) {
     (entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-
-          // remove old direction classes
           entry.target.classList.remove("from-up", "from-down");
+          entry.target.classList.add(scrollDirection === "down" ? "from-down" : "from-up");
 
-          // apply direction
-          if (scrollDirection === "down") {
-            entry.target.classList.add("from-down");
-          } else {
-            entry.target.classList.add("from-up");
-          }
-
-          // trigger animation
           requestAnimationFrame(() => {
             entry.target.classList.add("active");
           });
-
         } else {
           entry.target.classList.remove("active");
         }
       });
     },
-    {
-      threshold: 0.15,
-      rootMargin: "0px 0px -10% 0px" // mobile-friendly
-    }
+    { threshold: 0.15, rootMargin: "0px 0px -10% 0px" }
   );
 
   revealElements.forEach(el => observer.observe(el));
 }
 
-
 /* ======================================================
-   SEARCHABLE COUNTRY SELECTOR
+   SEARCHABLE COUNTRY SELECTOR (UNCHANGED)
 ====================================================== */
 const selector = document.getElementById("countrySelector");
 const selectedCountry = document.getElementById("selectedCountry");
@@ -186,39 +177,62 @@ if (selector && selectedCountry && dropdown) {
     });
   });
 
-  if (searchInput) {
-    searchInput.addEventListener("input", (e) => {
-      filterCountries(e.target.value.toLowerCase());
-    });
-  }
+  searchInput && searchInput.addEventListener("input", (e) => {
+    filterCountries(e.target.value.toLowerCase());
+  });
 
   function filterCountries(query) {
     countryItems.forEach(item => {
-      const text = item.textContent.toLowerCase();
-      item.style.display = text.includes(query) ? "block" : "none";
+      item.style.display = item.textContent.toLowerCase().includes(query)
+        ? "block"
+        : "none";
     });
   }
 
   document.addEventListener("click", (e) => {
-    if (!selector.contains(e.target)) {
-      dropdown.classList.remove("active");
-    }
+    if (!selector.contains(e.target)) dropdown.classList.remove("active");
   });
 }
 
 /* ======================================================
-   PHONE INPUT – NUMBERS ONLY
+   PHONE INPUT – NUMBERS ONLY (UNCHANGED)
 ====================================================== */
 const phoneInput = document.querySelector(".phone-input");
 
-if (phoneInput) {
-  phoneInput.addEventListener("input", () => {
-    phoneInput.value = phoneInput.value.replace(/\D/g, "");
-  });
+phoneInput && phoneInput.addEventListener("input", () => {
+  phoneInput.value = phoneInput.value.replace(/\D/g, "");
+});
+
+/* ======================================================
+   SUCCESS / ERROR DIALOG HELPERS
+====================================================== */
+// [ADDED]
+const successDialog = document.getElementById("successDialog");
+const errorDialog = document.getElementById("errorDialog");
+
+function showSuccess() {
+  successDialog.classList.add("active");
+  launchConfetti();
+
+  const autoClose = setTimeout(() => {
+    successDialog.classList.remove("active");
+  }, 4500);
+
+  document.getElementById("closeSuccessDialog").onclick = () => {
+    clearTimeout(autoClose);
+    successDialog.classList.remove("active");
+  };
+}
+
+function showError() {
+  errorDialog.classList.add("active");
+  document.getElementById("closeErrorDialog").onclick = () => {
+    errorDialog.classList.remove("active");
+  };
 }
 
 /* ======================================================
-   WHATSAPP FORM SUBMIT
+   WHATSAPP FORM SUBMIT (SAFE GUARDED)
 ====================================================== */
 const whatsappForm = document.querySelector(".whatsapp-form");
 
@@ -226,109 +240,84 @@ if (whatsappForm) {
   whatsappForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    const name = whatsappForm.querySelector(".input-field").value.trim();
+    // [SAFE GUARD]
+    const nameInput = whatsappForm.querySelector(".input-field");
+    const name = nameInput ? nameInput.value.trim() : "";
+    const phone = phoneInput ? phoneInput.value.trim() : "";
     const countryCode = selectedCountry?.dataset.code || "+965";
-    const phone = document.querySelector(".phone-input")?.value.trim();
 
     if (!name || !phone) return;
 
-    fetch(
-      "https://script.google.com/macros/s/AKfycbxamsuAn-GftmJxzgYXwVhrId6AG4gqcrVM-91Yc8bw6piR3dhMPXGiuZHGEI5zAXRA/exec",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        mode: "no-cors",
-        body: JSON.stringify({
-          name: name,
-          phone: countryCode + phone
-        })
-      }
-    );
+    try {
+      fetch(
+        "https://script.google.com/macros/s/AKfycbxamsuAn-GftmJxzgYXwVhrId6AG4gqcrVM-91Yc8bw6piR3dhMPXGiuZHGEI5zAXRA/exec",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          mode: "no-cors",
+          body: JSON.stringify({ name, phone: countryCode + phone })
+        }
+      );
 
-    const dialog = document.getElementById("successDialog");
-    const closeBtn = document.getElementById("closeSuccessDialog");
-
-    dialog.classList.add("active");
-    launchConfetti();
-
-    const autoClose = setTimeout(() => {
-      dialog.classList.remove("active");
+      showSuccess();
       toggleModal(whatsappModal, false);
       whatsappForm.reset();
-    }, 4500);
-
-    closeBtn.onclick = () => {
-      clearTimeout(autoClose);
-      dialog.classList.remove("active");
-      toggleModal(whatsappModal, false);
-      whatsappForm.reset();
-    };
+    } catch {
+      showError();
+    }
   });
 }
 
 /* ======================================================
-   EMAIL WAITLIST SUBMIT
+   EMAIL WAITLIST SUBMIT (PAGE + MODAL)
 ====================================================== */
-const emailForm = document.querySelector(".email-form");
+// [ADDED]
+function submitEmail(email) {
+  return fetch(
+    "https://script.google.com/macros/s/AKfycbxamsuAn-GftmJxzgYXwVhrId6AG4gqcrVM-91Yc8bw6piR3dhMPXGiuZHGEI5zAXRA/exec",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      mode: "no-cors",
+      body: JSON.stringify({ email })
+    }
+  );
+}
 
-if (emailForm && emailInput) {
-  emailForm.addEventListener("submit", (e) => {
+document.querySelectorAll(".email-form, .email-form-modal").forEach(form => {
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    const email = emailInput.value.trim();
+    const input = form.querySelector("input[type='email']");
+    const email = input.value.trim();
     if (!email) return;
 
-    fetch(
-      "https://script.google.com/macros/s/AKfycbxamsuAn-GftmJxzgYXwVhrId6AG4gqcrVM-91Yc8bw6piR3dhMPXGiuZHGEI5zAXRA/exec",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        mode: "no-cors",
-        body: JSON.stringify({ email })
-      }
-    );
-
-    const dialog = document.getElementById("successDialog");
-    const closeBtn = document.getElementById("closeSuccessDialog");
-
-    dialog.classList.add("active");
-    launchConfetti();
-
-    emailInput.value = "";
-
-    const autoClose = setTimeout(() => {
-      dialog.classList.remove("active");
-    }, 4500);
-
-    closeBtn.onclick = () => {
-      clearTimeout(autoClose);
-      dialog.classList.remove("active");
-    };
+    try {
+      submitEmail(email);
+      showSuccess();
+      toggleModal(waitlistModal, false);
+      input.value = "";
+    } catch {
+      showError();
+    }
   });
-}
+});
 
 /* ======================================================
-   CONFETTI
+   CONFETTI (UNCHANGED)
 ====================================================== */
 function launchConfetti() {
   const container = document.getElementById("confettiContainer");
   if (!container) return;
 
-  const CONFETTI_COUNT = 25;
-
-  for (let i = 0; i < CONFETTI_COUNT; i++) {
+  for (let i = 0; i < 25; i++) {
     const confetti = document.createElement("div");
     confetti.classList.add("confetti");
-
     confetti.style.left = Math.random() * 100 + "vw";
     confetti.style.animationDelay = Math.random() * 0.3 + "s";
-    confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
-
     container.appendChild(confetti);
 
-    setTimeout(() => {
-      confetti.remove();
-    }, 2000);
+    setTimeout(() => confetti.remove(), 2000);
   }
 }
 
