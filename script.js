@@ -332,3 +332,181 @@ function launchConfetti() {
   }
 }
 
+/* ======================================================
+   LANGUAGE TOGGLE – FULL SITE (100% COVERAGE, STATELESS)
+====================================================== */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  /* ---------------- TRANSLATIONS ---------------- */
+  const translations = {
+    en: {
+      heroEyebrow: "FREEZE-DRIED FRUIT · KUWAIT",
+      heroTitle: "Pure, crispy fruit —<br>crafted for performance<br><span class='gold-underline'>and everyday living.</span>",
+      heroDesc: "No sugar. No preservatives. Just real freeze-dried fruit that fits your gym, office, and family lifestyle.",
+      heroPoints: ["100% Real Fruit", "No Added Sugar", "No Preservatives"],
+      cta: "Get 10% Early Access",
+
+      waitlistTitle: "Join the Waiting List",
+      waitlistDesc: "Be the first to know when VEYRA launches.",
+      emailPlaceholder: "Enter your email",
+
+      snackTitle: "Real fruit. Zero nonsense.<br>Built for real life.",
+      snackDesc: "Freeze-dried fruit snacks for gym days, workdays, and everything in between.",
+      snackCTA: "Get 10% early access by joining our private WhatsApp group",
+      snackNote: "Real fruit. No sugar. No compromises.",
+
+      problemTitle: "The Snack Problem No One Talks About",
+      problems: [
+        "Snacks marketed as healthy,<br>loaded with sugar.",
+        "Energy that spikes…<br>then crashes.",
+        "Messy, inconvenient food<br>you stop carrying."
+      ],
+      problemFooter: "VEYRA exists because snacking shouldn’t punish your body.",
+
+      useCases: [
+        { title: "For the Gym", desc: "Fast fuel. No bloating. No crash." },
+        { title: "At Your Desk", desc: "Clean energy without killing focus." },
+        { title: "On the Go", desc: "A snack you don’t have to justify." }
+      ],
+
+      transformLabels: ["Fresh fruit", "Freeze-dried cubes", "VEYRA packs"],
+      transformText: "Same fruit. <span>Smarter form.</span>",
+
+      earlyTitle: "Early members get rewarded.",
+      earlyBenefits: [
+        "✔ First batch access",
+        "✔ Priority stock before sell-out",
+        "✔ 10% launch-only pricing"
+      ],
+      preferEmail: "Prefer email updates?",
+      trustText: "No spam. One launch email.",
+
+      whatsappTitle: "Join the WhatsApp Group",
+      whatsappDesc: "Get early access updates and launch alerts.",
+      namePlaceholder: "Your name",
+      phonePlaceholder: "Phone number",
+      formNote: "We’ll only message you for launch updates.",
+
+      footerTop: ["Launching soon in Kuwait", "Fulfilled locally"],
+      footerLinks: ["Privacy Policy", "Terms of Service"]
+    },
+
+    ar: {
+      heroEyebrow: "فاكهة مجففة بالتجميد · الكويت",
+      heroTitle: "فاكهة نقية ومقرمشة —<br>مصممة للأداء<br><span class='gold-underline'>والحياة اليومية.</span>",
+      heroDesc: "بدون سكر. بدون مواد حافظة. فقط فاكهة حقيقية مجففة بالتجميد تناسب الجيم، المكتب، والحياة العائلية.",
+      heroPoints: ["فاكهة حقيقية 100%", "بدون سكر مضاف", "بدون مواد حافظة"],
+      cta: "احصل على خصم 10٪ مبكرًا",
+
+      waitlistTitle: "انضم إلى قائمة الانتظار",
+      waitlistDesc: "كن أول من يعرف عند إطلاق VEYRA.",
+      emailPlaceholder: "أدخل بريدك الإلكتروني",
+
+      snackTitle: "فاكهة حقيقية. بدون إضافات.<br>مصممة للحياة الواقعية.",
+      snackDesc: "وجبات خفيفة من الفاكهة المجففة بالتجميد لأيام الجيم والعمل وكل ما بينهما.",
+      snackCTA: "احصل على خصم 10٪ مبكرًا عبر الانضمام إلى مجموعة واتساب الخاصة بنا",
+      snackNote: "فاكهة حقيقية. بدون سكر. بدون تنازلات.",
+
+      problemTitle: "مشكلة الوجبات الخفيفة التي لا يتحدث عنها أحد",
+      problems: [
+        "وجبات تُسوّق على أنها صحية<br>ومليئة بالسكر.",
+        "طاقة ترتفع بسرعة…<br>ثم تنخفض فجأة.",
+        "أطعمة غير عملية<br>تتوقف عن حملها."
+      ],
+      problemFooter: "VEYRA وُجدت لأن الوجبات الخفيفة لا يجب أن تضر بجسمك.",
+
+      useCases: [
+        { title: "للجيم", desc: "طاقة سريعة. بدون انتفاخ. بدون هبوط." },
+        { title: "أثناء العمل", desc: "طاقة نظيفة بدون تشتيت التركيز." },
+        { title: "أثناء التنقل", desc: "وجبة خفيفة بلا تبرير." }
+      ],
+
+      transformLabels: ["فاكهة طازجة", "مكعبات مجففة بالتجميد", "عبوات VEYRA"],
+      transformText: "نفس الفاكهة. <span>بشكل أذكى.</span>",
+
+      earlyTitle: "الأعضاء الأوائل يحصلون على مزايا.",
+      earlyBenefits: [
+        "✔ الوصول إلى أول دفعة",
+        "✔ أولوية قبل نفاد الكمية",
+        "✔ خصم إطلاق 10٪"
+      ],
+      preferEmail: "تفضل التحديثات عبر البريد الإلكتروني؟",
+      trustText: "لا رسائل مزعجة. رسالة واحدة عند الإطلاق.",
+
+      whatsappTitle: "انضم إلى مجموعة واتساب",
+      whatsappDesc: "احصل على تحديثات الوصول المبكر وتنبيهات الإطلاق.",
+      namePlaceholder: "الاسم",
+      phonePlaceholder: "رقم الهاتف",
+      formNote: "سنراسلك فقط بتحديثات الإطلاق.",
+
+      footerTop: ["الإطلاق قريبًا في الكويت", "التجهيز محليًا"],
+      footerLinks: ["سياسة الخصوصية", "شروط الاستخدام"]
+    }
+  };
+
+  const $ = s => document.querySelector(s);
+  const $$ = s => document.querySelectorAll(s);
+  const langToggle = $("#langToggle");
+
+  let currentLang = "en";
+
+  function setLanguage(lang) {
+    const t = translations[lang];
+
+    $(".hero-eyebrow").textContent = t.heroEyebrow;
+    $(".hero-title").innerHTML = t.heroTitle;
+    $(".hero-content p").textContent = t.heroDesc;
+
+    $$(".hero-points li").forEach((el, i) => el.textContent = t.heroPoints[i]);
+    $$(".cta-btn, .whatsapp-btn").forEach(btn => btn.textContent = t.cta);
+
+    $(".snack-text h2").innerHTML = t.snackTitle;
+    $(".snack-text p").textContent = t.snackDesc;
+    $(".snack-cta-text").textContent = t.snackCTA;
+    $(".snack-note").textContent = t.snackNote;
+
+    $(".snack-problems h3").textContent = t.problemTitle;
+    $$(".problem-item p").forEach((el, i) => el.innerHTML = t.problems[i]);
+    $(".snack-footer").textContent = t.problemFooter;
+
+    $$(".use-card").forEach((card, i) => {
+      card.querySelector("h4").textContent = t.useCases[i].title;
+      card.querySelector("p").textContent = t.useCases[i].desc;
+    });
+
+    $$(".fruit-side span").forEach((el, i) => el.textContent = t.transformLabels[i]);
+    $(".transform-text").innerHTML = t.transformText;
+
+    $(".early-container h3").textContent = t.earlyTitle;
+    $$(".early-benefits li").forEach((el, i) => el.textContent = t.earlyBenefits[i]);
+    $(".email-text").textContent = t.preferEmail;
+    $(".trust-text").textContent = t.trustText;
+    $("#emailWaitlistInput").placeholder = t.emailPlaceholder;
+
+    $("#whatsappModal h2").textContent = t.whatsappTitle;
+    $("#whatsappModal p").textContent = t.whatsappDesc;
+    $(".whatsapp-form .input-field").placeholder = t.namePlaceholder;
+    $(".phone-input").placeholder = t.phonePlaceholder;
+    $(".form-note").textContent = t.formNote;
+
+    const footerSpans = $$(".footer-top span");
+    footerSpans[0].textContent = t.footerTop[0];
+    footerSpans[2].textContent = t.footerTop[1];
+    $$(".footer-bottom a").forEach((el, i) => el.textContent = t.footerLinks[i]);
+
+    document.body.classList.toggle("rtl", lang === "ar");
+    document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+    document.documentElement.lang = lang;
+    langToggle.textContent = lang === "ar" ? "English" : "العربية";
+
+    currentLang = lang;
+  }
+
+  setLanguage("en");
+
+  langToggle.addEventListener("click", () => {
+    setLanguage(currentLang === "en" ? "ar" : "en");
+  });
+
+});
