@@ -1227,3 +1227,227 @@ body.rtl .use-cards,
 body.rtl .fruit-transform {
   text-align: right;
 }
+
+/* ======================================================
+   ARABIC TYPOGRAPHY (RTL MODE)
+====================================================== */
+
+/* Use Cairo for Arabic */
+body.rtl {
+  font-family: "Cairo", sans-serif;
+  letter-spacing: 0; /* Arabic should not have spacing */
+}
+
+/* Improve Arabic heading readability */
+body.rtl h1,
+body.rtl h2,
+body.rtl h3,
+body.rtl h4 {
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+/* Arabic body text */
+body.rtl p,
+body.rtl li,
+body.rtl span,
+body.rtl small {
+  font-weight: 500;
+  line-height: 1.9;
+}
+
+/* Buttons in Arabic */
+body.rtl button {
+  font-weight: 600;
+}
+
+/* Fix gold underline alignment for Arabic */
+body.rtl .gold-underline {
+  display: inline-block;
+}
+
+body.rtl {
+  font-variant-numeric: lining-nums;
+}
+
+
+/* ======================================================
+   RTL LAYOUT POLISH (ARABIC MODE)
+====================================================== */
+
+/* General text alignment */
+body.rtl {
+  text-align: right;
+}
+
+/* HERO */
+body.rtl .hero-container {
+  flex-direction: row-reverse;
+}
+
+body.rtl .hero-content {
+  text-align: right;
+}
+
+/* HERO POINTS */
+body.rtl .hero-points {
+  padding-right: 0;
+  padding-left: unset;
+}
+
+body.rtl .hero-points li {
+  list-style-position: inside;
+}
+
+/* SNACK SECTION */
+body.rtl .snack-hero {
+  flex-direction: row-reverse;
+}
+
+body.rtl .snack-text {
+  text-align: right;
+}
+
+/* PROBLEM GRID */
+body.rtl .problem-grid {
+  direction: rtl;
+}
+
+body.rtl .problem-item p {
+  text-align: right;
+}
+
+/* USE CASE CARDS */
+body.rtl .use-cards {
+  flex-direction: row-reverse;
+}
+
+body.rtl .use-card {
+  text-align: right;
+}
+
+/* FRUIT TRANSFORMATION FLOW */
+body.rtl .fruit-transform {
+  flex-direction: row-reverse;
+}
+
+/* Flip arrows */
+body.rtl .fruit-transform .arrow {
+  transform: rotate(180deg);
+}
+
+/* EARLY ACCESS */
+body.rtl .early-container {
+  text-align: right;
+}
+
+/* EMAIL FORM */
+body.rtl .email-form {
+  flex-direction: row-reverse;
+}
+
+/* WHATSAPP MODAL */
+body.rtl .modal-content {
+  text-align: right;
+}
+
+body.rtl .phone-group {
+  flex-direction: row-reverse;
+}
+
+/* FOOTER */
+body.rtl .footer-top,
+body.rtl .footer-bottom {
+  flex-direction: row-reverse;
+  text-align: right;
+}
+
+body.rtl .footer-top .dot,
+body.rtl .footer-bottom .dot {
+  transform: scaleX(-1);
+}
+
+/* ======================================================
+   LANGUAGE TOGGLE ANIMATION (SMOOTH)
+====================================================== */
+
+.lang-transition {
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity 0.45s ease,
+    transform 0.45s ease;
+  will-change: opacity, transform;
+}
+
+.lang-transition.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.lang-transition {
+  transition:
+    opacity 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+
+/* ======================================================
+   RTL FIX – EARLY ACCESS SECTION (CENTERED)
+====================================================== */
+
+body.rtl .early-container {
+  text-align: center;
+  align-items: center;
+}
+
+/* Center the title */
+body.rtl .early-container h3 {
+  text-align: center;
+}
+
+/* Center benefits list */
+body.rtl .early-benefits {
+  list-style: none;
+  padding: 0;
+  margin: 24px auto;
+}
+
+body.rtl .early-benefits li {
+  text-align: center;
+  justify-content: center;
+}
+
+/* Center CTA button */
+body.rtl .early-container .cta-btn,
+body.rtl .early-container .whatsapp-btn {
+  margin: 24px auto;
+  display: inline-flex;
+}
+
+/* Divider alignment */
+body.rtl .early-container .divider {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Email section text */
+body.rtl .email-text {
+  text-align: center;
+}
+
+/* Email form row */
+body.rtl .email-form {
+  justify-content: center;
+  align-items: center;
+}
+
+/* Email input text alignment */
+body.rtl .email-form input {
+  text-align: right;
+}
+
+/* Trust text */
+body.rtl .trust-text {
+  text-align: center;
+}

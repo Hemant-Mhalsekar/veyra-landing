@@ -490,6 +490,8 @@ document.addEventListener("DOMContentLoaded", () => {
     $(".phone-input").placeholder = t.phonePlaceholder;
     $(".form-note").textContent = t.formNote;
 
+    document.querySelector(".email-submit-btn") && (document.querySelector(".email-submit-btn").textContent = t.cta);
+
     const footerSpans = $$(".footer-top span");
     footerSpans[0].textContent = t.footerTop[0];
     footerSpans[2].textContent = t.footerTop[1];
@@ -505,8 +507,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
   setLanguage("en");
 
-  langToggle.addEventListener("click", () => {
-    setLanguage(currentLang === "en" ? "ar" : "en");
-  });
+  const langRoot = document.getElementById("langRoot");
 
+  langToggle.addEventListener("click", () => {
+    if (!langRoot) return;
+
+    // fade out
+    langRoot.classList.remove("active");
+
+  setTimeout(() => {
+    setLanguage(currentLang === "en" ? "ar" : "en");
+
+    requestAnimationFrame(() => {
+      langRoot.classList.add("active");
+    });
+  }, 380);
+  });
 });
