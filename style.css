@@ -1459,3 +1459,108 @@ body.rtl .email-form input {
 body.rtl .trust-text {
   text-align: center;
 }
+
+/* ======================================================
+   MOBILE RTL FIX (CRITICAL)
+====================================================== */
+@media (max-width: 900px) {
+
+  /* Reset layout direction on mobile */
+  body.rtl {
+    direction: rtl;
+    text-align: center;
+  }
+
+  /* Prevent row-reverse on mobile */
+  body.rtl .hero-container,
+  body.rtl .snack-hero,
+  body.rtl .use-cards,
+  body.rtl .fruit-transform,
+  body.rtl .phone-group,
+  body.rtl .footer-top,
+  body.rtl .footer-bottom {
+    flex-direction: column !important;
+  }
+
+  /* Center text consistently */
+  body.rtl .hero-content,
+  body.rtl .snack-text,
+  body.rtl .problem-item p,
+  body.rtl .use-card,
+  body.rtl .early-container,
+  body.rtl .modal-content {
+    text-align: center !important;
+  }
+
+  /* Fix email + input alignment */
+  body.rtl input,
+  body.rtl textarea {
+    text-align: right;
+  }
+
+  /* Fix buttons centering */
+  body.rtl button {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* ======================================================
+   FIX: GRID SHRINKING ON RTL TOGGLE (CRITICAL)
+====================================================== */
+
+/* Ensure grids never collapse */
+.use-cards,
+.problem-grid {
+  width: 100%;
+}
+
+/* RTL: do NOT reverse grid direction */
+body.rtl .use-cards,
+body.rtl .problem-grid {
+  direction: ltr; /* grid layout stays stable */
+}
+
+/* Mobile: force single-column grid explicitly */
+@media (max-width: 900px) {
+  .use-cards,
+  .problem-grid {
+    grid-template-columns: 1fr !important;
+    width: 100% !important;
+  }
+}
+
+/* ======================================================
+   FIX: PREVENT GRID SHRINK ON RE-ANIMATION (CRITICAL)
+====================================================== */
+
+/* Lock grid items so transforms never affect layout */
+.use-card,
+.problem-item {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Prevent transforms from affecting grid calculation */
+.use-cards,
+.problem-grid {
+  contain: layout paint;
+}
+
+/* Do NOT animate grid containers */
+.use-cards.reveal,
+.problem-grid.reveal {
+  transform: none !important;
+}
+
+/* Animate cards, not grids */
+.use-card.reveal,
+.problem-item.reveal {
+  transform: translateY(24px);
+}
+
+.use-card.reveal.active,
+.problem-item.reveal.active {
+  transform: translateY(0);
+}
