@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" translate="no">
 <head>
+  <!-- Arabic Font: Cairo -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="google" content="notranslate">
@@ -10,10 +15,15 @@
 
 <body>
 
+  <!-- LANGUAGE TOGGLE (outside animation wrapper) -->
+  <button id="langToggle" class="lang-toggle">العربية</button>
+
+  <!-- ANIMATED / TRANSLATED ROOT -->
+  <div id="langRoot" class="lang-transition active">
+
 <!-- ================= HERO ================= -->
 <header class="hero reveal">
   <!-- LANGUAGE TOGGLE -->
-<button id="langToggle" class="lang-toggle">العربية</button>
 
   <div class="hero-container">
 
@@ -267,7 +277,7 @@
 
       </div>
 
-      <button class="submit-btn">
+      <button class="submit-btn" >
         Get 10% Early Access
       </button>
 
@@ -300,7 +310,6 @@
   </div>
 </footer>
 
-<script src="script.js"></script>
 
 <!-- SUCCESS DIALOG -->
 <div class="success-dialog" id="successDialog">
@@ -322,6 +331,10 @@
 
 <!-- CONFETTI -->
 <div class="confetti-container" id="confettiContainer"></div>
+
+</div>
+
+<script src="script.js"></script>
 
 </body>
 </html>
