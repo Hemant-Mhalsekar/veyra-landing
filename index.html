@@ -15,16 +15,14 @@
 
 <body>
 
-  <!-- LANGUAGE TOGGLE (outside animation wrapper) -->
-  <button id="langToggle" class="lang-toggle">العربية</button>
+<!-- LANGUAGE TOGGLE -->
+<button id="langToggle" class="lang-toggle">العربية</button>
 
-  <!-- ANIMATED / TRANSLATED ROOT -->
-  <div id="langRoot" class="lang-transition active">
+<!-- ================= PAGE CONTENT (ANIMATED) ================= -->
+<div id="langRoot" class="lang-transition active">
 
 <!-- ================= HERO ================= -->
 <header class="hero reveal">
-  <!-- LANGUAGE TOGGLE -->
-
   <div class="hero-container">
 
     <div class="hero-left mobile-stack">
@@ -55,31 +53,17 @@
     </div>
 
     <div class="hero-image mobile-center reveal">
-      <img src="assets/product.png" alt="VEYRA Freeze Dried Fruits" />
+      <img src="assets/product.png" alt="VEYRA Freeze-Dried Fruit" />
     </div>
 
   </div>
 </header>
-
-<!-- ================= WAITLIST MODAL ================= -->
-<div class="modal" id="waitlistModal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <h2>Join the Waiting List</h2>
-    <p>Be the first to know when VEYRA launches.</p>
-    <form>
-      <input type="email" placeholder="Enter your email" required />
-      <button type="submit">Get 10% Early Access</button>
-    </form>
-  </div>
-</div>
 
 <!-- ================= SNACK PROBLEM ================= -->
 <section class="snack-problem reveal">
   <div class="snack-container">
 
     <div class="snack-hero mobile-stack">
-
       <div class="snack-text">
         <h2>
           Real fruit. Zero nonsense.<br />
@@ -98,15 +82,13 @@
         <small class="snack-note">
           Real fruit. No sugar. No compromises.
         </small>
-
       </div>
 
       <div class="snack-products mobile-center reveal">
-        <img src="assets/product-red.png" alt="" />
-        <img src="assets/product-yellow.png" alt="" />
-        <img src="assets/product-dark.png" alt="" />
+        <img src="assets/product-red.png" alt="VEYRA fruit pack red" />
+        <img src="assets/product-yellow.png" alt="VEYRA fruit pack yellow" />
+        <img src="assets/product-dark.png" alt="VEYRA fruit pack dark" />
       </div>
-
     </div>
 
     <div class="snack-divider"></div>
@@ -211,7 +193,6 @@
 
     <p class="email-text">Prefer email updates?</p>
 
-    <!-- FORM KEPT INTACT (button intentionally removed visually) -->
     <form class="email-form mobile-stack">
       <input
         type="email"
@@ -219,12 +200,10 @@
         placeholder="Enter your email"
         required
       />
-
       <button type="submit" class="email-submit-btn">
         Get 10% Early Access
       </button>
     </form>
-
 
     <small class="trust-text">
       No spam. One launch email.
@@ -233,7 +212,55 @@
   </div>
 </section>
 
-<!-- ================= WHATSAPP MODAL ================= -->
+<!-- ================= FOOTER ================= -->
+<footer class="site-footer reveal">
+  <div class="footer-container">
+
+    <div class="footer-top mobile-stack">
+      <span>Launching soon in Kuwait</span>
+      <span class="dot">•</span>
+      <span>Fulfilled locally</span>
+      <span class="dot">•</span>
+      <a href="mailto:support@veyra.com">support@veyra.com</a>
+    </div>
+
+    <div class="footer-bottom mobile-stack">
+      <a href="#">Privacy Policy</a>
+      <span class="dot">•</span>
+      <a href="#">Terms of Service</a>
+    </div>
+
+  </div>
+</footer>
+
+</div>
+<!-- ================= END langRoot ================= -->
+
+
+<!-- ================= MODALS & DIALOGS (OUTSIDE langRoot) ================= -->
+
+<!-- EMAIL WAITLIST MODAL -->
+<div class="modal" id="waitlistModal">
+  <div class="modal-content">
+    <span class="close" id="closeWaitlistModal">&times;</span>
+    <h2>Join the Waiting List</h2>
+    <p>Be the first to know when VEYRA launches.</p>
+
+    <form class="email-form-modal">
+      <input
+        type="email"
+        id="modalEmailInput"
+        placeholder="Enter your email"
+        required
+      />
+      <button type="submit" class="email-submit-btn">
+        Get 10% Early Access
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- WHATSAPP MODAL -->
 <div class="modal" id="whatsappModal">
   <div class="modal-content">
     <span class="close" id="closeWhatsappForm">&times;</span>
@@ -245,7 +272,6 @@
       <input class="input-field" placeholder="Your name" required />
 
       <div class="phone-group mobile-stack">
-
         <div class="country-selector" id="countrySelector">
           <button
             type="button"
@@ -274,10 +300,9 @@
           maxlength="15"
           required
         />
-
       </div>
 
-      <button class="submit-btn" >
+      <button class="submit-btn">
         Get 10% Early Access
       </button>
 
@@ -288,28 +313,6 @@
     </form>
   </div>
 </div>
-
-<!-- ================= FOOTER ================= -->
-<footer class="site-footer reveal">
-  <div class="footer-container">
-
-    <div class="footer-top mobile-stack">
-      <span>Launching soon in Kuwait</span>
-      <span class="dot">•</span>
-      <span>Fulfilled locally</span>
-      <span class="dot">•</span>
-      <a href="mailto:support@veyra.com">support@veyra.com</a>
-    </div>
-
-    <div class="footer-bottom mobile-stack">
-      <a href="#">Privacy Policy</a>
-      <span class="dot">•</span>
-      <a href="#">Terms of Service</a>
-    </div>
-
-  </div>
-</footer>
-
 
 <!-- SUCCESS DIALOG -->
 <div class="success-dialog" id="successDialog">
@@ -332,9 +335,6 @@
 <!-- CONFETTI -->
 <div class="confetti-container" id="confettiContainer"></div>
 
-</div>
-
 <script src="script.js"></script>
-
 </body>
 </html>
