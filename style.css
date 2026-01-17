@@ -1198,3 +1198,32 @@ button:active {
   transform: translateY(-4px) scale(1.04);
   filter: drop-shadow(0 20px 30px rgba(246,230,161,0.35));
 }
+
+/* Language toggle */
+.lang-toggle {
+  position: fixed;
+  top: 20px;
+  right: 24px;
+  z-index: 10001;
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* RTL support */
+body.rtl {
+  direction: rtl;
+}
+
+body.rtl .hero-container,
+body.rtl .snack-hero,
+body.rtl .use-cards,
+body.rtl .fruit-transform {
+  text-align: right;
+}
