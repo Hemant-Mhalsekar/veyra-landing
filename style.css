@@ -224,10 +224,31 @@ button:active {
 
 .snack-hero {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 60px;
+  flex-direction: column; /* stack text + images */
+  align-items: flex-start;
+  gap: 40px;
 }
+.snack-products {
+  display: flex;
+  gap: 28px;
+  justify-content: center;
+  width: 100%;
+}
+.snack-text {
+  max-width: 720px;
+}
+
+.snack-text h2 {
+  font-size: 48px;
+}
+
+.snack-products img {
+  max-width: 200px;              /* BIGGER images */
+  animation: syncFloat 5s ease-in-out infinite;
+  will-change: transform;
+  transition: filter 0.3s ease;
+}
+
 
 .snack-text h2 {
   font-size: 44px;
@@ -264,17 +285,14 @@ button:active {
 
 .snack-products {
   display: flex;
-  gap: 20px;
+  gap: 36px;
 }
 
 .snack-products img {
-  max-width: 130px;
-  filter: drop-shadow(0 20px 30px rgba(0,0,0,0.5));
-  transition: transform 0.3s ease;
-}
-
-.snack-products img:hover {
-  transform: translateY(-6px);
+  max-width: 200px;              /* BIGGER images */
+  animation: syncFloat 5s ease-in-out infinite;
+  will-change: transform;
+  transition: filter 0.3s ease;
 }
 
 /* Divider */
@@ -323,6 +341,49 @@ button:active {
   font-size: 16px;
   color: #d6c06f;
   font-weight: 500;
+}
+
+@media (max-width: 600px) {
+  .snack-products img {
+    max-width: 120px;
+  }
+}
+
+
+.snack-products img {
+  transition: transform 0.35s ease, filter 0.35s ease;
+}
+
+
+/* ===============================
+   SNACK PRODUCT – FINAL (CLEAN)
+================================ */
+
+.snack-products {
+  display: flex;
+  gap: 36px;
+  justify-content: center;
+  width: 100%;
+}
+
+.snack-products img {
+  max-width: 300px;                 /* bigger images */
+  animation: syncFloat 5s ease-in-out infinite;
+  will-change: transform;
+  transition: filter 0.3s ease;
+}
+
+/* Hover WITHOUT breaking motion */
+.snack-products img:hover {
+  filter: drop-shadow(0 40px 50px rgba(0,0,0,0.6));
+}
+
+.snack-products img {
+  --scale: 1;
+}
+
+.snack-products img:hover {
+  --scale: 1.06;
 }
 
 /* ======================================================
@@ -685,6 +746,13 @@ button:active {
     display: none;
   }
 }
+
+@media (max-width: 600px) {
+  .snack-products img {
+    max-width: 130px;
+  }
+}
+
 
 /* ================= FORM FIXES ================= */
 .input-field {
@@ -1564,3 +1632,49 @@ body.rtl .problem-grid {
 .problem-item.reveal.active {
   transform: translateY(0);
 }
+
+
+/* ===============================
+   USE CASES – BIGGER CARDS
+================================ */
+
+/* Increase grid spacing */
+.use-cards {
+  gap: 36px;
+}
+
+/* Bigger card */
+.use-card {
+  border-radius: 20px;
+}
+
+/* Bigger images */
+.use-card img {
+  height: 240px; /* was 180px */
+}
+
+/* Bigger heading */
+.use-card h4 {
+  font-size: 20px;
+}
+
+/* Bigger description */
+.use-card p {
+  font-size: 15.5px;
+}
+
+
+/* ===============================
+   SYNCHRONIZED FLOAT ANIMATION
+================================ */
+
+@keyframes syncFloat {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-14px); }
+  100% { transform: translateY(0); }
+}
+
+
+
+
+
