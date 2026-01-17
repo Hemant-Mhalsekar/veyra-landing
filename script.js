@@ -478,6 +478,12 @@ document.addEventListener("DOMContentLoaded", () => {
     $(".whatsapp-form .input-field").placeholder = t.namePlaceholder;
     $(".phone-input").placeholder = t.phonePlaceholder;
     $(".form-note").textContent = t.formNote;
+    // WhatsApp modal submit button
+    const whatsappSubmitBtn = document.querySelector(".whatsapp-form .submit-btn");
+    if (whatsappSubmitBtn) {
+      whatsappSubmitBtn.textContent = t.cta;
+    }
+
 
     document.querySelector(".email-submit-btn") && (document.querySelector(".email-submit-btn").textContent = t.cta);
 
