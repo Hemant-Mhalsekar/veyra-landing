@@ -316,23 +316,9 @@ button:active {
   text-align: center;
 }
 
-.problem-item img {
-  max-width: 80px;
-  margin-bottom: 16px;
-  opacity: 0.9;
-}
-
 .problem-item p {
   font-size: 15px;
   color: #d9e7e2;
-}
-
-.snack-footer {
-  margin-top: 60px;
-  text-align: center;
-  font-size: 16px;
-  color: #d6c06f;
-  font-weight: 500;
 }
 
 .snack-products img {
@@ -1672,6 +1658,80 @@ body.rtl .problem-grid {
     width: 140px; /* still big, no overflow */
   }
 }
+
+/* ===============================
+   PROBLEM SECTION VIDEOS
+================================ */
+
+.problem-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.problem-video {
+  width: clamp(170px, 22vw, 300px); /* ⬅️ increased */
+  height: auto;
+  margin-bottom: 18px;
+  border-radius: 16px;
+  object-fit: cover;
+  background: #000;
+  box-shadow: 0 18px 34px rgba(0,0,0,0.4);
+}
+
+@media (max-width: 600px) {
+  .problem-video {
+    width: 200px; /* still bold on phones */
+  }
+}
+
+
+.snack-footer {
+  width: 100%;                /* 🔑 force full width */
+  margin: 70px auto 0;
+  text-align: center;         /* center text */
+  font-size: 17px;
+  color: #d6c06f;
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+
+/* ===============================
+   PROBLEM VIDEO – SCROLL REVEAL
+================================ */
+
+.problem-item.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s cubic-bezier(0.22,1,0.36,1);
+}
+
+.problem-item.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes videoFloat {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-6px) scale(1.015);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
+
+.problem-video {
+  animation: videoFloat 6s ease-in-out infinite;
+  will-change: transform;
+}
+
 
 
 
