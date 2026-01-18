@@ -498,7 +498,41 @@ document.addEventListener("DOMContentLoaded", () => {
     currentLang = lang;
   }
 
-  setLanguage("en");
+  /* ======================================
+   AUTO LANGUAGE DETECTION (NO STORAGE)
+====================================== */
+
+function detectInitialLanguage() {
+  const browserLangs = navigator.languages || [navigator.language || "en"];
+  const browserLang = browserLangs[0].toLowerCase();
+
+  // 1. Browser prefers Arabic
+  if (browserLang.startsWith("ar")) {
+    return "ar";
+  }
+
+  // 2. GCC / Kuwait heuristic (timezone-based, no IP, no storage)
+  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
+
+  const gccTimezones = [
+    "Asia/Kuwait",
+    "Asia/Riyadh",
+    "Asia/Dubai",
+    "Asia/Qatar",
+    "Asia/Bahrain",
+    "Asia/Muscat"
+  ];
+
+  if (gccTimezones.includes(timeZone)) {
+    return "ar";
+  }
+
+  // 3. Default fallback
+  return "en";
+}
+
+const initialLang = detectInitialLanguage();
+setLanguage(initialLang);
 
   const langRoot = document.getElementById("langRoot");
 
