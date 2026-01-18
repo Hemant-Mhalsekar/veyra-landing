@@ -342,7 +342,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
       snackTitle: "Real fruit. Zero nonsense.<br>Built for real life.",
       snackDesc: "Freeze-dried fruit snacks for gym days, workdays, and everything in between.",
-      snackCTA: "Get 10% early access by joining our private WhatsApp group",
       snackNote: "Real fruit. No sugar. No compromises.",
 
       problemTitle: "The Snack Problem No One Talks About",
@@ -366,7 +365,7 @@ document.addEventListener("DOMContentLoaded", () => {
       earlyBenefits: [
         "✔ First batch access",
         "✔ Priority stock before sell-out",
-        "✔ 10% launch-only pricing"
+        "✔ 10% Early Access to Premium Code"
       ],
       preferEmail: "Prefer email updates?",
       trustText: "No spam. One launch email.",
@@ -394,7 +393,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
       snackTitle: "فاكهة حقيقية. بدون إضافات.<br>مصممة للحياة الواقعية.",
       snackDesc: "وجبات خفيفة من الفاكهة المجففة بالتجميد لأيام الجيم والعمل وكل ما بينهما.",
-      snackCTA: "احصل على خصم 10٪ مبكرًا عبر الانضمام إلى مجموعة واتساب الخاصة بنا",
       snackNote: "فاكهة حقيقية. بدون سكر. بدون تنازلات.",
 
       problemTitle: "مشكلة الوجبات الخفيفة التي لا يتحدث عنها أحد",
@@ -418,7 +416,7 @@ document.addEventListener("DOMContentLoaded", () => {
       earlyBenefits: [
         "✔ الوصول إلى أول دفعة",
         "✔ أولوية قبل نفاد الكمية",
-        "✔ خصم إطلاق 10٪"
+        "✔ خصم وصول مبكر 10٪ إلى كود مميز٪"
       ],
       preferEmail: "تفضل التحديثات عبر البريد الإلكتروني؟",
       trustText: "لا رسائل مزعجة. رسالة واحدة عند الإطلاق.",
@@ -448,11 +446,11 @@ document.addEventListener("DOMContentLoaded", () => {
     $(".hero-content p").textContent = t.heroDesc;
 
     $$(".hero-points li").forEach((el, i) => el.textContent = t.heroPoints[i]);
-    $$(".cta-btn, .whatsapp-btn").forEach(btn => btn.textContent = t.cta);
-
+    document.querySelectorAll(".cta-text").forEach(el => {
+      el.textContent = t.cta;
+    });
     $(".snack-text h2").innerHTML = t.snackTitle;
     $(".snack-text p").textContent = t.snackDesc;
-    $(".snack-cta-text").textContent = t.snackCTA;
     $(".snack-note").textContent = t.snackNote;
 
     $(".snack-problems h3").textContent = t.problemTitle;

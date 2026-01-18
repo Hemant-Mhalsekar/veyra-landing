@@ -332,10 +332,12 @@ button:active {
 
 .snack-products {
   display: flex;
-  gap: 36px;
   justify-content: center;
-  width: 100%;
+  align-items: flex-end;
+  gap: 28px;
+  flex-wrap: wrap;   /* IMPORTANT for 5 items */
 }
+
 
 .snack-products img {
   animation: syncFloat 5s ease-in-out infinite;
@@ -420,6 +422,27 @@ button:active {
   gap: 28px;
   flex-wrap: wrap;
 }
+/* ===============================
+   TRANSFORMATION BAR – VIDEO
+================================ */
+
+.transform-main-video {
+  width: clamp(240px, 42vw, 360px);  /* ⬅️ reduced */
+  height: auto;
+  border-radius: 14px;
+  object-fit: cover;
+  background: #000;
+  box-shadow: 
+    0 16px 32px rgba(0,0,0,0.3),
+    inset 0 0 0 1px rgba(255,255,255,0.08);
+}
+
+@media (max-width: 768px) {
+  .transform-main-video {
+    width: 100%;
+    max-width: 300px;
+  }
+}
 
 .fruit-side {
   text-align: center;
@@ -430,17 +453,6 @@ button:active {
   filter: drop-shadow(0 15px 25px rgba(0,0,0,0.6));
 }
 
-.fruit-side span {
-  display: block;
-  margin-top: 10px;
-  font-size: 13px;
-  color: #cfe3dd;
-}
-
-.arrow {
-  font-size: 32px;
-  color: #d6c06f;
-}
 
 .transform-text {
   margin-top: 10px;
@@ -1212,18 +1224,6 @@ button:active {
     inset 0 0 0 1px rgba(255,255,255,0.08);
 }
 
-/* Emphasize arrows */
-.fruit-transform .arrow {
-  font-size: 36px;
-  color: #f6e6a1;
-  text-shadow: 0 0 12px rgba(246,230,161,0.45);
-}
-
-/* Make labels pop */
-.fruit-side span {
-  font-weight: 600;
-  letter-spacing: 0.3px;
-}
 
 /* Slight glow on images */
 .fruit-side img {
@@ -1335,10 +1335,27 @@ body.rtl .hero-points li {
   list-style-position: inside;
 }
 
-/* SNACK SECTION */
-body.rtl .snack-hero {
-  flex-direction: row-reverse;
+/* ================================
+   SNACK SECTION – RTL SAFE LAYOUT
+================================ */
+
+/* Snack layout must ALWAYS be vertical */
+.snack-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
+
+/* Arabic: only text alignment changes */
+body.rtl .snack-text {
+  text-align: right;
+}
+
+/* Keep images centered in all languages */
+.snack-products {
+  justify-content: center;
+}
+
 
 body.rtl .snack-text {
   text-align: right;
@@ -1686,7 +1703,6 @@ body.rtl .problem-grid {
   }
 }
 
-
 .snack-footer {
   width: 100%;                /* 🔑 force full width */
   margin: 70px auto 0;
@@ -1732,9 +1748,82 @@ body.rtl .problem-grid {
   will-change: transform;
 }
 
+/* Emphasize VEYRA brand word */
+.snack-footer .brand-word {
+  font-size: 1.3em;      /* bigger than rest of sentence */
+  font-weight: 700;
+  color: #f6e6a1;        /* slightly brighter gold */
+  letter-spacing: 0.5px;
+}
 
+/* ================================
+   HERO RTL FIX (CRITICAL)
+================================ */
 
+/* Keep hero layout clean in Arabic */
+body.rtl .hero-container {
+  flex-direction: row-reverse;
+  align-items: center;
+}
 
+/* Lock image area width */
+.hero-image-wrapper {
+  flex: 0 0 520px; /* desktop image column */
+  display: flex;
+  justify-content: center;
+}
 
+/* Prevent image overflow */
+.hero-image-wrapper img {
+  max-width: 100%;
+  height: auto;
+}
 
+/* RTL: prevent image drifting */
+body.rtl .hero-image-wrapper {
+  justify-content: center;
+}
+
+@media (max-width: 900px) {
+  body.rtl .hero-container {
+    flex-direction: column !important;
+  }
+
+  body.rtl .hero-image-wrapper {
+    flex: unset;
+    margin-top: 32px;
+  }
+}
+
+/* ================================
+   WHATSAPP CTA ICON – FINAL FIX
+================================ */
+
+.whatsapp-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.whatsapp-icon {
+  display: flex;
+  align-items: center;
+}
+
+.whatsapp-icon img {
+  width: 30px;
+  height: 30px;
+  display: block;
+}
+
+/* Smooth hover polish */
+.whatsapp-btn:hover .whatsapp-icon img {
+  transform: scale(1.08);
+}
+
+/* RTL: icon on the right side */
+body.rtl .whatsapp-btn {
+  flex-direction: row-reverse;
+}
 
