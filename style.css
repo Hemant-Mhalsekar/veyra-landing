@@ -1827,3 +1827,54 @@ body.rtl .whatsapp-btn {
   flex-direction: row-reverse;
 }
 
+
+/* ===== Form Validation UI ===== */
+.input-error {
+  border: 1.5px solid #ff4d4d !important;
+  outline: none;
+}
+
+.field-error {
+  margin-top: 8px;
+  font-size: 0.85rem;
+  color: #ff4d4d;
+  line-height: 1.2;
+}
+
+/* ✅ Phone group error message should go BELOW */
+.phone-group {
+  display: flex;
+  flex-wrap: wrap; /* 🔥 allows next line */
+  gap: 12px;
+}
+
+.phone-group .field-error {
+  flex-basis: 100%;   /* 🔥 full width on next line */
+  width: 100%;
+  margin-top: 6px;
+}
+
+/* ✅ Email form error message should go BELOW */
+.email-form,
+.email-form-modal {
+  display: flex;
+  flex-wrap: wrap; /* 🔥 allows error to go next line */
+  gap: 12px;
+}
+
+.email-form .field-error,
+.email-form-modal .field-error {
+  flex-basis: 100%; /* 🔥 full width line */
+  width: 100%;
+  margin-top: 6px;
+  text-align: left;
+}
+
+/* ✅ Center error text under email form */
+.email-form .field-error,
+.email-form-modal .field-error {
+  width: 100%;
+  flex-basis: 100%;
+  margin-top: 8px;
+  text-align: center;   /* ✅ center text */
+}

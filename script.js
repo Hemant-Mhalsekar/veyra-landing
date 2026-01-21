@@ -4,6 +4,10 @@
 const emailWaitlistSection = document.getElementById("email-waitlist");
 const emailInput = document.getElementById("emailWaitlistInput");
 
+const pageEmailInput = document.getElementById("emailWaitlistInput");
+const modalEmailInput = document.getElementById("modalEmailInput");
+
+
 /* ======================================================
    MODAL HANDLER (SHARED)
 ====================================================== */
@@ -65,9 +69,12 @@ if (earlyAccessScrollBtn) {
 /* ======================================================
    WHATSAPP MODAL (UNCHANGED)
 ====================================================== */
+const whatsappForm = document.querySelector(".whatsapp-form");
 const openWhatsappBtn = document.getElementById("openWhatsappForm");
 const whatsappModal = document.getElementById("whatsappModal");
+const waitlistModal = document.getElementById("waitlistModal"); // ✅ ADD THIS
 const closeWhatsappBtn = document.getElementById("closeWhatsappForm");
+
 
 if (openWhatsappBtn && whatsappModal && closeWhatsappBtn) {
   openWhatsappBtn.addEventListener("click", () => {
@@ -168,14 +175,17 @@ if (selector && selectedCountry && dropdown) {
     filterCountries("");
   });
 
-  countryItems.forEach(item => {
-    item.addEventListener("click", () => {
-      const label = item.getAttribute("data-label") || item.textContent.trim();
-      selectedCountry.textContent = label;
-      selectedCountry.dataset.code = item.dataset.code;
-      dropdown.classList.remove("active");
-    });
+countryItems.forEach(item => {
+  item.addEventListener("click", () => {
+    const label = item.getAttribute("data-label") || item.textContent.trim();
+    selectedCountry.textContent = label;
+    selectedCountry.dataset.code = item.dataset.code;
+    dropdown.classList.remove("active");
+
+    validateWhatsappPhone(); // ✅ re-check phone format
   });
+});
+
 
   searchInput && searchInput.addEventListener("input", (e) => {
     filterCountries(e.target.value.toLowerCase());
@@ -193,15 +203,6 @@ if (selector && selectedCountry && dropdown) {
     if (!selector.contains(e.target)) dropdown.classList.remove("active");
   });
 }
-
-/* ======================================================
-   PHONE INPUT – NUMBERS ONLY (UNCHANGED)
-====================================================== */
-const phoneInput = document.querySelector(".phone-input");
-
-phoneInput && phoneInput.addEventListener("input", () => {
-  phoneInput.value = phoneInput.value.replace(/\D/g, "");
-});
 
 /* ======================================================
    SUCCESS / ERROR DIALOG HELPERS
@@ -232,87 +233,283 @@ function showError() {
 }
 
 /* ======================================================
-   WHATSAPP FORM SUBMIT (SAFE GUARDED)
+   HELPERS: ERROR UI
 ====================================================== */
-const whatsappForm = document.querySelector(".whatsapp-form");
+function showFieldError(inputEl, message) {
+  if (!inputEl) return;
 
+  inputEl.classList.add("input-error");
+
+  // ✅ Choose correct container where error should appear
+  const container =
+    inputEl.classList.contains("phone-input")
+      ? inputEl.closest(".phone-group") // phone error below phone block
+      : inputEl.closest(".email-form") || inputEl.closest(".email-form-modal") // email error below form
+      || inputEl.parentElement;
+
+  if (!container) return;
+
+  let err = container.querySelector(".field-error");
+  if (!err) {
+    err = document.createElement("div");
+    err.className = "field-error";
+    container.appendChild(err);
+  }
+
+  err.textContent = message;
+}
+
+function clearFieldError(inputEl) {
+  if (!inputEl) return;
+
+  inputEl.classList.remove("input-error");
+
+  const container =
+    inputEl.classList.contains("phone-input")
+      ? inputEl.closest(".phone-group")
+      : inputEl.closest(".email-form") || inputEl.closest(".email-form-modal")
+      || inputEl.parentElement;
+
+  if (!container) return;
+
+  const err = container.querySelector(".field-error");
+  if (err) err.remove();
+}
+
+
+/* ======================================================
+   VALIDATION RULES
+====================================================== */
+
+// ✅ Email Validation
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.trim());
+}
+
+// ✅ Phone Rules by country code
+function getPhoneRule(countryCode) {
+  if (countryCode === "+965") return { min: 8, max: 8, msgKey: "kwPhone" };
+  if (countryCode === "+91") return { min: 10, max: 10, msgKey: "indiaPhone" };
+  if (countryCode === "+971") return { min: 9, max: 9, msgKey: "uaePhone" };
+
+  return { min: 7, max: 15, msgKey: "phoneGeneric" };
+}
+
+
+/* ======================================================
+   PHONE INPUT – NUMBERS ONLY (REAL-TIME)
+====================================================== */
+const phoneInput = document.querySelector(".phone-input");
+if (phoneInput) {
+  phoneInput.addEventListener("input", () => {
+    phoneInput.value = phoneInput.value.replace(/\D/g, "");
+  });
+}
+
+/* ======================================================
+   REAL-TIME VALIDATION FUNCTIONS
+====================================================== */
+
+// ✅ WhatsApp Name
+function validateWhatsappName() {
+  if (!whatsappForm) return true;
+
+  const t = errorTexts[currentLang];
+  const nameInput = whatsappForm.querySelector(".input-field");
+  if (!nameInput) return true;
+
+  const name = nameInput.value.trim();
+
+  if (!name) {
+    showFieldError(nameInput, t.nameRequired);
+    return false;
+  }
+
+  if (name.length < 2) {
+    showFieldError(nameInput, t.nameShort);
+    return false;
+  }
+
+  clearFieldError(nameInput);
+  return true;
+}
+
+
+// ✅ WhatsApp Phone
+function validateWhatsappPhone() {
+  if (!phoneInput) return true;
+
+  const t = errorTexts[currentLang];
+  const phone = phoneInput.value.trim();
+  const countryCode = selectedCountry?.dataset.code || "+965";
+  const rule = getPhoneRule(countryCode);
+
+  if (!phone) {
+    showFieldError(phoneInput, t.phoneRequired);
+    return false;
+  }
+
+  if (!/^\d+$/.test(phone)) {
+    showFieldError(phoneInput, t.phoneDigitsOnly);
+    return false;
+  }
+
+  if (phone.length < rule.min || phone.length > rule.max) {
+    showFieldError(phoneInput, t[rule.msgKey]);
+    return false;
+  }
+
+  clearFieldError(phoneInput);
+  return true;
+}
+
+
+// ✅ Email Validation (works for both page + modal)
+function validateEmailInput(inputEl) {
+  if (!inputEl) return true;
+
+  const t = errorTexts[currentLang];
+  const email = inputEl.value.trim();
+
+  if (!email) {
+    showFieldError(inputEl, t.emailRequired);
+    return false;
+  }
+
+  if (!isValidEmail(email)) {
+    showFieldError(inputEl, t.emailInvalid);
+    return false;
+  }
+
+  clearFieldError(inputEl);
+  return true;
+}
+
+
+/* ======================================================
+   REAL-TIME EMAIL VALIDATION (PAGE + MODAL)
+====================================================== */
+function attachEmailRealtimeValidation(inputEl) {
+  if (!inputEl) return;
+
+  inputEl.addEventListener("input", () => {
+    const t = errorTexts[currentLang];
+    const v = inputEl.value.trim();
+
+    if (!v) {
+      clearFieldError(inputEl);
+      return;
+    }
+
+    if (!isValidEmail(v)) {
+      showFieldError(inputEl, t.emailInvalid);
+    } else {
+      clearFieldError(inputEl);
+    }
+  });
+
+  inputEl.addEventListener("blur", () => {
+    const t = errorTexts[currentLang];
+    const v = inputEl.value.trim();
+
+    if (v && !isValidEmail(v)) {
+      showFieldError(inputEl, t.emailInvalid);
+    }
+  });
+}
+
+attachEmailRealtimeValidation(pageEmailInput);
+attachEmailRealtimeValidation(modalEmailInput);
+
+/* ======================================================
+   REAL-TIME WHATSAPP VALIDATION
+====================================================== */
 if (whatsappForm) {
-  whatsappForm.addEventListener("submit", async (e) => {
+  const nameInput = whatsappForm.querySelector(".input-field"); // name field
+  if (nameInput) {
+    nameInput.addEventListener("input", validateWhatsappName);
+    nameInput.addEventListener("blur", validateWhatsappName);
+  }
+}
+
+if (phoneInput) {
+  phoneInput.addEventListener("input", validateWhatsappPhone);
+  phoneInput.addEventListener("blur", validateWhatsappPhone);
+}
+
+/* ======================================================
+   API URL (YOUR EXISTING)
+====================================================== */
+const API_URL =
+  "https://script.google.com/macros/s/AKfycbxamsuAn-GftmJxzgYXwVhrId6AG4gqcrVM-91Yc8bw6piR3dhMPXGiuZHGEI5zAXRA/exec";
+
+/* ======================================================
+   WHATSAPP FORM SUBMIT (OLD WORKING + VALIDATION ✅)
+====================================================== */
+if (whatsappForm) {
+  whatsappForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    // [SAFE GUARD]
-    const nameInput = whatsappForm.querySelector(".input-field");
+    const nameInput = whatsappForm.querySelector(".input-field"); // name input
     const name = nameInput ? nameInput.value.trim() : "";
     const phone = phoneInput ? phoneInput.value.trim() : "";
     const countryCode = selectedCountry?.dataset.code || "+965";
 
-    if (!name || !phone) return;
+    // ✅ Validate before sending
+    const okName = validateWhatsappName();
+    const okPhone = validateWhatsappPhone();
+    if (!okName || !okPhone) return;
 
     try {
-      const response = await fetch(
-        "https://script.google.com/macros/s/AKfycbxamsuAn-GftmJxzgYXwVhrId6AG4gqcrVM-91Yc8bw6piR3dhMPXGiuZHGEI5zAXRA/exec",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name, phone: countryCode + phone })
-        }
-      );
+      fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        mode: "no-cors",
+        body: JSON.stringify({ name, phone: countryCode + phone }),
+      });
 
-      const result = await response.json();
-
-      if (result.success) {
-        showSuccess();
-        toggleModal(whatsappModal, false);
-        whatsappForm.reset();
-      } else {
-        showError();
-        console.error("WhatsApp Lead Error:", result.message || result.error);
-      }
+      showSuccess();
+      toggleModal(whatsappModal, false);
+      whatsappForm.reset();
     } catch (err) {
       showError();
-      console.error("WhatsApp Network Error:", err);
+      console.error("WhatsApp Error:", err);
     }
   });
 }
 
 /* ======================================================
-   EMAIL WAITLIST SUBMIT (PAGE + MODAL)
+   EMAIL WAITLIST SUBMIT (PAGE + MODAL) + VALIDATION ✅
 ====================================================== */
-async function submitEmail(email) {
-  const response = await fetch(
-    "https://script.google.com/macros/s/AKfycbxamsuAn-GftmJxzgYXwVhrId6AG4gqcrVM-91Yc8bw6piR3dhMPXGiuZHGEI5zAXRA/exec",
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email })
-    }
-  );
-
-  return await response.json();
+function submitEmail(email) {
+  return fetch(API_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    mode: "no-cors",
+    body: JSON.stringify({ email }),
+  });
 }
 
 document.querySelectorAll(".email-form, .email-form-modal").forEach((form) => {
-  form.addEventListener("submit", async (e) => {
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
 
     const input = form.querySelector("input[type='email']");
-    const email = input.value.trim();
-    if (!email) return;
+    if (!input) return;
+
+    // ✅ Validate before sending
+    const okEmail = validateEmailInput(input);
+    if (!okEmail) return;
 
     try {
-      const result = await submitEmail(email);
+      submitEmail(input.value.trim());
 
-      if (result.success) {
-        showSuccess();
-        toggleModal(waitlistModal, false);
-        input.value = "";
-      } else {
-        showError();
-        console.error("Email Lead Error:", result.message || result.error);
-      }
+      showSuccess();
+      toggleModal(waitlistModal, false);
+      input.value = "";
     } catch (err) {
       showError();
-      console.error("Email Network Error:", err);
+      console.error("Email Error:", err);
     }
   });
 });
@@ -339,6 +536,37 @@ function launchConfetti() {
 /* ======================================================
    LANGUAGE TOGGLE – FULL SITE (100% COVERAGE, STATELESS)
 ====================================================== */
+let currentLang = "en";
+
+
+  const errorTexts = {
+  en: {
+    nameRequired: "Please enter your name.",
+    nameShort: "Name must be at least 2 characters.",
+    phoneRequired: "Please enter your phone number.",
+    phoneDigitsOnly: "Phone must contain only digits.",
+    kwPhone: "Kuwait numbers must be exactly 8 digits.",
+    indiaPhone: "India numbers must be exactly 10 digits.",
+    uaePhone: "UAE numbers must be exactly 9 digits.",
+    phoneGeneric: "Phone number must be 7 to 15 digits.",
+    emailRequired: "Please enter your email.",
+    emailInvalid: "Please enter a valid email address."
+  },
+
+  ar: {
+    nameRequired: "يرجى إدخال الاسم.",
+    nameShort: "يجب أن يحتوي الاسم على حرفين على الأقل.",
+    phoneRequired: "يرجى إدخال رقم الهاتف.",
+    phoneDigitsOnly: "رقم الهاتف يجب أن يحتوي على أرقام فقط.",
+    kwPhone: "رقم الكويت يجب أن يكون 8 أرقام.",
+    indiaPhone: "رقم الهند يجب أن يكون 10 أرقام.",
+    uaePhone: "رقم الإمارات يجب أن يكون 9 أرقام.",
+    phoneGeneric: "رقم الهاتف يجب أن يكون بين 7 و 15 رقمًا.",
+    emailRequired: "يرجى إدخال البريد الإلكتروني.",
+    emailInvalid: "يرجى إدخال بريد إلكتروني صحيح."
+  }
+};
+
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -447,11 +675,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
+
   const $ = s => document.querySelector(s);
   const $$ = s => document.querySelectorAll(s);
   const langToggle = $("#langToggle");
 
-  let currentLang = "en";
 
   function setLanguage(lang) {
     const t = translations[lang];
@@ -566,3 +794,4 @@ setLanguage(initialLang);
   }, 380);
   });
 });
+
