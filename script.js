@@ -237,7 +237,7 @@ function showError() {
 const whatsappForm = document.querySelector(".whatsapp-form");
 
 if (whatsappForm) {
-  whatsappForm.addEventListener("submit", (e) => {
+  whatsappForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     // [SAFE GUARD]
@@ -249,21 +249,28 @@ if (whatsappForm) {
     if (!name || !phone) return;
 
     try {
-      fetch(
+      const response = await fetch(
         "https://script.google.com/macros/s/AKfycbxamsuAn-GftmJxzgYXwVhrId6AG4gqcrVM-91Yc8bw6piR3dhMPXGiuZHGEI5zAXRA/exec",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          mode: "no-cors",
           body: JSON.stringify({ name, phone: countryCode + phone })
         }
       );
 
-      showSuccess();
-      toggleModal(whatsappModal, false);
-      whatsappForm.reset();
-    } catch {
+      const result = await response.json();
+
+      if (result.success) {
+        showSuccess();
+        toggleModal(whatsappModal, false);
+        whatsappForm.reset();
+      } else {
+        showError();
+        console.error("WhatsApp Lead Error:", result.message || result.error);
+      }
+    } catch (err) {
       showError();
+      console.error("WhatsApp Network Error:", err);
     }
   });
 }
@@ -271,21 +278,21 @@ if (whatsappForm) {
 /* ======================================================
    EMAIL WAITLIST SUBMIT (PAGE + MODAL)
 ====================================================== */
-// [ADDED]
-function submitEmail(email) {
-  return fetch(
+async function submitEmail(email) {
+  const response = await fetch(
     "https://script.google.com/macros/s/AKfycbxamsuAn-GftmJxzgYXwVhrId6AG4gqcrVM-91Yc8bw6piR3dhMPXGiuZHGEI5zAXRA/exec",
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      mode: "no-cors",
       body: JSON.stringify({ email })
     }
   );
+
+  return await response.json();
 }
 
-document.querySelectorAll(".email-form, .email-form-modal").forEach(form => {
-  form.addEventListener("submit", (e) => {
+document.querySelectorAll(".email-form, .email-form-modal").forEach((form) => {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const input = form.querySelector("input[type='email']");
@@ -293,15 +300,23 @@ document.querySelectorAll(".email-form, .email-form-modal").forEach(form => {
     if (!email) return;
 
     try {
-      submitEmail(email);
-      showSuccess();
-      toggleModal(waitlistModal, false);
-      input.value = "";
-    } catch {
+      const result = await submitEmail(email);
+
+      if (result.success) {
+        showSuccess();
+        toggleModal(waitlistModal, false);
+        input.value = "";
+      } else {
+        showError();
+        console.error("Email Lead Error:", result.message || result.error);
+      }
+    } catch (err) {
       showError();
+      console.error("Email Network Error:", err);
     }
   });
 });
+
 
 /* ======================================================
    CONFETTI (UNCHANGED)
