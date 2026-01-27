@@ -1899,3 +1899,24 @@ body.rtl .whatsapp-btn {
 #countryDropdown.active ~ .selected-country::after {
   transform: translateY(-50%) rotate(180deg);
 }
+
+.hero-title span {
+  font-weight: 700;
+}
+
+.cta-subtext {
+  margin-top: 10px;
+  font-size: 13px;
+  color: #d6c06f;
+  opacity: 0.9;
+  font-weight: 500;
+}
+
+
+.cta-subtext {
+  margin-top: 10px;
+  font-size: 13px;
+  color: #f6e6a1;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
