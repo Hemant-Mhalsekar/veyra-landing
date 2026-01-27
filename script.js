@@ -632,6 +632,10 @@ document.addEventListener("DOMContentLoaded", () => {
       timerRunning: "Early access closes in",
       timerClosed: "Early access is now closed",
 
+      waitlistTitle: "Get 10% off your first order",
+      waitlistDesc: "Early access is limited to the first batch.",  
+
+
     },
 
     ar: {
@@ -688,7 +692,8 @@ document.addEventListener("DOMContentLoaded", () => {
       timerRunning: "ينتهي الوصول المبكر خلال",
       timerClosed: "تم إغلاق الوصول المبكر",
 
-    
+      waitlistTitle: "احصل على خصم 10٪ على أول طلب",
+      waitlistDesc: "الوصول المبكر محدود بالدفعة الأولى.",
     }
   };
 
@@ -778,6 +783,15 @@ document.addEventListener("DOMContentLoaded", () => {
   if (timerLabel && timerDigits) {
   timerLabel.textContent = t.timerRunning;
   }
+
+
+  // EMAIL POPUP (WAITLIST MODAL)
+    const modalTitle = document.querySelector("#waitlistModal h2");
+    const modalDesc = document.querySelector("#waitlistModal p");
+
+    if (modalTitle) modalTitle.textContent = t.waitlistTitle;
+    if (modalDesc) modalDesc.textContent = t.waitlistDesc;
+
 
 
   // RTL / LANGUAGE
@@ -917,54 +931,31 @@ setLanguage(initialLang);
   });
 
 /* ======================================================
-   DELAYED EMAIL POPUP (META ADS OPTIMIZED)
+   EMAIL POPUP – SHOW ON EVERY PAGE LOAD (SAFE)
 ====================================================== */
 
-const POPUP_DELAY = 5000; // 5 seconds
-const POPUP_COOLDOWN = 30 * 60 * 1000; // 30 minutes
-const POPUP_KEY = "veyraEmailPopupLastClosed";
-
-function shouldShowEmailPopup() {
-  const lastClosed = localStorage.getItem(POPUP_KEY);
-  if (!lastClosed) return true;
-
-  return Date.now() - parseInt(lastClosed, 10) > POPUP_COOLDOWN;
-}
-
-function showEmailPopup() {
-  if (!shouldShowEmailPopup()) return;
-  if (!waitlistModal) return;
+(function () {
+  const EMAIL_POPUP_DELAY_MS = 5000;
+  const modal = document.getElementById("waitlistModal");
+  if (!modal) return;
 
   setTimeout(() => {
-    toggleModal(waitlistModal, true);
-  }, POPUP_DELAY);
-}
+    toggleModal(modal, true);
+  }, EMAIL_POPUP_DELAY_MS);
 
-function markEmailPopupClosed() {
-  localStorage.setItem(POPUP_KEY, Date.now());
-}
+  const closeBtn = document.getElementById("closeWaitlistModal");
+  if (closeBtn) {
+    closeBtn.addEventListener("click", () => {
+      toggleModal(modal, false);
+    });
+  }
 
-/* Track close button */
-const closeWaitlistBtn = document.getElementById("closeWaitlistModal");
-if (closeWaitlistBtn) {
-  closeWaitlistBtn.addEventListener("click", () => {
-    markEmailPopupClosed();
-    toggleModal(waitlistModal, false);
-  });
-}
-
-/* Track clicking outside modal */
-if (waitlistModal) {
-  waitlistModal.addEventListener("click", (e) => {
-    if (e.target === waitlistModal) {
-      markEmailPopupClosed();
-      toggleModal(waitlistModal, false);
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      toggleModal(modal, false);
     }
   });
-}
+})();
 
-/* Fire popup */
-showEmailPopup();
-
-});
+})();
 
