@@ -627,7 +627,11 @@ document.addEventListener("DOMContentLoaded", () => {
       formNote: "We’ll only message you for launch updates.",
 
       footerTop: ["Launching soon in Kuwait", "Fulfilled locally"],
-      footerLinks: ["Privacy Policy", "Terms of Service"]
+      footerLinks: ["Privacy Policy", "Terms of Service"],
+
+      timerRunning: "Early access closes in",
+      timerClosed: "Early access is now closed",
+
     },
 
     ar: {
@@ -679,7 +683,12 @@ document.addEventListener("DOMContentLoaded", () => {
       formNote: "سنراسلك فقط بتحديثات الإطلاق.",
 
       footerTop: ["الإطلاق قريبًا في الكويت", "التجهيز محليًا"],
-      footerLinks: ["سياسة الخصوصية", "شروط الاستخدام"]
+      footerLinks: ["سياسة الخصوصية", "شروط الاستخدام"],
+
+      timerRunning: "ينتهي الوصول المبكر خلال",
+      timerClosed: "تم إغلاق الوصول المبكر",
+
+    
     }
   };
 
@@ -766,6 +775,11 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".footer-bottom a")
     .forEach((el, i) => el.textContent = t.footerLinks[i]);
 
+  if (timerLabel && timerDigits) {
+  timerLabel.textContent = t.timerRunning;
+  }
+
+
   // RTL / LANGUAGE
   document.body.classList.toggle("rtl", lang === "ar");
   document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
@@ -775,7 +789,78 @@ document.addEventListener("DOMContentLoaded", () => {
     lang === "ar" ? "English" : "العربية";
 
   currentLang = lang;
+  }
+
+
+/* ======================================================
+   EARLY ACCESS COUNTDOWN (48 HOURS, PERSISTENT)
+====================================================== */
+
+const TIMER_DURATION = 48 * 60 * 60 * 1000; // 48 hours
+const TIMER_KEY = "veyraEarlyAccessEnd";
+
+const timerEl = document.getElementById("launchTimer");
+const timerLabel = document.getElementById("timerLabel");
+const timerDigits = document.getElementById("timerDigits");
+
+function initEarlyAccessTimer() {
+  if (!timerEl || !timerDigits || !timerLabel) return;
+
+  let endTime = localStorage.getItem(TIMER_KEY);
+
+  if (!endTime) {
+    endTime = Date.now() + TIMER_DURATION;
+    localStorage.setItem(TIMER_KEY, endTime);
+  } else {
+    endTime = parseInt(endTime, 10);
+  }
+
+  function updateTimer() {
+    const now = Date.now();
+    const diff = endTime - now;
+
+    if (diff <= 0) {
+      handleTimerEnd();
+      return;
+    }
+
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+
+    timerDigits.textContent =
+      `${String(hours).padStart(2, "0")} : ` +
+      `${String(minutes).padStart(2, "0")} : ` +
+      `${String(seconds).padStart(2, "0")}`;
+  }
+
+  function handleTimerEnd() {
+    timerEl.classList.add("closed");
+
+    timerDigits.textContent =
+      currentLang === "ar"
+        ? "تم إغلاق الوصول المبكر"
+        : "Early access is now closed";
+
+    timerLabel.textContent = "";
+
+    // Disable Hero CTA
+    const heroBtn = document.getElementById("waitlistBtn");
+    if (heroBtn) heroBtn.disabled = true;
+
+    // Disable WhatsApp CTA
+    document.querySelectorAll("#openWhatsappForm").forEach(btn => {
+      btn.disabled = true;
+    });
+
+    clearInterval(timerInterval);
+  }
+
+  updateTimer();
+  const timerInterval = setInterval(updateTimer, 1000);
 }
+
+initEarlyAccessTimer();
 
 
   /* ======================================

@@ -1920,3 +1920,50 @@ body.rtl .whatsapp-btn {
   font-weight: 600;
   letter-spacing: 0.3px;
 }
+
+
+/* ===============================
+   EARLY ACCESS TIMER
+================================ */
+
+.launch-timer {
+  text-align: center;
+  margin-bottom: 22px;
+}
+
+.timer-label {
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #cfe3dd;
+  opacity: 0.85;
+  margin-bottom: 6px;
+}
+
+.timer-digits {
+  font-size: 32px;
+  font-weight: 700;
+  color: #d6c06f;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Mobile optimization */
+@media (max-width: 600px) {
+  .timer-digits {
+    font-size: 26px;
+  }
+}
+
+/* Closed state */
+.launch-timer.closed .timer-digits {
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffb3b3;
+}
+
+/* Disabled CTAs */
+button[disabled] {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
