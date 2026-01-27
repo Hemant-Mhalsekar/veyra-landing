@@ -550,7 +550,10 @@ let currentLang = "en";
     uaePhone: "UAE numbers must be exactly 9 digits.",
     phoneGeneric: "Phone number must be 7 to 15 digits.",
     emailRequired: "Please enter your email.",
-    emailInvalid: "Please enter a valid email address."
+    emailInvalid: "Please enter a valid email address.",
+    cta: "Get 10% Discount on Early Access",
+    ctaSubtext: "Limited first batch. Early access closes soon."
+
   },
 
   ar: {
@@ -563,7 +566,10 @@ let currentLang = "en";
     uaePhone: "رقم الإمارات يجب أن يكون 9 أرقام.",
     phoneGeneric: "رقم الهاتف يجب أن يكون بين 7 و 15 رقمًا.",
     emailRequired: "يرجى إدخال البريد الإلكتروني.",
-    emailInvalid: "يرجى إدخال بريد إلكتروني صحيح."
+    emailInvalid: "يرجى إدخال بريد إلكتروني صحيح.",
+    cta: "احصل على خصم 10٪ مع الوصول المبكر",
+    ctaSubtext: "الكمية الأولى محدودة. ينتهي الوصول المبكر قريبًا."
+
   }
 };
 
@@ -577,7 +583,8 @@ document.addEventListener("DOMContentLoaded", () => {
       heroTitle: "Pure, crispy fruit —<br>crafted for performance<br><span class='gold-underline'>and everyday living.</span>",
       heroDesc: "No sugar. No preservatives. Just real freeze-dried fruit that fits your gym, office, and family lifestyle.",
       heroPoints: ["100% Real Fruit", "No Added Sugar", "No Preservatives"],
-      cta: "Get 10% Early Access",
+      cta: "Get 10% Discount on Early Access",
+      ctaSubtext: "Limited first batch. Early access closes soon.",
 
       waitlistTitle: "Join the Waiting List",
       waitlistDesc: "Be the first to know when VEYRA launches.",
@@ -628,8 +635,9 @@ document.addEventListener("DOMContentLoaded", () => {
       heroTitle: "فاكهة نقية ومقرمشة —<br>مصممة للأداء<br><span class='gold-underline'>والحياة اليومية.</span>",
       heroDesc: "بدون سكر. بدون مواد حافظة. فقط فاكهة حقيقية مجففة بالتجميد تناسب الجيم، المكتب، والحياة العائلية.",
       heroPoints: ["فاكهة حقيقية 100%", "بدون سكر مضاف", "بدون مواد حافظة"],
-      cta: "احصل على خصم 10٪ مبكرًا",
-
+      emailInvalid: "يرجى إدخال بريد إلكتروني صحيح.",
+      cta: "احصل على خصم 10٪ مع الوصول المبكر",
+      ctaSubtext: "الكمية الأولى محدودة. ينتهي الوصول المبكر قريبًا.",
       waitlistTitle: "انضم إلى قائمة الانتظار",
       waitlistDesc: "كن أول من يعرف عند إطلاق VEYRA.",
       emailPlaceholder: "أدخل بريدك الإلكتروني",
@@ -682,64 +690,93 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   function setLanguage(lang) {
-    const t = translations[lang];
+  const t = translations[lang];
 
-    $(".hero-eyebrow").textContent = t.heroEyebrow;
-    $(".hero-title").innerHTML = t.heroTitle;
-    $(".hero-content p").textContent = t.heroDesc;
+  // HERO
+  document.querySelector(".hero-eyebrow").textContent = t.heroEyebrow;
+  document.querySelector(".hero-title").innerHTML = t.heroTitle;
+  document.querySelector(".hero-content p").textContent = t.heroDesc;
 
-    $$(".hero-points li").forEach((el, i) => el.textContent = t.heroPoints[i]);
-    document.querySelectorAll(".cta-text").forEach(el => {
-      el.textContent = t.cta;
-    });
-    $(".snack-text h2").innerHTML = t.snackTitle;
-    $(".snack-text p").textContent = t.snackDesc;
-    $(".snack-note").textContent = t.snackNote;
+  document.querySelectorAll(".hero-points li")
+    .forEach((el, i) => el.textContent = t.heroPoints[i]);
 
-    $(".snack-problems h3").textContent = t.problemTitle;
-    $$(".problem-item p").forEach((el, i) => el.innerHTML = t.problems[i]);
-    $(".snack-footer").textContent = t.problemFooter;
+    // HERO CTA
+    const heroCta = document.getElementById("waitlistBtn");
+    if (heroCta) heroCta.textContent = t.cta;
 
-    $$(".use-card").forEach((card, i) => {
-      card.querySelector("h4").textContent = t.useCases[i].title;
-      card.querySelector("p").textContent = t.useCases[i].desc;
-    });
+    // WHATSAPP CTA (GREEN BUTTON)
+    document.querySelectorAll(".cta-text")
+      .forEach(el => el.textContent = t.cta);
 
-    $$(".fruit-side span").forEach((el, i) => el.textContent = t.transformLabels[i]);
-    $(".transform-text").innerHTML = t.transformText;
-
-    $(".early-container h3").textContent = t.earlyTitle;
-    $$(".early-benefits li").forEach((el, i) => el.textContent = t.earlyBenefits[i]);
-    $(".email-text").textContent = t.preferEmail;
-    $(".trust-text").textContent = t.trustText;
-    $("#emailWaitlistInput").placeholder = t.emailPlaceholder;
-
-    $("#whatsappModal h2").textContent = t.whatsappTitle;
-    $("#whatsappModal p").textContent = t.whatsappDesc;
-    $(".whatsapp-form .input-field").placeholder = t.namePlaceholder;
-    $(".phone-input").placeholder = t.phonePlaceholder;
-    $(".form-note").textContent = t.formNote;
-    // WhatsApp modal submit button
-    const whatsappSubmitBtn = document.querySelector(".whatsapp-form .submit-btn");
-    if (whatsappSubmitBtn) {
-      whatsappSubmitBtn.textContent = t.cta;
-    }
+    // CTA SUBTEXT
+    const ctaSubtext = document.querySelector(".cta-subtext");
+    if (ctaSubtext) ctaSubtext.textContent = t.ctaSubtext;
 
 
-    document.querySelector(".email-submit-btn") && (document.querySelector(".email-submit-btn").textContent = t.cta);
+  // SNACK SECTION
+  document.querySelector(".snack-text h2").innerHTML = t.snackTitle;
+  document.querySelector(".snack-text p").textContent = t.snackDesc;
+  document.querySelector(".snack-note").textContent = t.snackNote;
 
-    const footerSpans = $$(".footer-top span");
-    footerSpans[0].textContent = t.footerTop[0];
-    footerSpans[2].textContent = t.footerTop[1];
-    $$(".footer-bottom a").forEach((el, i) => el.textContent = t.footerLinks[i]);
+  document.querySelector(".snack-problems h3").textContent = t.problemTitle;
+  document.querySelectorAll(".problem-item p")
+    .forEach((el, i) => el.innerHTML = t.problems[i]);
 
-    document.body.classList.toggle("rtl", lang === "ar");
-    document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
-    document.documentElement.lang = lang;
-    langToggle.textContent = lang === "ar" ? "English" : "العربية";
+  document.querySelector(".snack-footer").textContent = t.problemFooter;
 
-    currentLang = lang;
-  }
+  // USE CASES
+  document.querySelectorAll(".use-card").forEach((card, i) => {
+    card.querySelector("h4").textContent = t.useCases[i].title;
+    card.querySelector("p").textContent = t.useCases[i].desc;
+  });
+
+  // TRANSFORMATION
+  document.querySelector(".transform-text").innerHTML = t.transformText;
+
+  // EARLY ACCESS
+  document.querySelector(".early-container h3").textContent = t.earlyTitle;
+  document.querySelectorAll(".early-benefits li")
+    .forEach((el, i) => el.textContent = t.earlyBenefits[i]);
+
+  document.querySelector(".email-text").textContent = t.preferEmail;
+  document.querySelector(".trust-text").textContent = t.trustText;
+
+  const emailInput = document.getElementById("emailWaitlistInput");
+  if (emailInput) emailInput.placeholder = t.emailPlaceholder;
+
+  // WHATSAPP MODAL
+  document.querySelector("#whatsappModal h2").textContent = t.whatsappTitle;
+  document.querySelector("#whatsappModal p").textContent = t.whatsappDesc;
+  document.querySelector(".whatsapp-form .input-field").placeholder = t.namePlaceholder;
+  document.querySelector(".phone-input").placeholder = t.phonePlaceholder;
+  document.querySelector(".form-note").textContent = t.formNote;
+
+  const whatsappSubmitBtn = document.querySelector(".whatsapp-form .submit-btn");
+  if (whatsappSubmitBtn) whatsappSubmitBtn.textContent = t.cta;
+
+  // EMAIL SUBMIT BUTTON
+  document.querySelectorAll(".email-submit-btn")
+    .forEach(btn => btn.textContent = t.cta);
+
+  // FOOTER
+  const footerSpans = document.querySelectorAll(".footer-top span");
+  footerSpans[0].textContent = t.footerTop[0];
+  footerSpans[2].textContent = t.footerTop[1];
+
+  document.querySelectorAll(".footer-bottom a")
+    .forEach((el, i) => el.textContent = t.footerLinks[i]);
+
+  // RTL / LANGUAGE
+  document.body.classList.toggle("rtl", lang === "ar");
+  document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+  document.documentElement.lang = lang;
+
+  document.getElementById("langToggle").textContent =
+    lang === "ar" ? "English" : "العربية";
+
+  currentLang = lang;
+}
+
 
   /* ======================================
    AUTO LANGUAGE DETECTION (NO STORAGE)
