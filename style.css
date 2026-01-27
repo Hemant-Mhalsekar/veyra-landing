@@ -1920,3 +1920,101 @@ body.rtl .whatsapp-btn {
   font-weight: 600;
   letter-spacing: 0.3px;
 }
+
+
+/* ===============================
+   EARLY ACCESS TIMER
+================================ */
+
+.launch-timer {
+  text-align: center;
+  margin-bottom: 22px;
+}
+
+.timer-label {
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #cfe3dd;
+  opacity: 0.85;
+  margin-bottom: 6px;
+}
+
+.timer-digits {
+  font-size: 32px;
+  font-weight: 700;
+  color: #d6c06f;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Mobile optimization */
+@media (max-width: 600px) {
+  .timer-digits {
+    font-size: 26px;
+  }
+}
+
+/* Closed state */
+.launch-timer.closed .timer-digits {
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffb3b3;
+}
+
+/* Disabled CTAs */
+button[disabled] {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+
+/* ===============================
+   MOBILE EMAIL POPUP OPTIMIZATION
+================================ */
+@media (max-width: 600px) {
+  .modal-content {
+    width: 92%;
+    padding: 22px 18px;
+    border-radius: 14px;
+  }
+
+  .modal-content h2 {
+    font-size: 20px;
+    line-height: 1.3;
+  }
+
+  .modal-content p {
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  .email-form-modal input {
+    font-size: 16px; /* prevents iOS zoom */
+    padding: 12px 14px;
+  }
+
+  .email-submit-btn {
+    font-size: 16px;
+    padding: 14px;
+  }
+
+  .close {
+    font-size: 26px;
+  }
+}
+
+
+@media (max-width: 600px) {
+  .launch-timer {
+    margin-bottom: 14px;
+  }
+
+  .timer-label {
+    font-size: 12px;
+  }
+
+  .timer-digits {
+    font-size: 24px;
+  }
+}
