@@ -2018,3 +2018,16 @@ button[disabled] {
     font-size: 24px;
   }
 }
+
+/* ===============================
+   FORCE TIMER TO STAY LTR
+================================ */
+.launch-timer,
+.timer-digits {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+.launch-timer * {
+  direction: ltr;
+}
