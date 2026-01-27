@@ -915,5 +915,56 @@ setLanguage(initialLang);
     });
   }, 380);
   });
+
+/* ======================================================
+   DELAYED EMAIL POPUP (META ADS OPTIMIZED)
+====================================================== */
+
+const POPUP_DELAY = 5000; // 5 seconds
+const POPUP_COOLDOWN = 30 * 60 * 1000; // 30 minutes
+const POPUP_KEY = "veyraEmailPopupLastClosed";
+
+function shouldShowEmailPopup() {
+  const lastClosed = localStorage.getItem(POPUP_KEY);
+  if (!lastClosed) return true;
+
+  return Date.now() - parseInt(lastClosed, 10) > POPUP_COOLDOWN;
+}
+
+function showEmailPopup() {
+  if (!shouldShowEmailPopup()) return;
+  if (!waitlistModal) return;
+
+  setTimeout(() => {
+    toggleModal(waitlistModal, true);
+  }, POPUP_DELAY);
+}
+
+function markEmailPopupClosed() {
+  localStorage.setItem(POPUP_KEY, Date.now());
+}
+
+/* Track close button */
+const closeWaitlistBtn = document.getElementById("closeWaitlistModal");
+if (closeWaitlistBtn) {
+  closeWaitlistBtn.addEventListener("click", () => {
+    markEmailPopupClosed();
+    toggleModal(waitlistModal, false);
+  });
+}
+
+/* Track clicking outside modal */
+if (waitlistModal) {
+  waitlistModal.addEventListener("click", (e) => {
+    if (e.target === waitlistModal) {
+      markEmailPopupClosed();
+      toggleModal(waitlistModal, false);
+    }
+  });
+}
+
+/* Fire popup */
+showEmailPopup();
+
 });
 
