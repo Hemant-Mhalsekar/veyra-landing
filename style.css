@@ -2239,3 +2239,47 @@ body.rtl .modal-content h2 {
 }
 
 
+.selected-country {
+  min-width: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.selected-country {
+  color: white;
+  font-weight: 500;
+}
+
+
+.phone-group {
+  display: flex;
+  gap: 12px;
+}
+
+.country-selector {
+  min-width: 110px;
+}
+
+.selected-country {
+  background: #e5e5e5;
+  border-radius: 12px;
+  padding: 14px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #111;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+
+.country-selector {
+  flex-shrink: 0;
+}
+
+
+.selected-country {
+  color: #111 !important;
+  min-width: 110px;
+}

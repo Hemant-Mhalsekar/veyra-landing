@@ -327,17 +327,38 @@ src="https://www.facebook.com/tr?id=1205290478428348&ev=PageView&noscript=1"
     </ul>
 
 
-    <form class="email-form-modal">
-      <input
-        type="email"
-        id="modalEmailInput"
-        placeholder="Enter your email"
-        required
-      />
+    <form class="waitlist-phone-form">
+
+      <div class="phone-group">
+        <div class="country-selector" id="countrySelectorModal">
+          <div class="selected-country" id="selectedCountryModal" data-code="+965">
+            KW +965
+          </div>
+
+          <div class="country-dropdown" id="countryDropdownModal">
+            <input type="text" class="country-search" placeholder="Search country">
+            <ul class="country-list">
+              <li data-code="+965">Kuwait (+965)</li>
+              <li data-code="+91">India (+91)</li>
+              <li data-code="+971">UAE (+971)</li>
+            </ul>
+          </div>
+        </div>
+
+        <input
+          type="tel"
+          class="phone-input"
+          id="waitlistPhoneInput"
+          placeholder="Phone number"
+        />
+      </div>
+
       <button type="submit" class="email-submit-btn">
-        Get 10% Early Access
+        Get 10% Discount on Early Access
       </button>
+
     </form>
+
   </div>
 </div>
 
@@ -383,7 +404,7 @@ src="https://www.facebook.com/tr?id=1205290478428348&ev=PageView&noscript=1"
         />
       </div>
 
-      <button class="submit-btn">
+      <button type="submit" class="submit-btn">
         Get 10% Early Access
       </button>
 
