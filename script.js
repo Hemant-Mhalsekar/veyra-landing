@@ -8,6 +8,10 @@ const pageEmailInput = document.getElementById("emailWaitlistInput");
 const modalEmailInput = document.getElementById("modalEmailInput");
 
 
+const waitlistPhoneForm = document.querySelector(".waitlist-phone-form");
+const waitlistPhoneInput = document.getElementById("waitlistPhoneInput");
+
+
 /* ======================================================
    MODAL HANDLER (SHARED)
 ====================================================== */
@@ -204,6 +208,60 @@ countryItems.forEach(item => {
   });
 }
 
+
+/* ======================================================
+   COUNTRY SELECTOR — WAITLIST POPUP
+====================================================== */
+
+const selectorModal = document.getElementById("countrySelectorModal");
+const selectedCountryModalEl = document.getElementById("selectedCountryModal");
+const dropdownModal = document.getElementById("countryDropdownModal");
+
+if (selectorModal && selectedCountryModalEl && dropdownModal) {
+
+  const searchInputModal = dropdownModal.querySelector(".country-search");
+  const countryItemsModal = dropdownModal.querySelectorAll(".country-list li");
+
+  selectedCountryModalEl.addEventListener("click", (e) => {
+    e.stopPropagation();
+    dropdownModal.classList.toggle("active");
+    if (searchInputModal) searchInputModal.value = "";
+    filterCountriesModal("");
+  });
+
+  countryItemsModal.forEach(item => {
+    item.addEventListener("click", () => {
+      const label = item.getAttribute("data-label") || item.textContent.trim();
+
+      selectedCountryModalEl.textContent = label;
+      selectedCountryModalEl.dataset.code = item.dataset.code;
+
+      dropdownModal.classList.remove("active");
+    });
+  });
+
+  if (searchInputModal) {
+    searchInputModal.addEventListener("input", (e) => {
+      filterCountriesModal(e.target.value.toLowerCase());
+    });
+  }
+
+  function filterCountriesModal(query) {
+    countryItemsModal.forEach(item => {
+      item.style.display =
+        item.textContent.toLowerCase().includes(query)
+          ? "block"
+          : "none";
+    });
+  }
+
+  document.addEventListener("click", (e) => {
+    if (!selectorModal.contains(e.target)) {
+      dropdownModal.classList.remove("active");
+    }
+  });
+}
+
 /* ======================================================
    SUCCESS / ERROR DIALOG HELPERS
 ====================================================== */
@@ -296,15 +354,6 @@ function getPhoneRule(countryCode) {
 }
 
 
-/* ======================================================
-   PHONE INPUT – NUMBERS ONLY (REAL-TIME)
-====================================================== */
-const phoneInput = document.querySelector(".phone-input");
-if (phoneInput) {
-  phoneInput.addEventListener("input", () => {
-    phoneInput.value = phoneInput.value.replace(/\D/g, "");
-  });
-}
 
 /* ======================================================
    REAL-TIME VALIDATION FUNCTIONS
@@ -337,31 +386,69 @@ function validateWhatsappName() {
 
 // ✅ WhatsApp Phone
 function validateWhatsappPhone() {
-  if (!phoneInput) return true;
+  if (!whatsappForm) return true;
 
   const t = errorTexts[currentLang];
-  const phone = phoneInput.value.trim();
-  const countryCode = selectedCountry?.dataset.code || "+965";
+
+  const phoneInputLocal = whatsappForm.querySelector(".phone-input");
+  if (!phoneInputLocal) return true;
+
+  const phone = phoneInputLocal.value.trim();
+
+  const countryCode =
+    selectedCountry?.dataset.code ||
+    "+965";
+
   const rule = getPhoneRule(countryCode);
 
   if (!phone) {
-    showFieldError(phoneInput, t.phoneRequired);
+    showFieldError(phoneInputLocal, t.phoneRequired);
     return false;
   }
 
   if (!/^\d+$/.test(phone)) {
-    showFieldError(phoneInput, t.phoneDigitsOnly);
+    showFieldError(phoneInputLocal, t.phoneDigitsOnly);
     return false;
   }
 
   if (phone.length < rule.min || phone.length > rule.max) {
-    showFieldError(phoneInput, t[rule.msgKey]);
+    showFieldError(phoneInputLocal, t[rule.msgKey]);
     return false;
   }
 
-  clearFieldError(phoneInput);
+  clearFieldError(phoneInputLocal);
   return true;
 }
+
+
+function validateWaitlistPhone() {
+  if (!waitlistPhoneInput) return true;
+
+  const t = errorTexts[currentLang];
+  const phone = waitlistPhoneInput.value.trim();
+  const countryCode =
+    selectedCountryModalEl?.dataset.code || "+965";
+  const rule = getPhoneRule(countryCode);
+
+  if (!phone) {
+    showFieldError(waitlistPhoneInput, t.phoneRequired);
+    return false;
+  }
+
+  if (!/^\d+$/.test(phone)) {
+    showFieldError(waitlistPhoneInput, t.phoneDigitsOnly);
+    return false;
+  }
+
+  if (phone.length < rule.min || phone.length > rule.max) {
+    showFieldError(waitlistPhoneInput, t[rule.msgKey]);
+    return false;
+  }
+
+  clearFieldError(waitlistPhoneInput);
+  return true;
+}
+
 
 
 // ✅ Email Validation (works for both page + modal)
@@ -432,10 +519,48 @@ if (whatsappForm) {
   }
 }
 
-if (phoneInput) {
-  phoneInput.addEventListener("input", validateWhatsappPhone);
-  phoneInput.addEventListener("blur", validateWhatsappPhone);
+if (whatsappForm) {
+  const phoneInputLocal = whatsappForm.querySelector(".phone-input");
+
+  if (phoneInputLocal) {
+    phoneInputLocal.addEventListener("input", () => {
+      phoneInputLocal.value = phoneInputLocal.value.replace(/\D/g, "");
+      validateWhatsappPhone();
+    });
+
+    phoneInputLocal.addEventListener("blur", validateWhatsappPhone);
+  }
 }
+
+
+function validatePhoneForInput(inputEl, countryCode) {
+  if (!inputEl) return true;
+
+  const t = errorTexts[currentLang];
+  const phone = inputEl.value.trim();
+  const rule = getPhoneRule(countryCode);
+
+  if (!phone) {
+    showFieldError(inputEl, t.phoneRequired);
+    return false;
+  }
+
+  if (!/^\d+$/.test(phone)) {
+    showFieldError(inputEl, t.phoneDigitsOnly);
+    return false;
+  }
+
+  if (phone.length < rule.min || phone.length > rule.max) {
+    showFieldError(inputEl, t[rule.msgKey]);
+    return false;
+  }
+
+  clearFieldError(inputEl);
+  return true;
+}
+
+
+
 
 /* ======================================================
    API URL (YOUR EXISTING)
@@ -443,40 +568,83 @@ if (phoneInput) {
 const API_URL =
   "https://script.google.com/macros/s/AKfycbxamsuAn-GftmJxzgYXwVhrId6AG4gqcrVM-91Yc8bw6piR3dhMPXGiuZHGEI5zAXRA/exec";
 
-/* ======================================================
-   WHATSAPP FORM SUBMIT (OLD WORKING + VALIDATION ✅)
-====================================================== */
 if (whatsappForm) {
+  const phoneInputWA = whatsappForm.querySelector(".phone-input");
+  const nameInputWA = whatsappForm.querySelector(".input-field");
+
+  if (phoneInputWA) {
+    phoneInputWA.addEventListener("input", () => {
+      phoneInputWA.value = phoneInputWA.value.replace(/\D/g, "");
+      validatePhoneForInput(
+        phoneInputWA,
+        selectedCountry?.dataset.code || "+965"
+      );
+    });
+  }
+
   whatsappForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    const nameInput = whatsappForm.querySelector(".input-field"); // name input
-    const name = nameInput ? nameInput.value.trim() : "";
-    const phone = phoneInput ? phoneInput.value.trim() : "";
+    const name = nameInputWA.value.trim();
+    const phone = phoneInputWA.value.trim();
     const countryCode = selectedCountry?.dataset.code || "+965";
 
-    // ✅ Validate before sending
-    const okName = validateWhatsappName();
-    const okPhone = validateWhatsappPhone();
-    if (!okName || !okPhone) return;
+    if (!validateWhatsappName()) return;
+    if (!validatePhoneForInput(phoneInputWA, countryCode)) return;
 
-    try {
-      fetch(API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        mode: "no-cors",
-        body: JSON.stringify({ name, phone: countryCode + phone }),
-      });
+    fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      mode: "no-cors",
+      body: JSON.stringify({ name, phone: countryCode + phone }),
+    });
 
-      showSuccess();
-      toggleModal(whatsappModal, false);
-      whatsappForm.reset();
-    } catch (err) {
-      showError();
-      console.error("WhatsApp Error:", err);
-    }
+    showSuccess();
+    toggleModal(whatsappModal, false);
+    whatsappForm.reset();
   });
 }
+
+
+if (waitlistPhoneForm) {
+  const phoneInputWL = waitlistPhoneForm.querySelector(".phone-input");
+
+  if (phoneInputWL) {
+    phoneInputWL.addEventListener("input", () => {
+      phoneInputWL.value = phoneInputWL.value.replace(/\D/g, "");
+      validatePhoneForInput(
+        phoneInputWL,
+        selectedCountryModalEl?.dataset.code || "+965"
+      );
+    });
+  }
+
+  waitlistPhoneForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const phone = phoneInputWL.value.trim();
+    const countryCode =
+      selectedCountryModalEl?.dataset.code || "+965";
+
+    if (!validatePhoneForInput(phoneInputWL, countryCode)) return;
+
+    fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      mode: "no-cors",
+      body: JSON.stringify({
+        name: "Waitlist",
+        phone: countryCode + phone
+      }),
+    });
+
+    showSuccess();
+    toggleModal(waitlistModal, false);
+    waitlistPhoneForm.reset();
+  });
+}
+
+
 
 /* ======================================================
    EMAIL WAITLIST SUBMIT (PAGE + MODAL) + VALIDATION ✅
@@ -575,6 +743,11 @@ let currentLang = "en";
 
 
 document.addEventListener("DOMContentLoaded", () => {
+
+    const timerEl = document.getElementById("launchTimer");
+    const timerLabel = document.getElementById("timerLabel");
+    const timerDigits = document.getElementById("timerDigits");
+
 
   /* ---------------- TRANSLATIONS ---------------- */
   const translations = {
@@ -795,8 +968,21 @@ document.addEventListener("DOMContentLoaded", () => {
     .forEach((el, i) => el.textContent = t.footerLinks[i]);
 
   if (timerLabel && timerDigits) {
-  timerLabel.textContent = t.timerRunning;
+
+    if (timerEl.classList.contains("closed")) {
+
+      timerDigits.textContent =
+        lang === "ar"
+          ? "سينتهي الوصول المبكر قريباً"
+          : "Early access is now closing soon";
+
+      timerLabel.textContent = "";
+
+    } else {
+      timerLabel.textContent = t.timerRunning;
+    }
   }
+
 
 
   // EMAIL POPUP (WAITLIST MODAL)
@@ -830,156 +1016,141 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
-/* ======================================================
-   EARLY ACCESS COUNTDOWN (48 HOURS, PERSISTENT)
-====================================================== */
+      /* ======================================================
+        EARLY ACCESS COUNTDOWN (48 HOURS, PERSISTENT)
+      ====================================================== */
 
-const TIMER_DURATION = 48 * 60 * 60 * 1000; // 48 hours
-const TIMER_KEY = "veyraEarlyAccessEnd";
+      /* EARLY ACCESS TIMER */
+      const TIMER_DURATION = 48 * 60 * 60 * 1000;
+      const TIMER_KEY = "veyraEarlyAccessEnd";
 
-const timerEl = document.getElementById("launchTimer");
-const timerLabel = document.getElementById("timerLabel");
-const timerDigits = document.getElementById("timerDigits");
+      function initEarlyAccessTimer() {
 
-function initEarlyAccessTimer() {
-  if (!timerEl || !timerDigits || !timerLabel) return;
+        if (!timerEl || !timerDigits || !timerLabel) return;
 
-  let endTime = localStorage.getItem(TIMER_KEY);
+        let endTime = localStorage.getItem(TIMER_KEY);
 
-  if (!endTime) {
-    endTime = Date.now() + TIMER_DURATION;
-    localStorage.setItem(TIMER_KEY, endTime);
-  } else {
-    endTime = parseInt(endTime, 10);
-  }
+        if (!endTime) {
+          endTime = Date.now() + TIMER_DURATION;
+          localStorage.setItem(TIMER_KEY, endTime);
+        } else {
+          endTime = parseInt(endTime, 10);
+        }
 
-  function updateTimer() {
-    const now = Date.now();
-    const diff = endTime - now;
+        let timerInterval = null;
 
-    if (diff <= 0) {
-      handleTimerEnd();
-      return;
-    }
+        function updateTimer() {
+          const now = Date.now();
+          const diff = endTime - now;
 
-    const hours = Math.floor(diff / (1000 * 60 * 60));
-    const minutes = Math.floor((diff / (1000 * 60)) % 60);
-    const seconds = Math.floor((diff / 1000) % 60);
+          if (diff <= 0) {
+            handleTimerEnd();
+            return;
+          }
 
-    timerDigits.textContent =
-      `${String(hours).padStart(2, "0")} : ` +
-      `${String(minutes).padStart(2, "0")} : ` +
-      `${String(seconds).padStart(2, "0")}`;
-  }
+          const hours = Math.floor(diff / (1000 * 60 * 60));
+          const minutes = Math.floor((diff / (1000 * 60)) % 60);
+          const seconds = Math.floor((diff / 1000) % 60);
 
-  function handleTimerEnd() {
-    timerEl.classList.add("closed");
+          timerDigits.textContent =
+            `${String(hours).padStart(2, "0")} : ` +
+            `${String(minutes).padStart(2, "0")} : ` +
+            `${String(seconds).padStart(2, "0")}`;
+        }
 
-    timerDigits.textContent =
-      currentLang === "ar"
-        ? "تم إغلاق الوصول المبكر"
-        : "Early access is now closed";
+        function handleTimerEnd() {
+          timerEl.classList.add("closed");
 
-    timerLabel.textContent = "";
+          timerDigits.textContent =
+            currentLang === "ar"
+              ? "الوصول المبكر سينتهي قريباً"
+              : "Early access is now closing soon";
 
-    // Disable Hero CTA
-    const heroBtn = document.getElementById("waitlistBtn");
-    if (heroBtn) heroBtn.disabled = true;
+          timerLabel.textContent = "";
 
-    // Disable WhatsApp CTA
-    document.querySelectorAll("#openWhatsappForm").forEach(btn => {
-      btn.disabled = true;
-    });
+          if (timerInterval) clearInterval(timerInterval);
+        }
 
-    clearInterval(timerInterval);
-  }
+        updateTimer();
+        timerInterval = setInterval(updateTimer, 1000);
+      }
 
-  updateTimer();
-  const timerInterval = setInterval(updateTimer, 1000);
-}
+      initEarlyAccessTimer();
 
-initEarlyAccessTimer();
+
+      /* EMAIL POPUP */
+      const POPUP_DELAY = 5000;
+
+      setTimeout(() => {
+        if (waitlistModal) toggleModal(waitlistModal, true);
+      }, POPUP_DELAY);
+
+
+
 
 
   /* ======================================
    AUTO LANGUAGE DETECTION (NO STORAGE)
-====================================== */
+  ====================================== */
 
-function detectInitialLanguage() {
-  const browserLangs = navigator.languages || [navigator.language || "en"];
-  const browserLang = browserLangs[0].toLowerCase();
+  function detectInitialLanguage() {
+    const browserLangs = navigator.languages || [navigator.language || "en"];
+    const browserLang = browserLangs[0].toLowerCase();
 
-  // 1. Browser prefers Arabic
-  if (browserLang.startsWith("ar")) {
-    return "ar";
-  }
-
-  // 2. GCC / Kuwait heuristic (timezone-based, no IP, no storage)
-  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
-
-  const gccTimezones = [
-    "Asia/Kuwait",
-    "Asia/Riyadh",
-    "Asia/Dubai",
-    "Asia/Qatar",
-    "Asia/Bahrain",
-    "Asia/Muscat"
-  ];
-
-  if (gccTimezones.includes(timeZone)) {
-    return "ar";
-  }
-
-  // 3. Default fallback
-  return "en";
-}
-
-const initialLang = detectInitialLanguage();
-setLanguage(initialLang);
-
-  const langRoot = document.getElementById("langRoot");
-
-  langToggle.addEventListener("click", () => {
-    if (!langRoot) return;
-
-    // fade out
-    langRoot.classList.remove("active");
-
-  setTimeout(() => {
-    setLanguage(currentLang === "en" ? "ar" : "en");
-
-    requestAnimationFrame(() => {
-      langRoot.classList.add("active");
-    });
-  }, 380);
-  });
-
-/* ======================================================
-   EMAIL POPUP – SHOW ON EVERY PAGE LOAD (SAFE)
-====================================================== */
-
-(function () {
-  const EMAIL_POPUP_DELAY_MS = 5000;
-  const modal = document.getElementById("waitlistModal");
-  if (!modal) return;
-
-  setTimeout(() => {
-    toggleModal(modal, true);
-  }, EMAIL_POPUP_DELAY_MS);
-
-  const closeBtn = document.getElementById("closeWaitlistModal");
-  if (closeBtn) {
-    closeBtn.addEventListener("click", () => {
-      toggleModal(modal, false);
-    });
-  }
-
-  modal.addEventListener("click", (e) => {
-    if (e.target === modal) {
-      toggleModal(modal, false);
+    // 1. Browser prefers Arabic
+    if (browserLang.startsWith("ar")) {
+      return "ar";
     }
-  });
-})();
 
-})();
+    // 2. GCC / Kuwait heuristic (timezone-based, no IP, no storage)
+    const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
+
+    const gccTimezones = [
+      "Asia/Kuwait",
+      "Asia/Riyadh",
+      "Asia/Dubai",
+      "Asia/Qatar",
+      "Asia/Bahrain",
+      "Asia/Muscat"
+    ];
+
+    if (gccTimezones.includes(timeZone)) {
+      return "ar";
+    }
+
+    // 3. Default fallback
+    return "en";
+  }
+
+  const initialLang = detectInitialLanguage();
+  setLanguage(initialLang);
+
+    const langRoot = document.getElementById("langRoot");
+
+    langToggle.addEventListener("click", () => {
+      if (!langRoot) return;
+
+      // fade out
+      langRoot.classList.remove("active");
+
+    setTimeout(() => {
+      setLanguage(currentLang === "en" ? "ar" : "en");
+
+      requestAnimationFrame(() => {
+        langRoot.classList.add("active");
+      });
+    }, 380);
+    });
+
+    const closeWaitlistBtn = document.getElementById("closeWaitlistModal");
+
+      if (closeWaitlistBtn && waitlistModal) {
+        closeWaitlistBtn.addEventListener("click", () => {
+          toggleModal(waitlistModal, false);
+        });
+      }
+
+
+
+});
 
