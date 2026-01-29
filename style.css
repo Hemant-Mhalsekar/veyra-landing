@@ -2152,3 +2152,90 @@ body.rtl .popup-benefits li {
   }
 }
 
+/* FORCE HERO BENEFITS TO STAY IN HERO COLUMN (AR) */
+.hero .hero-benefits {
+  margin-inline-start: 0;
+  margin-inline-end: auto;
+}
+
+/* Arabic: keep hero benefits visually grouped */
+body.rtl .hero .hero-benefits {
+  align-items: flex-start;
+  text-align: right;
+}
+
+/* Prevent hero benefits from drifting to far right */
+body.rtl .hero-benefits {
+  max-width: 420px;
+}
+
+
+/* FINAL RTL VISUAL BALANCE FIX */
+
+body.rtl .hero {
+  position: relative;
+}
+
+/* Early access benefits (top) */
+body.rtl .popup-benefits,
+body.rtl .hero-benefits {
+  max-width: 420px;
+}
+
+/* Product benefits (bottom right) */
+body.rtl .hero-benefits {
+  margin-top: 18px;
+  opacity: 0.95;
+}
+
+/* Slight visual hierarchy */
+body.rtl .popup-benefits li {
+  font-weight: 600;
+}
+
+body.rtl .hero-benefits li {
+  color: #e9c86b; /* keeps product benefits visually distinct */
+}
+
+
+/* ===============================
+   MODAL HEADER FIX (LTR + RTL)
+================================ */
+
+.modal-content {
+  position: relative;
+}
+
+/* Close button */
+.modal-content .close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 10;
+}
+
+/* RTL: move close button to left */
+body.rtl .modal-content .close {
+  right: auto;
+  left: 16px;
+}
+
+/* Reserve space so text never overlaps */
+.modal-content h2 {
+  padding-right: 36px; /* space for ❌ */
+}
+
+body.rtl .modal-content h2 {
+  padding-right: 0;
+  padding-left: 36px; /* space for ❌ in RTL */
+}
+
+/* Tighten Arabic line height slightly */
+body.rtl .modal-content h2 {
+  line-height: 1.35;
+}
+
+
