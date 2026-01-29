@@ -635,6 +635,13 @@ document.addEventListener("DOMContentLoaded", () => {
       waitlistTitle: "Get 10% off your first order",
       waitlistDesc: "Early access is limited to the first batch.",  
 
+      popupBenefits: [
+        "10% launch code for first batch",
+        "Private WhatsApp early-access list",
+        "Limited slots before public release"
+      ],
+
+
 
     },
 
@@ -694,6 +701,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
       waitlistTitle: "احصل على خصم 10٪ على أول طلب",
       waitlistDesc: "الوصول المبكر محدود بالدفعة الأولى.",
+
+      popupBenefits: [
+        "كود خصم 10٪ للدفعة الأولى",
+        "قائمة واتساب خاصة للوصول المبكر",
+        "عدد محدود قبل الإطلاق الرسمي"
+      ],
+
     }
   };
 
@@ -792,6 +806,16 @@ document.addEventListener("DOMContentLoaded", () => {
     if (modalTitle) modalTitle.textContent = t.waitlistTitle;
     if (modalDesc) modalDesc.textContent = t.waitlistDesc;
 
+
+    // HERO BENEFITS
+    document.querySelectorAll(".hero-benefits li").forEach((el, i) => {
+      el.textContent = t.popupBenefits[i];
+    });
+
+    // POPUP BENEFITS
+    document.querySelectorAll(".popup-benefits li").forEach((el, i) => {
+      el.textContent = t.popupBenefits[i];
+    });
 
 
   // RTL / LANGUAGE

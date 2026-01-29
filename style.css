@@ -2031,3 +2031,124 @@ button[disabled] {
 .launch-timer * {
   direction: ltr;
 }
+
+
+/* ======================================================
+   HERO BENEFITS — LEFT ALIGNED (DESKTOP + MOBILE)
+====================================================== */
+
+.hero-benefits {
+  list-style: none;
+  padding: 0;
+  margin: 18px 0 10px;
+}
+
+.hero-benefits li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  font-size: 14px;
+  margin-bottom: 8px;
+  line-height: 1.4;
+  color: #e6f5ef;
+  font-weight: 500;
+  text-align: left;
+}
+
+.hero-benefits li::before {
+  content: "✓";
+  color: #3ddc84;
+  font-weight: 700;
+}
+
+/* Arabic hero stays RIGHT aligned */
+body.rtl .hero-benefits li {
+  flex-direction: row-reverse;
+  text-align: right;
+}
+
+
+/* ======================================================
+   POPUP BENEFITS — CENTERED (ONLY POPUP)
+====================================================== */
+
+.popup-benefits {
+  list-style: none;
+  padding: 0;
+  margin: 14px auto 18px;
+  max-width: 360px;
+}
+
+.popup-benefits li {
+  display: flex;
+  align-items: center;
+  justify-content: center;   /* ✅ centered only here */
+  gap: 12px;
+
+  font-size: 14.5px;
+  margin-bottom: 10px;
+  line-height: 1.4;
+  color: #eaf6f1;
+  font-weight: 500;
+  text-align: center;
+}
+
+.popup-benefits li::before {
+  content: "✓";
+  color: #3ddc84;
+  font-weight: 700;
+}
+
+/* Arabic popup stays centered */
+body.rtl .popup-benefits li {
+  flex-direction: row-reverse;
+  text-align: center;
+}
+
+
+/* ======================================================
+   POPUP GENERAL SPACING (UNCHANGED / CLEAN)
+====================================================== */
+
+.modal-content {
+  padding: 22px 20px;
+  text-align: center;
+}
+
+.modal-content h2 {
+  margin-bottom: 6px;
+}
+
+.modal-content p {
+  margin-bottom: 12px;
+}
+
+.email-form-modal input {
+  margin-top: 10px;
+  margin-bottom: 12px;
+}
+
+.email-submit-btn {
+  margin-top: 6px;
+}
+
+
+/* ======================================================
+   MOBILE TWEAKS
+====================================================== */
+
+@media (max-width: 600px) {
+  .hero-benefits li {
+    font-size: 13.5px;
+  }
+
+  .popup-benefits li {
+    font-size: 14px;
+  }
+
+  .modal-content {
+    padding: 18px 16px;
+  }
+}
+
