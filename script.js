@@ -1034,53 +1034,87 @@ document.addEventListener("DOMContentLoaded", () => {
 
       /* EARLY ACCESS TIMER */
       const TIMER_DURATION = 48 * 60 * 60 * 1000;
-      const TIMER_KEY = "veyraEarlyAccessEnd";
+      const RESET_DELAY = 15 * 60 * 1000; // 15 minutes
+      const TIMER_KEY = "veyraLoopTimer";
 
       function initEarlyAccessTimer() {
 
         if (!timerEl || !timerDigits || !timerLabel) return;
 
-        let endTime = localStorage.getItem(TIMER_KEY);
+        let timerData = JSON.parse(localStorage.getItem(TIMER_KEY) || "{}");
 
-        if (!endTime) {
+        let endTime = timerData.endTime;
+        let resetTime = timerData.resetTime;
+
+        // First visit → create timer
+        if (!endTime && !resetTime) {
           endTime = Date.now() + TIMER_DURATION;
-          localStorage.setItem(TIMER_KEY, endTime);
-        } else {
-          endTime = parseInt(endTime, 10);
+          localStorage.setItem(TIMER_KEY, JSON.stringify({ endTime }));
         }
 
         let timerInterval = null;
 
         function updateTimer() {
-          const now = Date.now();
-          const diff = endTime - now;
 
-          if (diff <= 0) {
-            handleTimerEnd();
+          const now = Date.now();
+          timerData = JSON.parse(localStorage.getItem(TIMER_KEY) || "{}");
+
+          endTime = timerData.endTime;
+          resetTime = timerData.resetTime;
+
+          /* ===== PHASE 1 → NORMAL COUNTDOWN ===== */
+          if (endTime && now < endTime) {
+
+            const diff = endTime - now;
+
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            const minutes = Math.floor((diff / (1000 * 60)) % 60);
+            const seconds = Math.floor((diff / 1000) % 60);
+
+            timerEl.classList.remove("closed");
+
+            timerLabel.textContent =
+              currentLang === "ar"
+                ? "ينتهي الوصول المبكر خلال"
+                : "Early access closes in";
+
+            timerDigits.textContent =
+              `${String(hours).padStart(2, "0")} : ` +
+              `${String(minutes).padStart(2, "0")} : ` +
+              `${String(seconds).padStart(2, "0")}`;
+
             return;
           }
 
-          const hours = Math.floor(diff / (1000 * 60 * 60));
-          const minutes = Math.floor((diff / (1000 * 60)) % 60);
-          const seconds = Math.floor((diff / 1000) % 60);
+          /* ===== PHASE 2 → CLOSING MESSAGE (15 MIN WINDOW) ===== */
+          if (!resetTime) {
+            resetTime = now + RESET_DELAY;
+            localStorage.setItem(
+              TIMER_KEY,
+              JSON.stringify({ resetTime })
+            );
+          }
 
-          timerDigits.textContent =
-            `${String(hours).padStart(2, "0")} : ` +
-            `${String(minutes).padStart(2, "0")} : ` +
-            `${String(seconds).padStart(2, "0")}`;
-        }
+          if (resetTime && now < resetTime) {
 
-        function handleTimerEnd() {
-          timerEl.classList.add("closed");
+            timerEl.classList.add("closed");
 
-          timerDigits.textContent =
-            currentLang === "ar"
-              ? "الوصول المبكر سينتهي قريباً"
-              : "Early access is now closing soon";
+            timerLabel.textContent = "";
 
-          timerLabel.textContent = "";
+            timerDigits.textContent =
+              currentLang === "ar"
+                ? "سينتهي الوصول المبكر قريباً"
+                : "Early access closing soon";
 
-          if (timerInterval) clearInterval(timerInterval);
+            return;
+          }
+
+          /* ===== PHASE 3 → RESET TIMER ===== */
+          endTime = Date.now() + TIMER_DURATION;
+          localStorage.setItem(
+            TIMER_KEY,
+            JSON.stringify({ endTime })
+          );
         }
 
         updateTimer();
@@ -1089,16 +1123,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
       initEarlyAccessTimer();
 
-
       /* EMAIL POPUP */
       const POPUP_DELAY = 5000;
 
       setTimeout(() => {
         if (waitlistModal) toggleModal(waitlistModal, true);
       }, POPUP_DELAY);
-
-
-
 
 
   /* ======================================
