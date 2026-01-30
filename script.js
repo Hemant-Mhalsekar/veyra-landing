@@ -753,8 +753,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const translations = {
     en: {
       heroEyebrow: "FREEZE-DRIED FRUIT · KUWAIT",
-      heroTitle: "Pure, crispy fruit —<br>crafted for performance<br><span class='gold-underline'>and everyday living.</span>",
-      heroDesc: "No sugar. No preservatives. Just real freeze-dried fruit that fits your gym, office, and family lifestyle.",
+
+      heroTitle: `Most “healthy” snacks<br>
+      are sugar in disguise.<br>
+      <span class='gold-underline'>This isn’t.</span>`,
+
+      heroDesc:
+      "Freeze-dried fruit made for people who train, work, and care about what goes into their body.",
+
       heroPoints: ["100% Real Fruit", "No Added Sugar", "No Preservatives"],
       cta: "Get 10% Discount on Early Access",
       ctaSubtext: "Limited first batch. Early access closes soon.",
@@ -820,8 +826,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     ar: {
       heroEyebrow: "فاكهة مجففة بالتجميد · الكويت",
-      heroTitle: "فاكهة نقية ومقرمشة —<br>مصممة للأداء<br><span class='gold-underline'>والحياة اليومية.</span>",
-      heroDesc: "بدون سكر. بدون مواد حافظة. فقط فاكهة حقيقية مجففة بالتجميد تناسب الجيم، المكتب، والحياة العائلية.",
+
+      heroTitle: `معظم الوجبات الخفيفة "الصحية"<br>
+      تحتوي على سكر مخفي.<br>
+      <span class='gold-underline'>هذا ليس كذلك.</span>`,
+
+      heroDesc:
+      "فاكهة مجففة بالتجميد مصنوعة للأشخاص الذين يتمرنون، يعملون، ويهتمون بما يدخل إلى أجسامهم.",
+
       heroPoints: ["فاكهة حقيقية 100%", "بدون سكر مضاف", "بدون مواد حافظة"],
       emailInvalid: "يرجى إدخال بريد إلكتروني صحيح.",
       cta: "احصل على خصم 10٪ مع الوصول المبكر",

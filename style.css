@@ -2283,3 +2283,11 @@ body.rtl .modal-content h2 {
   color: #111 !important;
   min-width: 110px;
 }
+
+
+.hero-sub {
+  font-size: 19px;
+  line-height: 1.6;
+  color: #d9e7e2;
+  margin-bottom: 34px;
+}
