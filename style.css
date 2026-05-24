@@ -1,8 +1,37 @@
-/* PERF PATCH – safe */
-.hero-image img,
-.snack-products img,
-.use-card {
-  will-change: transform;
+/* ======================================================
+   CSS CUSTOM PROPERTIES
+====================================================== */
+:root {
+  /* Colors */
+  --color-bg:          #041f18;
+  --color-bg-mid:      #0a3d2f;
+  --color-bg-hero:     #135a3a;
+  --color-bg-hero-mid: #1b6b4a;
+  --color-gold:        #d6c06f;
+  --color-gold-light:  #f6e6a1;
+  --color-gold-dark:   #bfa24a;
+  --color-text-muted:  #d9e7e2;
+  --color-text-subtle: #cfe3dd;
+  --color-dark-text:   #052f24;
+  --color-white-5:     rgba(255, 255, 255, 0.05);
+  --color-white-8:     rgba(255, 255, 255, 0.08);
+  --color-white-12:    rgba(255, 255, 255, 0.12);
+
+  /* Gold gradient (reused on hero points, underline) */
+  --gradient-gold: linear-gradient(90deg, #f6e6a1, #d6c06f, #bfa24a);
+
+  /* Section padding */
+  --section-pad-v: 100px;
+  --section-pad-h: 8%;
+
+  /* Border radius */
+  --radius-sm:  10px;
+  --radius-md:  14px;
+  --radius-lg:  18px;
+  --radius-xl:  20px;
+
+  /* Transitions */
+  --ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /* ======================================================
@@ -16,17 +45,32 @@
 }
 
 body {
-  background: #041f18;
+  background: var(--color-bg);
   color: #ffffff;
   overflow-x: hidden;
 }
 
-button, a {
+button,
+a {
   transition: all 0.25s ease;
 }
 
 button:active {
   transform: scale(0.97);
+}
+
+/* Disabled state */
+button[disabled] {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Performance hints */
+.hero-image-wrapper img,
+.snack-products img,
+.use-card {
+  will-change: transform;
 }
 
 /* ======================================================
@@ -36,8 +80,8 @@ button:active {
   min-height: 100vh;
   display: flex;
   align-items: center;
-  padding: 60px 8%;
-  background: radial-gradient(circle at center, #1b6b4a, #135A3A);
+  padding: 60px var(--section-pad-h);
+  background: radial-gradient(circle at center, var(--color-bg-hero-mid), var(--color-bg-hero));
   position: relative;
   overflow: hidden;
 }
@@ -73,7 +117,7 @@ button:active {
 .hero-eyebrow {
   font-size: 13px;
   letter-spacing: 2px;
-  color: #d6c06f;
+  color: var(--color-gold);
   margin-bottom: 20px;
 }
 
@@ -83,21 +127,26 @@ button:active {
   margin-bottom: 24px;
 }
 
+.hero-title span {
+  font-weight: 700;
+}
+
+.hero-sub,
 .hero-content p {
   font-size: 19px;
   line-height: 1.6;
-  color: #d9e7e2;
+  color: var(--color-text-muted);
   margin-bottom: 34px;
 }
 
-/* CTA */
+/* CTA Button */
 .cta-btn {
-  background: #d6c06f;
-  color: #052f24;
+  background: var(--color-gold);
+  color: var(--color-dark-text);
   padding: 16px 34px;
   font-size: 17px;
   font-weight: 600;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   border: none;
   cursor: pointer;
   position: relative;
@@ -108,12 +157,20 @@ button:active {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle, rgba(255,255,255,0.35), transparent 70%);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.35), transparent 70%);
   opacity: 0;
 }
 
 .cta-btn:hover::after {
   opacity: 1;
+}
+
+.cta-subtext {
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--color-gold-light);
+  font-weight: 600;
+  letter-spacing: 0.3px;
 }
 
 /* Gold underline */
@@ -128,10 +185,10 @@ button:active {
   bottom: -6px;
   height: 3px;
   width: 100%;
-  background: linear-gradient(90deg, #f6e6a1, #d6c06f, #bfa24a);
+  background: var(--gradient-gold);
 }
 
-/* Points */
+/* Hero points */
 .hero-points {
   list-style: none;
   margin-top: 36px;
@@ -142,7 +199,7 @@ button:active {
   gap: 12px;
   font-size: 17px;
   margin-bottom: 14px;
-  background: linear-gradient(90deg, #f6e6a1, #d6c06f, #bfa24a);
+  background: var(--gradient-gold);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -151,70 +208,58 @@ button:active {
   content: "✔";
 }
 
-/* Image */
-.hero-image img {
+/* Hero image */
+.hero-image-wrapper {
+  flex: 0 0 520px;
+  display: flex;
+  justify-content: center;
+}
+
+.hero-image-wrapper img {
+  max-width: 100%;
+  height: auto;
   max-width: 520px;
   margin-left: -20px;
-  filter: drop-shadow(0 50px 80px rgba(0,0,0,0.75));
+  filter: drop-shadow(0 50px 80px rgba(0, 0, 0, 0.75));
   animation: floatProduct 6s ease-in-out infinite;
 }
 
-/* ======================================================
-   MODALS (WAITLIST + WHATSAPP)
-====================================================== */
-.modal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.75);
-  backdrop-filter: blur(8px);
-  z-index: 9999;
-  justify-content: center;
+/* Hero benefits (popup list) */
+.hero-benefits {
+  list-style: none;
+  padding: 0;
+  margin: 18px 0 10px;
+}
+
+.hero-benefits li {
+  display: flex;
   align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  margin-bottom: 8px;
+  line-height: 1.4;
+  color: #e6f5ef;
+  font-weight: 500;
+  text-align: left;
 }
 
-.modal-content {
-  background: #0a3d2f;
-  padding: 40px;
-  border-radius: 18px;
-  width: 90%;
-  max-width: 420px;
-  text-align: center;
-  position: relative;
-  animation: modalReveal 0.35s cubic-bezier(0.22,1,0.36,1);
+.hero-benefits li::before {
+  content: "✓";
+  color: #3ddc84;
+  font-weight: 700;
 }
 
-.modal-content input,
-.modal-content button {
-  width: 100%;
-  padding: 12px;
-  border-radius: 10px;
-  border: none;
-  margin-top: 12px;
-}
-
-.close {
-  position: absolute;
-  top: 18px;
-  right: 22px;
-  font-size: 26px;
-  cursor: pointer;
+.hero .hero-benefits {
+  margin-inline-start: 0;
+  margin-inline-end: auto;
 }
 
 /* ======================================================
-   [ADDED] EMAIL MODAL FORM SUPPORT (SAFE, NON-BREAKING)
-====================================================== */
-.email-form-modal input,
-.email-form-modal button {
-  width: 100%;
-}
-
-/* ======================================================
-   SNACK PROBLEM SECTION (UNCHANGED STRUCTURE)
+   SNACK PROBLEM SECTION
 ====================================================== */
 .snack-problem {
-  padding: 100px 8%;
-  background: radial-gradient(circle at top, #0a3d2f, #041f18);
+  padding: var(--section-pad-v) var(--section-pad-h);
+  background: radial-gradient(circle at top, var(--color-bg-mid), var(--color-bg));
 }
 
 .snack-container {
@@ -224,30 +269,14 @@ button:active {
 
 .snack-hero {
   display: flex;
-  flex-direction: column; /* stack text + images */
-  align-items: flex-start;
+  flex-direction: column;
+  align-items: center;
   gap: 40px;
 }
-.snack-products {
-  display: flex;
-  gap: 28px;
-  justify-content: center;
-  width: 100%;
-}
+
 .snack-text {
   max-width: 720px;
 }
-
-.snack-text h2 {
-  font-size: 48px;
-}
-
-.snack-products img {
-  animation: syncFloat 5s ease-in-out infinite;
-  will-change: transform;
-  transition: filter 0.3s ease;
-}
-
 
 .snack-text h2 {
   font-size: 44px;
@@ -257,34 +286,37 @@ button:active {
 
 .snack-text p {
   font-size: 18px;
-  color: #d9e7e2;
+  color: var(--color-text-muted);
   margin-bottom: 26px;
-}
-
-.snack-cta {
-  background: #d6c06f;
-  color: #052f24;
-  border: none;
-  padding: 14px 28px;
-  border-radius: 10px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.snack-cta:hover {
-  box-shadow: 0 15px 30px rgba(214,192,111,0.4);
 }
 
 .snack-note {
   display: block;
   margin-top: 10px;
   font-size: 13px;
-  color: #cfe3dd;
+  color: var(--color-text-subtle);
 }
 
+/* Product images */
 .snack-products {
   display: flex;
+  justify-content: center;
+  align-items: flex-end;
   gap: 36px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.snack-products img {
+  width: clamp(160px, 26vw, 300px);
+  height: auto;
+  animation: syncFloat 5s ease-in-out infinite;
+  will-change: transform;
+  transition: filter 0.3s ease;
+}
+
+.snack-products img:hover {
+  filter: drop-shadow(0 40px 50px rgba(0, 0, 0, 0.6));
 }
 
 /* Divider */
@@ -294,12 +326,12 @@ button:active {
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(214,192,111,0.4),
+    rgba(214, 192, 111, 0.4),
     transparent
   );
 }
 
-/* Problems */
+/* Problem grid */
 .snack-problems h3 {
   text-align: center;
   font-size: 28px;
@@ -308,62 +340,69 @@ button:active {
 
 .problem-grid {
   display: grid;
-  grid-template-columns: repeat(3,1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 40px;
+  width: 100%;
 }
 
 .problem-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .problem-item p {
   font-size: 15px;
-  color: #d9e7e2;
+  color: var(--color-text-muted);
 }
 
-.snack-products img {
-  transition: transform 0.35s ease, filter 0.35s ease;
-}
-
-
-/* ===============================
-   SNACK PRODUCT – FINAL (CLEAN)
-================================ */
-
-.snack-products {
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  gap: 28px;
-  flex-wrap: wrap;   /* IMPORTANT for 5 items */
-}
-
-
-.snack-products img {
-  animation: syncFloat 5s ease-in-out infinite;
+.problem-video {
+  width: clamp(170px, 22vw, 300px);
+  height: auto;
+  margin-bottom: 18px;
+  border-radius: 16px;
+  object-fit: cover;
+  background: #000;
+  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.4);
+  animation: videoFloat 6s ease-in-out infinite;
   will-change: transform;
-  transition: filter 0.3s ease;
 }
 
-/* Hover WITHOUT breaking motion */
-.snack-products img:hover {
-  filter: drop-shadow(0 40px 50px rgba(0,0,0,0.6));
+/* Snack footer */
+.snack-footer {
+  width: 100%;
+  margin: 70px auto 0;
+  text-align: center;
+  font-size: 17px;
+  color: var(--color-gold);
+  font-weight: 600;
+  line-height: 1.6;
 }
 
-.snack-products img {
-  --scale: 1;
+.snack-footer .brand-word {
+  font-size: 1.3em;
+  font-weight: 700;
+  color: var(--color-gold-light);
+  letter-spacing: 0.5px;
 }
 
-.snack-products img:hover {
-  --scale: 1.06;
+.snack-cta-text {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-gold);
+  margin-top: 10px;
 }
 
 /* ======================================================
    USE CASES
 ====================================================== */
 .use-cases {
-  padding: 100px 8%;
-  background: radial-gradient(circle at top, #0a3d2f, #041f18);
+  padding: var(--section-pad-v) var(--section-pad-h);
+  background: radial-gradient(circle at top, var(--color-bg-mid), var(--color-bg));
 }
 
 .use-container {
@@ -373,28 +412,33 @@ button:active {
 
 .use-cards {
   display: grid;
-  grid-template-columns: repeat(3,1fr);
-  gap: 24px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 36px;
   margin-bottom: 80px;
+  width: 100%;
+  contain: layout paint;
 }
 
 .use-card {
-  background: rgba(255,255,255,0.05);
-  border-radius: 16px;
+  background: var(--color-white-5);
+  border-radius: var(--radius-xl);
   overflow: hidden;
   backdrop-filter: blur(6px);
   transition: transform 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .use-card:hover {
   transform: translateY(-8px) scale(1.01);
-  background: rgba(255,255,255,0.08);
-  box-shadow: 0 30px 60px rgba(0,0,0,0.45);
+  background: var(--color-white-8);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45);
 }
 
 .use-card img {
   width: 100%;
-  height: 180px;
+  height: 240px;
   object-fit: cover;
   transition: transform 0.6s ease;
 }
@@ -404,44 +448,40 @@ button:active {
 }
 
 .use-card h4 {
-  font-size: 18px;
+  font-size: 20px;
   margin: 16px 18px 6px;
 }
 
 .use-card p {
-  font-size: 14px;
-  color: #d9e7e2;
+  font-size: 15.5px;
+  color: var(--color-text-muted);
   margin: 0 18px 20px;
 }
 
-/* Transformation */
+/* Fruit transformation */
 .fruit-transform {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 28px;
   flex-wrap: wrap;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 28px 36px;
+  border-radius: var(--radius-xl);
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.35),
+    inset 0 0 0 1px var(--color-white-8);
 }
-/* ===============================
-   TRANSFORMATION BAR – VIDEO
-================================ */
 
 .transform-main-video {
-  width: clamp(240px, 42vw, 360px);  /* ⬅️ reduced */
+  width: clamp(240px, 42vw, 360px);
   height: auto;
-  border-radius: 14px;
+  border-radius: var(--radius-md);
   object-fit: cover;
   background: #000;
-  box-shadow: 
-    0 16px 32px rgba(0,0,0,0.3),
-    inset 0 0 0 1px rgba(255,255,255,0.08);
-}
-
-@media (max-width: 768px) {
-  .transform-main-video {
-    width: 100%;
-    max-width: 300px;
-  }
+  box-shadow:
+    0 16px 32px rgba(0, 0, 0, 0.3),
+    inset 0 0 0 1px var(--color-white-8);
 }
 
 .fruit-side {
@@ -450,19 +490,24 @@ button:active {
 
 .fruit-side img {
   max-width: 120px;
-  filter: drop-shadow(0 15px 25px rgba(0,0,0,0.6));
+  filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.6));
+  transition: transform 0.4s ease, filter 0.4s ease;
 }
 
+.fruit-side:hover img {
+  transform: translateY(-4px) scale(1.04);
+  filter: drop-shadow(0 20px 30px rgba(246, 230, 161, 0.35));
+}
 
 .transform-text {
   margin-top: 10px;
   text-align: center;
   font-size: 22px;
-  color: #d9e7e2;
+  color: var(--color-text-muted);
 }
 
 .transform-text span {
-  color: #d6c06f;
+  color: var(--color-gold);
   font-weight: 600;
 }
 
@@ -470,8 +515,8 @@ button:active {
    EARLY ACCESS
 ====================================================== */
 .early-access {
-  padding: 100px 8%;
-  background: radial-gradient(circle at top, #0a3d2f, #041f18);
+  padding: var(--section-pad-v) var(--section-pad-h);
+  background: radial-gradient(circle at top, var(--color-bg-mid), var(--color-bg));
   text-align: center;
 }
 
@@ -493,27 +538,48 @@ button:active {
 .early-benefits li {
   margin-bottom: 12px;
   font-size: 15px;
-  color: #d9e7e2;
+  color: var(--color-text-muted);
 }
 
+/* WhatsApp button */
 .whatsapp-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
   background: linear-gradient(180deg, #3bd16f, #1fa855);
-  color: #052f24;
+  color: var(--color-dark-text);
   padding: 14px 28px;
   border: none;
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
   font-weight: 600;
   cursor: pointer;
 }
 
 .whatsapp-btn:hover {
-  box-shadow: 0 15px 30px rgba(59,209,111,0.4);
+  box-shadow: 0 15px 30px rgba(59, 209, 111, 0.4);
 }
 
+.whatsapp-btn:hover .whatsapp-icon img {
+  transform: scale(1.08);
+}
+
+.whatsapp-icon {
+  display: flex;
+  align-items: center;
+}
+
+.whatsapp-icon img {
+  width: 30px;
+  height: 30px;
+  display: block;
+}
+
+/* Divider */
 .divider {
   height: 1px;
   margin: 40px 0;
-  background: rgba(255,255,255,0.15);
+  background: rgba(255, 255, 255, 0.15);
 }
 
 .email-text {
@@ -521,10 +587,13 @@ button:active {
   margin-bottom: 10px;
 }
 
-.email-form {
+/* Email form */
+.email-form,
+.email-form-modal {
   display: flex;
   justify-content: center;
   gap: 8px;
+  flex-wrap: wrap;
 }
 
 .email-form input {
@@ -535,7 +604,7 @@ button:active {
 }
 
 .email-form button {
-  background: #d6c06f;
+  background: var(--color-gold);
   border: none;
   border-radius: 8px;
   padding: 10px 16px;
@@ -543,46 +612,94 @@ button:active {
   cursor: pointer;
 }
 
+.email-form .field-error,
+.email-form-modal .field-error {
+  flex-basis: 100%;
+  width: 100%;
+  margin-top: 8px;
+  text-align: center;
+  font-size: 0.85rem;
+  color: #ff4d4d;
+  line-height: 1.2;
+}
+
 .trust-text {
   display: block;
   margin-top: 10px;
   font-size: 12px;
-  color: #cfe3dd;
+  color: var(--color-text-subtle);
+}
+
+.email-submit-btn {
+  margin-top: 6px;
 }
 
 /* ======================================================
-   SEARCHABLE COUNTRY SELECTOR
+   COUNTRY SELECTOR
 ====================================================== */
 .phone-group {
   display: flex;
-  gap: 10px;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.phone-group .field-error {
+  flex-basis: 100%;
+  width: 100%;
+  margin-top: 6px;
+  font-size: 0.85rem;
+  color: #ff4d4d;
+  line-height: 1.2;
 }
 
 .country-selector {
   position: relative;
-  width: 120px;
-  font-size: 14px;
+  min-width: 110px;
+  flex-shrink: 0;
 }
 
 .selected-country {
-  background: #ffffff;
-  padding: 12px;
-  border-radius: 10px;
+  background: #e5e5e5;
+  border-radius: 12px;
+  padding: 14px 12px;
+  padding-right: 38px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #111 !important;
   cursor: pointer;
-  text-align: center;
+  white-space: nowrap;
+  width: 100%;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  position: relative;
+}
+
+.selected-country::after {
+  content: "▾";
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+  opacity: 0.75;
+  pointer-events: none;
 }
 
 .country-dropdown {
   display: none;
   position: absolute;
-  top: 110%;
+  top: calc(100% + 8px);
   left: 0;
-  width: 220px;
+  width: 240px;
   background: #ffffff;
   color: #000;
-  border-radius: 12px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
-  z-index: 20;
+  border-radius: var(--radius-md);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+  z-index: 50;
   overflow: hidden;
 }
 
@@ -616,16 +733,221 @@ button:active {
 
 .phone-input {
   flex: 1;
+  height: 48px;
+}
+
+/* ======================================================
+   INPUT FIELD (MODAL FORMS)
+====================================================== */
+.input-field {
+  width: 100%;
+  height: 48px;
+  padding: 0 16px;
+  border-radius: 12px;
+  border: none;
+  font-size: 15px;
+}
+
+/* Form validation UI */
+.input-error {
+  border: 1.5px solid #ff4d4d !important;
+  outline: none;
+}
+
+.field-error {
+  margin-top: 8px;
+  font-size: 0.85rem;
+  color: #ff4d4d;
+  line-height: 1.2;
+}
+
+/* ======================================================
+   MODALS (WAITLIST + WHATSAPP)
+====================================================== */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: var(--color-bg-mid);
+  padding: 22px 20px;
+  border-radius: var(--radius-lg);
+  width: 90%;
+  max-width: 420px;
+  text-align: center;
+  position: relative;
+  animation: modalReveal 0.35s var(--ease-standard);
+}
+
+.modal-content input,
+.modal-content button {
+  width: 100%;
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  border: none;
+  margin-top: 12px;
+}
+
+.modal-content h2 {
+  margin-bottom: 6px;
+  padding-right: 36px;
+}
+
+.modal-content p {
+  margin-bottom: 12px;
+}
+
+.email-form-modal input {
+  margin-top: 10px;
+  margin-bottom: 12px;
+}
+
+.close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 10;
+}
+
+/* Popup benefits */
+.popup-benefits {
+  list-style: none;
+  padding: 0;
+  margin: 14px auto 18px;
+  max-width: 360px;
+}
+
+.popup-benefits li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: 14.5px;
+  margin-bottom: 10px;
+  line-height: 1.4;
+  color: #eaf6f1;
+  font-weight: 500;
+  text-align: center;
+}
+
+.popup-benefits li::before {
+  content: "✓";
+  color: #3ddc84;
+  font-weight: 700;
+}
+
+/* ======================================================
+   SUCCESS DIALOG
+====================================================== */
+.success-dialog,
+.error-dialog {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(6px);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
+
+.success-dialog.active,
+.error-dialog.active {
+  display: flex;
+}
+
+.success-card,
+.error-card {
+  padding: 36px;
+  border-radius: var(--radius-lg);
+  text-align: center;
+  width: 90%;
+  max-width: 380px;
+}
+
+.success-card {
+  background: var(--color-bg-mid);
+  animation: popFade 0.35s ease, successPulse 1.2s ease;
+}
+
+.error-card {
+  background: #2a0f0f;
+  animation: popFade 0.35s ease, errorShake 0.4s ease;
+}
+
+.success-card h3,
+.error-card h3 {
+  margin-bottom: 10px;
+  font-size: 22px;
+}
+
+.error-card h3 {
+  color: #ffb3b3;
+}
+
+.success-card p,
+.error-card p {
+  font-size: 14px;
+  margin-bottom: 22px;
+}
+
+.success-card p {
+  color: var(--color-text-muted);
+}
+
+.error-card p {
+  color: #f0dada;
+}
+
+.success-card button {
+  background: var(--color-gold);
+  color: var(--color-dark-text);
+  border: none;
+  padding: 12px 24px;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.error-card button {
+  background: #ff6b6b;
+  color: #2a0f0f;
+  border: none;
+  padding: 12px 24px;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.success-card button,
+.error-card button {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.success-card button:hover,
+.error-card button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
 /* ======================================================
    FOOTER
 ====================================================== */
 .site-footer {
-  padding: 30px 8% 26px;
-  background: radial-gradient(circle at top, #0a3d2f, #041f18);
+  padding: 30px var(--section-pad-h) 26px;
+  background: radial-gradient(circle at top, var(--color-bg-mid), var(--color-bg));
   font-size: 13px;
-  color: #cfe3dd;
+  color: var(--color-text-subtle);
 }
 
 .footer-container {
@@ -651,7 +973,7 @@ button:active {
 
 .footer-top a:hover,
 .footer-bottom a:hover {
-  color: #d6c06f;
+  color: var(--color-gold);
 }
 
 .dot {
@@ -659,279 +981,77 @@ button:active {
 }
 
 /* ======================================================
-   ANIMATIONS
+   LAUNCH TIMER
 ====================================================== */
-@keyframes heroReveal {
-  from {
-    opacity: 0;
-    transform: translateY(24px);
-    filter: blur(4px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-    filter: blur(0);
-  }
-}
-
-@keyframes underlineReveal {
-  to { width: 100%; }
-}
-
-@keyframes floatProduct {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-12px); }
-  100% { transform: translateY(0); }
-}
-
-@keyframes modalReveal {
-  from {
-    opacity: 0;
-    transform: translateY(20px) scale(0.96);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-/* ======================================================
-   RESPONSIVE
-====================================================== */
-@media (max-width: 900px) {
-  .hero-container,
-  .snack-hero {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .hero-title {
-    font-size: 44px;
-  }
-
-  .problem-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .use-cards {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 600px) {
-  .footer-top,
-  .footer-bottom {
-    flex-direction: column;
-  }
-
-  .dot {
-    display: none;
-  }
-}
-
-
-/* ================= FORM FIXES ================= */
-.input-field {
-  width: 100%;
-  height: 48px;
-  padding: 0 16px;
-  border-radius: 12px;
-  border: none;
-  font-size: 15px;
-}
-
-.phone-group {
-  display: flex;
-  gap: 12px;
-  margin-top: 12px;
-}
-
-.country-selector {
-  position: relative;
-  width: 120px;
-}
-
-.selected-country {
-  width: 100%;
-  height: 48px;
-  background: #fff;
-  border-radius: 12px;
-  border: none;
-  cursor: pointer;
-}
-
-.country-dropdown {
-  display: none;
-  position: absolute;
-  top: calc(100% + 8px);
-  left: 0;
-  width: 240px;
-  background: #fff;
-  border-radius: 14px;
-  box-shadow: 0 20px 40px rgba(0,0,0,.25);
-  z-index: 50;
-}
-
-.country-dropdown.active { display:block; }
-
-/* ======================================================
-   SUCCESS DIALOG
-====================================================== */
-.success-dialog {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.6);
-  backdrop-filter: blur(6px);
-  display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 10000;
-}
-
-.success-dialog.active {
-  display: flex;
-}
-
-.success-card {
-  background: #0a3d2f;
-  padding: 36px;
-  border-radius: 18px;
+.launch-timer {
   text-align: center;
-  width: 90%;
-  max-width: 380px;
-  animation: modalReveal 0.35s cubic-bezier(0.22,1,0.36,1);
-}
-
-.success-card h3 {
-  margin-bottom: 10px;
-  font-size: 22px;
-}
-
-.success-card p {
-  font-size: 14px;
-  color: #d9e7e2;
   margin-bottom: 22px;
+  direction: ltr;
+  unicode-bidi: isolate;
 }
 
-.success-card button {
-  background: #d6c06f;
-  color: #052f24;
-  border: none;
-  padding: 12px 24px;
-  border-radius: 10px;
+.launch-timer * {
+  direction: ltr;
+}
+
+.timer-label {
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--color-text-subtle);
+  opacity: 0.85;
+  margin-bottom: 6px;
+}
+
+.timer-digits {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--color-gold);
+  font-variant-numeric: tabular-nums;
+}
+
+.launch-timer.closed .timer-digits {
+  font-size: 18px;
   font-weight: 600;
-  cursor: pointer;
-}
-
-
-/* ======================================================
-   ERROR DIALOG
-====================================================== */
-.error-dialog {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.6);
-  backdrop-filter: blur(6px);
-  display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 10000;
-}
-
-.error-dialog.active {
-  display: flex;
-}
-
-.error-card {
-  background: #2a0f0f;
-  padding: 36px;
-  border-radius: 18px;
-  text-align: center;
-  width: 90%;
-  max-width: 380px;
-  animation: modalReveal 0.35s cubic-bezier(0.22,1,0.36,1);
-}
-
-.error-card h3 {
-  margin-bottom: 10px;
-  font-size: 22px;
   color: #ffb3b3;
 }
 
-.error-card p {
+/* ======================================================
+   LANGUAGE TOGGLE
+====================================================== */
+.lang-toggle {
+  position: fixed;
+  top: 20px;
+  right: 24px;
+  z-index: 10001;
+  background: var(--color-white-12);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
   font-size: 14px;
-  color: #f0dada;
-  margin-bottom: 22px;
-}
-
-.error-card button {
-  background: #ff6b6b;
-  color: #2a0f0f;
-  border: none;
-  padding: 12px 24px;
-  border-radius: 10px;
   font-weight: 600;
   cursor: pointer;
 }
 
+/* Language transition */
+.lang-transition {
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity, transform;
+}
+
+.lang-transition.active {
+  opacity: 1;
+  transform: translateY(0);
+}
 
 /* ======================================================
-   MICRO ANIMATIONS
-====================================================== */
-
-/* Fade + rise animation */
-@keyframes popFade {
-  0% {
-    opacity: 0;
-    transform: translateY(16px) scale(0.96);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-/* Pulse effect for success */
-@keyframes successPulse {
-  0% { box-shadow: 0 0 0 0 rgba(214,192,111,0.5); }
-  70% { box-shadow: 0 0 0 16px rgba(214,192,111,0); }
-  100% { box-shadow: 0 0 0 0 rgba(214,192,111,0); }
-}
-
-/* Shake effect for error */
-@keyframes errorShake {
-  0% { transform: translateX(0); }
-  20% { transform: translateX(-6px); }
-  40% { transform: translateX(6px); }
-  60% { transform: translateX(-4px); }
-  80% { transform: translateX(4px); }
-  100% { transform: translateX(0); }
-}
-
-/* Apply animations */
-.success-card {
-  animation: popFade 0.35s ease, successPulse 1.2s ease;
-}
-
-.error-card {
-  animation: popFade 0.35s ease, errorShake 0.4s ease;
-}
-
-/* Button micro interaction */
-.success-card button,
-.error-card button {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.success-card button:hover,
-.error-card button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-}
-
-
-/* ======================================================
-   CONFETTI (SUBTLE)
+   CONFETTI
 ====================================================== */
 .confetti-container {
   position: fixed;
@@ -945,34 +1065,337 @@ button:active {
   position: absolute;
   width: 6px;
   height: 10px;
-  background: #d6c06f;
+  background: var(--color-gold);
   opacity: 0.9;
   animation: confettiFall 1.8s ease-out forwards;
   border-radius: 2px;
 }
 
 .confetti:nth-child(odd) {
-  background: #f6e6a1;
-}
-
-@keyframes confettiFall {
-  0% {
-    transform: translateY(-20px) rotate(0deg);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(120vh) rotate(360deg);
-    opacity: 0;
-  }
+  background: var(--color-gold-light);
 }
 
 /* ======================================================
-   MOBILE RESPONSIVE ADDITIONS ONLY
+   EMAIL GLOW
 ====================================================== */
+.email-glow {
+  animation: emailGlow 1.6s ease-out;
+}
 
-/* ---------- GLOBAL MOBILE HELPERS ---------- */
+/* ======================================================
+   SCROLL REVEAL
+====================================================== */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s var(--ease-standard);
+}
+
+.reveal.from-down {
+  transform: translateY(32px);
+}
+
+.reveal.from-up {
+  transform: translateY(-32px);
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Grid containers: don't animate the container, only the items */
+.use-cards,
+.problem-grid {
+  contain: layout paint;
+  width: 100%;
+}
+
+.use-cards.reveal,
+.problem-grid.reveal {
+  transform: none !important;
+}
+
+.use-card.reveal,
+.problem-item.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s var(--ease-standard);
+}
+
+.use-card.reveal.active,
+.problem-item.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ======================================================
+   ANIMATIONS
+====================================================== */
+@keyframes floatProduct {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-12px); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes syncFloat {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-14px); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes videoFloat {
+  0%   { transform: translateY(0) scale(1); }
+  50%  { transform: translateY(-6px) scale(1.015); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+@keyframes modalReveal {
+  from { opacity: 0; transform: translateY(20px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes popFade {
+  0%   { opacity: 0; transform: translateY(16px) scale(0.96); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes successPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(214, 192, 111, 0.5); }
+  70%  { box-shadow: 0 0 0 16px rgba(214, 192, 111, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(214, 192, 111, 0); }
+}
+
+@keyframes errorShake {
+  0%   { transform: translateX(0); }
+  20%  { transform: translateX(-6px); }
+  40%  { transform: translateX(6px); }
+  60%  { transform: translateX(-4px); }
+  80%  { transform: translateX(4px); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes confettiFall {
+  0%   { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(120vh) rotate(360deg); opacity: 0; }
+}
+
+@keyframes emailGlow {
+  0%   { box-shadow: 0 0 0 rgba(214, 192, 111, 0); }
+  30%  { box-shadow: 0 0 0 4px rgba(214, 192, 111, 0.35); }
+  60%  { box-shadow: 0 0 0 8px rgba(214, 192, 111, 0.18); }
+  100% { box-shadow: 0 0 0 rgba(214, 192, 111, 0); }
+}
+
+/* ======================================================
+   RTL — ARABIC MODE
+====================================================== */
+body.rtl {
+  direction: rtl;
+  font-family: "Cairo", sans-serif;
+  letter-spacing: 0;
+  text-align: right;
+  font-variant-numeric: lining-nums;
+}
+
+body.rtl h1,
+body.rtl h2,
+body.rtl h3,
+body.rtl h4 {
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+body.rtl p,
+body.rtl li,
+body.rtl span,
+body.rtl small {
+  font-weight: 500;
+  line-height: 1.9;
+}
+
+body.rtl button {
+  font-weight: 600;
+}
+
+body.rtl .gold-underline {
+  display: inline-block;
+}
+
+/* Hero RTL */
+body.rtl .hero-container {
+  flex-direction: row-reverse;
+  align-items: center;
+}
+
+body.rtl .hero-content {
+  text-align: right;
+}
+
+body.rtl .hero-image-wrapper {
+  justify-content: center;
+}
+
+body.rtl .hero-points {
+  padding-right: 0;
+  padding-left: unset;
+}
+
+body.rtl .hero-points li {
+  list-style-position: inside;
+}
+
+body.rtl .hero-benefits li {
+  flex-direction: row-reverse;
+  text-align: right;
+}
+
+body.rtl .hero-benefits {
+  max-width: 420px;
+  align-items: flex-start;
+  text-align: right;
+  margin-top: 18px;
+  opacity: 0.95;
+}
+
+body.rtl .hero-benefits li {
+  color: #e9c86b;
+}
+
+/* Snack RTL */
+body.rtl .snack-text {
+  text-align: right;
+}
+
+body.rtl .problem-grid {
+  direction: ltr; /* grid layout stays stable */
+}
+
+body.rtl .problem-item p {
+  text-align: right;
+}
+
+/* Use cases RTL */
+body.rtl .use-cards {
+  direction: ltr;
+}
+
+body.rtl .use-card {
+  text-align: right;
+}
+
+/* Fruit transform RTL */
+body.rtl .fruit-transform {
+  flex-direction: row-reverse;
+}
+
+body.rtl .fruit-transform .arrow {
+  transform: rotate(180deg);
+}
+
+/* Early access RTL */
+body.rtl .early-container {
+  text-align: center;
+  align-items: center;
+}
+
+body.rtl .early-container h3 {
+  text-align: center;
+}
+
+body.rtl .early-benefits {
+  list-style: none;
+  padding: 0;
+  margin: 24px auto;
+}
+
+body.rtl .early-benefits li {
+  text-align: center;
+  justify-content: center;
+}
+
+body.rtl .early-container .cta-btn,
+body.rtl .early-container .whatsapp-btn {
+  margin: 24px auto;
+  display: inline-flex;
+}
+
+body.rtl .early-container .divider {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+body.rtl .email-text {
+  text-align: center;
+}
+
+body.rtl .email-form {
+  flex-direction: row-reverse;
+  justify-content: center;
+  align-items: center;
+}
+
+body.rtl .email-form input {
+  text-align: right;
+}
+
+body.rtl .trust-text {
+  text-align: center;
+}
+
+/* WhatsApp button RTL */
+body.rtl .whatsapp-btn {
+  flex-direction: row-reverse;
+}
+
+/* Modal RTL */
+body.rtl .modal-content {
+  text-align: right;
+}
+
+body.rtl .modal-content .close {
+  right: auto;
+  left: 16px;
+}
+
+body.rtl .modal-content h2 {
+  padding-right: 0;
+  padding-left: 36px;
+  line-height: 1.35;
+}
+
+body.rtl .phone-group {
+  flex-direction: row-reverse;
+}
+
+body.rtl .popup-benefits li {
+  flex-direction: row-reverse;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* Footer RTL */
+body.rtl .footer-top,
+body.rtl .footer-bottom {
+  flex-direction: row-reverse;
+  text-align: right;
+}
+
+body.rtl .footer-top .dot,
+body.rtl .footer-bottom .dot {
+  transform: scaleX(-1);
+}
+
+/* ======================================================
+   RESPONSIVE — 900px
+====================================================== */
 @media (max-width: 900px) {
 
+  /* Global mobile helpers */
   .mobile-stack {
     display: flex !important;
     flex-direction: column !important;
@@ -991,11 +1414,8 @@ button:active {
     grid-template-columns: 1fr !important;
     gap: 32px;
   }
-}
 
-/* ---------- HERO SECTION ---------- */
-@media (max-width: 900px) {
-
+  /* Hero */
   .hero {
     padding: 80px 6% 60px;
     min-height: auto;
@@ -1014,7 +1434,8 @@ button:active {
     line-height: 1.2;
   }
 
-  .hero-content p {
+  .hero-content p,
+  .hero-sub {
     font-size: 16px;
   }
 
@@ -1028,16 +1449,17 @@ button:active {
     margin-top: 28px;
   }
 
-  .hero-image img {
+  .hero-image-wrapper {
+    flex: unset;
+    margin-top: 32px;
+  }
+
+  .hero-image-wrapper img {
     max-width: 300px;
     margin-left: 0;
-    margin-top: 40px;
   }
-}
 
-/* ---------- SNACK PROBLEM ---------- */
-@media (max-width: 900px) {
-
+  /* Snack */
   .snack-problem {
     padding: 80px 6%;
   }
@@ -1062,58 +1484,40 @@ button:active {
   .snack-divider {
     margin: 50px 0;
   }
-}
 
-/* ---------- PROBLEM GRID ---------- */
-@media (max-width: 900px) {
-
+  /* Problem grid */
   .problem-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
     gap: 36px;
+    width: 100% !important;
   }
 
-  .problem-item p {
-    font-size: 15px;
-  }
-}
-
-/* ---------- USE CASES ---------- */
-@media (max-width: 900px) {
-
+  /* Use cases */
   .use-cases {
     padding: 80px 6%;
   }
 
   .use-cards {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
     gap: 28px;
+    width: 100% !important;
   }
 
   .use-card img {
     height: 200px;
   }
-}
 
-/* ---------- FRUIT TRANSFORMATION ---------- */
-@media (max-width: 900px) {
-
+  /* Fruit transform */
   .fruit-transform {
     gap: 18px;
-  }
-
-  .arrow {
-    font-size: 26px;
   }
 
   .transform-text {
     font-size: 18px;
     margin-top: 20px;
   }
-}
 
-/* ---------- EARLY ACCESS ---------- */
-@media (max-width: 900px) {
-
+  /* Early access */
   .early-access {
     padding: 80px 6%;
   }
@@ -1131,32 +1535,8 @@ button:active {
   .email-form button {
     width: 100%;
   }
-}
 
-/* ---------- WHATSAPP MODAL ---------- */
-@media (max-width: 600px) {
-
-  .modal-content {
-    padding: 28px 22px;
-  }
-
-  .phone-group {
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .country-selector {
-    width: 100%;
-  }
-
-  .selected-country {
-    width: 100%;
-  }
-}
-
-/* ---------- FOOTER ---------- */
-@media (max-width: 900px) {
-
+  /* Footer */
   .footer-top,
   .footer-bottom {
     flex-direction: column;
@@ -1166,357 +1546,12 @@ button:active {
   .dot {
     display: none;
   }
-}
-/* ======================================================
-   EMAIL WAITLIST GLOW ANIMATION (ADD ONLY)
-====================================================== */
 
-@keyframes emailGlow {
-  0% { box-shadow: 0 0 0 rgba(214, 192, 111, 0); }
-  30% { box-shadow: 0 0 0 4px rgba(214, 192, 111, 0.35); }
-  60% { box-shadow: 0 0 0 8px rgba(214, 192, 111, 0.18); }
-  100% { box-shadow: 0 0 0 rgba(214, 192, 111, 0); }
-}
-
-.email-glow {
-  animation: emailGlow 1.6s ease-out;
-}
-
-/* ======================================================
-   DIRECTION-BASED SCROLL REVEAL (FINAL)
-====================================================== */
-.reveal {
-  opacity: 0;
-  transform: translateY(24px); /* baseline to prevent flicker */
-  transition:
-    opacity 0.7s ease,
-    transform 0.7s cubic-bezier(0.22,1,0.36,1);
-}
-
-.reveal.from-down {
-  transform: translateY(32px);
-}
-
-.reveal.from-up {
-  transform: translateY(-32px);
-}
-
-.reveal.active {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Snack section CTA text (replaces button) */
-.snack-cta-text {
-  font-size: 16px;
-  font-weight: 600;
-  color: #d6c06f;
-  margin-top: 10px;
-}
-
-/* Highlight transformation section */
-.fruit-transform {
-  background: rgba(255, 255, 255, 0.06);
-  padding: 28px 36px;
-  border-radius: 20px;
-  box-shadow:
-    0 20px 40px rgba(0,0,0,0.35),
-    inset 0 0 0 1px rgba(255,255,255,0.08);
-}
-
-
-/* Slight glow on images */
-.fruit-side img {
-  transition: transform 0.4s ease, filter 0.4s ease;
-}
-
-.fruit-side:hover img {
-  transform: translateY(-4px) scale(1.04);
-  filter: drop-shadow(0 20px 30px rgba(246,230,161,0.35));
-}
-
-/* Language toggle */
-.lang-toggle {
-  position: fixed;
-  top: 20px;
-  right: 24px;
-  z-index: 10001;
-  background: rgba(255,255,255,0.12);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255,255,255,0.25);
-  color: #fff;
-  padding: 8px 14px;
-  border-radius: 10px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-/* RTL support */
-body.rtl {
-  direction: rtl;
-}
-
-body.rtl .hero-container,
-body.rtl .snack-hero,
-body.rtl .use-cards,
-body.rtl .fruit-transform {
-  text-align: right;
-}
-
-/* ======================================================
-   ARABIC TYPOGRAPHY (RTL MODE)
-====================================================== */
-
-/* Use Cairo for Arabic */
-body.rtl {
-  font-family: "Cairo", sans-serif;
-  letter-spacing: 0; /* Arabic should not have spacing */
-}
-
-/* Improve Arabic heading readability */
-body.rtl h1,
-body.rtl h2,
-body.rtl h3,
-body.rtl h4 {
-  font-weight: 700;
-  line-height: 1.4;
-}
-
-/* Arabic body text */
-body.rtl p,
-body.rtl li,
-body.rtl span,
-body.rtl small {
-  font-weight: 500;
-  line-height: 1.9;
-}
-
-/* Buttons in Arabic */
-body.rtl button {
-  font-weight: 600;
-}
-
-/* Fix gold underline alignment for Arabic */
-body.rtl .gold-underline {
-  display: inline-block;
-}
-
-body.rtl {
-  font-variant-numeric: lining-nums;
-}
-
-
-/* ======================================================
-   RTL LAYOUT POLISH (ARABIC MODE)
-====================================================== */
-
-/* General text alignment */
-body.rtl {
-  text-align: right;
-}
-
-/* HERO */
-body.rtl .hero-container {
-  flex-direction: row-reverse;
-}
-
-body.rtl .hero-content {
-  text-align: right;
-}
-
-/* HERO POINTS */
-body.rtl .hero-points {
-  padding-right: 0;
-  padding-left: unset;
-}
-
-body.rtl .hero-points li {
-  list-style-position: inside;
-}
-
-/* ================================
-   SNACK SECTION – RTL SAFE LAYOUT
-================================ */
-
-/* Snack layout must ALWAYS be vertical */
-.snack-hero {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* Arabic: only text alignment changes */
-body.rtl .snack-text {
-  text-align: right;
-}
-
-/* Keep images centered in all languages */
-.snack-products {
-  justify-content: center;
-}
-
-
-body.rtl .snack-text {
-  text-align: right;
-}
-
-/* PROBLEM GRID */
-body.rtl .problem-grid {
-  direction: rtl;
-}
-
-body.rtl .problem-item p {
-  text-align: right;
-}
-
-/* USE CASE CARDS */
-body.rtl .use-cards {
-  flex-direction: row-reverse;
-}
-
-body.rtl .use-card {
-  text-align: right;
-}
-
-/* FRUIT TRANSFORMATION FLOW */
-body.rtl .fruit-transform {
-  flex-direction: row-reverse;
-}
-
-/* Flip arrows */
-body.rtl .fruit-transform .arrow {
-  transform: rotate(180deg);
-}
-
-/* EARLY ACCESS */
-body.rtl .early-container {
-  text-align: right;
-}
-
-/* EMAIL FORM */
-body.rtl .email-form {
-  flex-direction: row-reverse;
-}
-
-/* WHATSAPP MODAL */
-body.rtl .modal-content {
-  text-align: right;
-}
-
-body.rtl .phone-group {
-  flex-direction: row-reverse;
-}
-
-/* FOOTER */
-body.rtl .footer-top,
-body.rtl .footer-bottom {
-  flex-direction: row-reverse;
-  text-align: right;
-}
-
-body.rtl .footer-top .dot,
-body.rtl .footer-bottom .dot {
-  transform: scaleX(-1);
-}
-
-/* ======================================================
-   LANGUAGE TOGGLE ANIMATION (SMOOTH)
-====================================================== */
-
-.lang-transition {
-  opacity: 0;
-  transform: translateY(10px);
-  transition:
-    opacity 0.45s ease,
-    transform 0.45s ease;
-  will-change: opacity, transform;
-}
-
-.lang-transition.active {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.lang-transition {
-  transition:
-    opacity 0.45s cubic-bezier(0.4, 0, 0.2, 1),
-    transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-
-/* ======================================================
-   RTL FIX – EARLY ACCESS SECTION (CENTERED)
-====================================================== */
-
-body.rtl .early-container {
-  text-align: center;
-  align-items: center;
-}
-
-/* Center the title */
-body.rtl .early-container h3 {
-  text-align: center;
-}
-
-/* Center benefits list */
-body.rtl .early-benefits {
-  list-style: none;
-  padding: 0;
-  margin: 24px auto;
-}
-
-body.rtl .early-benefits li {
-  text-align: center;
-  justify-content: center;
-}
-
-/* Center CTA button */
-body.rtl .early-container .cta-btn,
-body.rtl .early-container .whatsapp-btn {
-  margin: 24px auto;
-  display: inline-flex;
-}
-
-/* Divider alignment */
-body.rtl .early-container .divider {
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* Email section text */
-body.rtl .email-text {
-  text-align: center;
-}
-
-/* Email form row */
-body.rtl .email-form {
-  justify-content: center;
-  align-items: center;
-}
-
-/* Email input text alignment */
-body.rtl .email-form input {
-  text-align: right;
-}
-
-/* Trust text */
-body.rtl .trust-text {
-  text-align: center;
-}
-
-/* ======================================================
-   MOBILE RTL FIX (CRITICAL)
-====================================================== */
-@media (max-width: 900px) {
-
-  /* Reset layout direction on mobile */
+  /* RTL mobile resets */
   body.rtl {
-    direction: rtl;
     text-align: center;
   }
 
-  /* Prevent row-reverse on mobile */
   body.rtl .hero-container,
   body.rtl .snack-hero,
   body.rtl .use-cards,
@@ -1527,7 +1562,6 @@ body.rtl .trust-text {
     flex-direction: column !important;
   }
 
-  /* Center text consistently */
   body.rtl .hero-content,
   body.rtl .snack-text,
   body.rtl .problem-item p,
@@ -1537,13 +1571,11 @@ body.rtl .trust-text {
     text-align: center !important;
   }
 
-  /* Fix email + input alignment */
   body.rtl input,
   body.rtl textarea {
     text-align: right;
   }
 
-  /* Fix buttons centering */
   body.rtl button {
     margin-left: auto;
     margin-right: auto;
@@ -1551,431 +1583,23 @@ body.rtl .trust-text {
 }
 
 /* ======================================================
-   FIX: GRID SHRINKING ON RTL TOGGLE (CRITICAL)
+   RESPONSIVE — 600px
 ====================================================== */
-
-/* Ensure grids never collapse */
-.use-cards,
-.problem-grid {
-  width: 100%;
-}
-
-/* RTL: do NOT reverse grid direction */
-body.rtl .use-cards,
-body.rtl .problem-grid {
-  direction: ltr; /* grid layout stays stable */
-}
-
-/* Mobile: force single-column grid explicitly */
-@media (max-width: 900px) {
-  .use-cards,
-  .problem-grid {
-    grid-template-columns: 1fr !important;
-    width: 100% !important;
-  }
-}
-
-/* ======================================================
-   FIX: PREVENT GRID SHRINK ON RE-ANIMATION (CRITICAL)
-====================================================== */
-
-/* Lock grid items so transforms never affect layout */
-.use-card,
-.problem-item {
-  width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
-}
-
-/* Prevent transforms from affecting grid calculation */
-.use-cards,
-.problem-grid {
-  contain: layout paint;
-}
-
-/* Do NOT animate grid containers */
-.use-cards.reveal,
-.problem-grid.reveal {
-  transform: none !important;
-}
-
-/* Animate cards, not grids */
-.use-card.reveal,
-.problem-item.reveal {
-  transform: translateY(24px);
-}
-
-.use-card.reveal.active,
-.problem-item.reveal.active {
-  transform: translateY(0);
-}
-
-
-/* ===============================
-   USE CASES – BIGGER CARDS
-================================ */
-
-/* Increase grid spacing */
-.use-cards {
-  gap: 36px;
-}
-
-/* Bigger card */
-.use-card {
-  border-radius: 20px;
-}
-
-/* Bigger images */
-.use-card img {
-  height: 240px; /* was 180px */
-}
-
-/* Bigger heading */
-.use-card h4 {
-  font-size: 20px;
-}
-
-/* Bigger description */
-.use-card p {
-  font-size: 15.5px;
-}
-
-
-/* ===============================
-   SYNCHRONIZED FLOAT ANIMATION
-================================ */
-
-@keyframes syncFloat {
-  0%   { transform: translateY(0); }
-  50%  { transform: translateY(-14px); }
-  100% { transform: translateY(0); }
-}
-
-.snack-products {
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  gap: 36px;
-  flex-wrap: wrap;
-  width: 100%;
-}
-
-
-.snack-products img {
-  width: clamp(160px, 26vw, 300px);  /* 🔥 bigger baseline */
-  height: auto;
-  animation: syncFloat 5s ease-in-out infinite;
-  will-change: transform;
-  transition: filter 0.3s ease;
-}
-
-
-@media (max-width: 360px) {
-  .snack-products img {
-    width: 140px; /* still big, no overflow */
-  }
-}
-
-/* ===============================
-   PROBLEM SECTION VIDEOS
-================================ */
-
-.problem-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-.problem-video {
-  width: clamp(170px, 22vw, 300px); /* ⬅️ increased */
-  height: auto;
-  margin-bottom: 18px;
-  border-radius: 16px;
-  object-fit: cover;
-  background: #000;
-  box-shadow: 0 18px 34px rgba(0,0,0,0.4);
-}
-
 @media (max-width: 600px) {
-  .problem-video {
-    width: 200px; /* still bold on phones */
-  }
-}
 
-.snack-footer {
-  width: 100%;                /* 🔑 force full width */
-  margin: 70px auto 0;
-  text-align: center;         /* center text */
-  font-size: 17px;
-  color: #d6c06f;
-  font-weight: 600;
-  line-height: 1.6;
-}
-
-
-/* ===============================
-   PROBLEM VIDEO – SCROLL REVEAL
-================================ */
-
-.problem-item.reveal {
-  opacity: 0;
-  transform: translateY(28px);
-  transition:
-    opacity 0.8s ease,
-    transform 0.8s cubic-bezier(0.22,1,0.36,1);
-}
-
-.problem-item.reveal.active {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-@keyframes videoFloat {
-  0% {
-    transform: translateY(0) scale(1);
-  }
-  50% {
-    transform: translateY(-6px) scale(1.015);
-  }
-  100% {
-    transform: translateY(0) scale(1);
-  }
-}
-
-.problem-video {
-  animation: videoFloat 6s ease-in-out infinite;
-  will-change: transform;
-}
-
-/* Emphasize VEYRA brand word */
-.snack-footer .brand-word {
-  font-size: 1.3em;      /* bigger than rest of sentence */
-  font-weight: 700;
-  color: #f6e6a1;        /* slightly brighter gold */
-  letter-spacing: 0.5px;
-}
-
-/* ================================
-   HERO RTL FIX (CRITICAL)
-================================ */
-
-/* Keep hero layout clean in Arabic */
-body.rtl .hero-container {
-  flex-direction: row-reverse;
-  align-items: center;
-}
-
-/* Lock image area width */
-.hero-image-wrapper {
-  flex: 0 0 520px; /* desktop image column */
-  display: flex;
-  justify-content: center;
-}
-
-/* Prevent image overflow */
-.hero-image-wrapper img {
-  max-width: 100%;
-  height: auto;
-}
-
-/* RTL: prevent image drifting */
-body.rtl .hero-image-wrapper {
-  justify-content: center;
-}
-
-@media (max-width: 900px) {
-  body.rtl .hero-container {
-    flex-direction: column !important;
+  .footer-top,
+  .footer-bottom {
+    flex-direction: column;
   }
 
-  body.rtl .hero-image-wrapper {
-    flex: unset;
-    margin-top: 32px;
+  .dot {
+    display: none;
   }
-}
 
-/* ================================
-   WHATSAPP CTA ICON – FINAL FIX
-================================ */
-
-.whatsapp-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-}
-
-.whatsapp-icon {
-  display: flex;
-  align-items: center;
-}
-
-.whatsapp-icon img {
-  width: 30px;
-  height: 30px;
-  display: block;
-}
-
-/* Smooth hover polish */
-.whatsapp-btn:hover .whatsapp-icon img {
-  transform: scale(1.08);
-}
-
-/* RTL: icon on the right side */
-body.rtl .whatsapp-btn {
-  flex-direction: row-reverse;
-}
-
-
-/* ===== Form Validation UI ===== */
-.input-error {
-  border: 1.5px solid #ff4d4d !important;
-  outline: none;
-}
-
-.field-error {
-  margin-top: 8px;
-  font-size: 0.85rem;
-  color: #ff4d4d;
-  line-height: 1.2;
-}
-
-/* ✅ Phone group error message should go BELOW */
-.phone-group {
-  display: flex;
-  flex-wrap: wrap; /* 🔥 allows next line */
-  gap: 12px;
-}
-
-.phone-group .field-error {
-  flex-basis: 100%;   /* 🔥 full width on next line */
-  width: 100%;
-  margin-top: 6px;
-}
-
-/* ✅ Email form error message should go BELOW */
-.email-form,
-.email-form-modal {
-  display: flex;
-  flex-wrap: wrap; /* 🔥 allows error to go next line */
-  gap: 12px;
-}
-
-.email-form .field-error,
-.email-form-modal .field-error {
-  flex-basis: 100%; /* 🔥 full width line */
-  width: 100%;
-  margin-top: 6px;
-  text-align: left;
-}
-
-/* ✅ Center error text under email form */
-.email-form .field-error,
-.email-form-modal .field-error {
-  width: 100%;
-  flex-basis: 100%;
-  margin-top: 8px;
-  text-align: center;   /* ✅ center text */
-}
-
-#countrySelector .selected-country {
-  position: relative;
-  padding-right: 38px;
-}
-
-#countrySelector .selected-country::after {
-  content: "▾";
-  position: absolute;
-  right: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 14px;
-  opacity: 0.75;
-  pointer-events: none;
-}
-
-/* ✅ rotate arrow when dropdown open */
-#countryDropdown.active ~ .selected-country::after {
-  transform: translateY(-50%) rotate(180deg);
-}
-
-.hero-title span {
-  font-weight: 700;
-}
-
-.cta-subtext {
-  margin-top: 10px;
-  font-size: 13px;
-  color: #d6c06f;
-  opacity: 0.9;
-  font-weight: 500;
-}
-
-
-.cta-subtext {
-  margin-top: 10px;
-  font-size: 13px;
-  color: #f6e6a1;
-  font-weight: 600;
-  letter-spacing: 0.3px;
-}
-
-
-/* ===============================
-   EARLY ACCESS TIMER
-================================ */
-
-.launch-timer {
-  text-align: center;
-  margin-bottom: 22px;
-}
-
-.timer-label {
-  font-size: 13px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: #cfe3dd;
-  opacity: 0.85;
-  margin-bottom: 6px;
-}
-
-.timer-digits {
-  font-size: 32px;
-  font-weight: 700;
-  color: #d6c06f;
-  font-variant-numeric: tabular-nums;
-}
-
-/* Mobile optimization */
-@media (max-width: 600px) {
-  .timer-digits {
-    font-size: 26px;
-  }
-}
-
-/* Closed state */
-.launch-timer.closed .timer-digits {
-  font-size: 18px;
-  font-weight: 600;
-  color: #ffb3b3;
-}
-
-/* Disabled CTAs */
-button[disabled] {
-  opacity: 0.45;
-  cursor: not-allowed;
-  pointer-events: none;
-}
-
-
-/* ===============================
-   MOBILE EMAIL POPUP OPTIMIZATION
-================================ */
-@media (max-width: 600px) {
+  /* Modal */
   .modal-content {
     width: 92%;
-    padding: 22px 18px;
+    padding: 18px 16px;
     border-radius: 14px;
   }
 
@@ -1990,7 +1614,7 @@ button[disabled] {
   }
 
   .email-form-modal input {
-    font-size: 16px; /* prevents iOS zoom */
+    font-size: 16px;
     padding: 12px 14px;
   }
 
@@ -1999,146 +1623,50 @@ button[disabled] {
     padding: 14px;
   }
 
-  .close {
-    font-size: 26px;
+  /* Phone group */
+  .phone-group {
+    flex-direction: column;
+    gap: 12px;
   }
-}
 
+  .country-selector {
+    width: 100%;
+  }
 
-@media (max-width: 600px) {
-  .launch-timer {
-    margin-bottom: 14px;
+  .selected-country {
+    width: 100%;
+  }
+
+  /* Transform video */
+  .transform-main-video {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  /* Timer */
+  .timer-digits {
+    font-size: 24px;
   }
 
   .timer-label {
     font-size: 12px;
   }
 
-  .timer-digits {
-    font-size: 24px;
+  .launch-timer {
+    margin-bottom: 14px;
   }
-}
 
-/* ===============================
-   FORCE TIMER TO STAY LTR
-================================ */
-.launch-timer,
-.timer-digits {
-  direction: ltr;
-  unicode-bidi: isolate;
-}
+  /* Problem video */
+  .problem-video {
+    width: 200px;
+  }
 
-.launch-timer * {
-  direction: ltr;
-}
+  /* Snack products */
+  .snack-products img {
+    width: 140px;
+  }
 
-
-/* ======================================================
-   HERO BENEFITS — LEFT ALIGNED (DESKTOP + MOBILE)
-====================================================== */
-
-.hero-benefits {
-  list-style: none;
-  padding: 0;
-  margin: 18px 0 10px;
-}
-
-.hero-benefits li {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-
-  font-size: 14px;
-  margin-bottom: 8px;
-  line-height: 1.4;
-  color: #e6f5ef;
-  font-weight: 500;
-  text-align: left;
-}
-
-.hero-benefits li::before {
-  content: "✓";
-  color: #3ddc84;
-  font-weight: 700;
-}
-
-/* Arabic hero stays RIGHT aligned */
-body.rtl .hero-benefits li {
-  flex-direction: row-reverse;
-  text-align: right;
-}
-
-
-/* ======================================================
-   POPUP BENEFITS — CENTERED (ONLY POPUP)
-====================================================== */
-
-.popup-benefits {
-  list-style: none;
-  padding: 0;
-  margin: 14px auto 18px;
-  max-width: 360px;
-}
-
-.popup-benefits li {
-  display: flex;
-  align-items: center;
-  justify-content: center;   /* ✅ centered only here */
-  gap: 12px;
-
-  font-size: 14.5px;
-  margin-bottom: 10px;
-  line-height: 1.4;
-  color: #eaf6f1;
-  font-weight: 500;
-  text-align: center;
-}
-
-.popup-benefits li::before {
-  content: "✓";
-  color: #3ddc84;
-  font-weight: 700;
-}
-
-/* Arabic popup stays centered */
-body.rtl .popup-benefits li {
-  flex-direction: row-reverse;
-  text-align: center;
-}
-
-
-/* ======================================================
-   POPUP GENERAL SPACING (UNCHANGED / CLEAN)
-====================================================== */
-
-.modal-content {
-  padding: 22px 20px;
-  text-align: center;
-}
-
-.modal-content h2 {
-  margin-bottom: 6px;
-}
-
-.modal-content p {
-  margin-bottom: 12px;
-}
-
-.email-form-modal input {
-  margin-top: 10px;
-  margin-bottom: 12px;
-}
-
-.email-submit-btn {
-  margin-top: 6px;
-}
-
-
-/* ======================================================
-   MOBILE TWEAKS
-====================================================== */
-
-@media (max-width: 600px) {
+  /* Benefits */
   .hero-benefits li {
     font-size: 13.5px;
   }
@@ -2146,148 +1674,4 @@ body.rtl .popup-benefits li {
   .popup-benefits li {
     font-size: 14px;
   }
-
-  .modal-content {
-    padding: 18px 16px;
-  }
-}
-
-/* FORCE HERO BENEFITS TO STAY IN HERO COLUMN (AR) */
-.hero .hero-benefits {
-  margin-inline-start: 0;
-  margin-inline-end: auto;
-}
-
-/* Arabic: keep hero benefits visually grouped */
-body.rtl .hero .hero-benefits {
-  align-items: flex-start;
-  text-align: right;
-}
-
-/* Prevent hero benefits from drifting to far right */
-body.rtl .hero-benefits {
-  max-width: 420px;
-}
-
-
-/* FINAL RTL VISUAL BALANCE FIX */
-
-body.rtl .hero {
-  position: relative;
-}
-
-/* Early access benefits (top) */
-body.rtl .popup-benefits,
-body.rtl .hero-benefits {
-  max-width: 420px;
-}
-
-/* Product benefits (bottom right) */
-body.rtl .hero-benefits {
-  margin-top: 18px;
-  opacity: 0.95;
-}
-
-/* Slight visual hierarchy */
-body.rtl .popup-benefits li {
-  font-weight: 600;
-}
-
-body.rtl .hero-benefits li {
-  color: #e9c86b; /* keeps product benefits visually distinct */
-}
-
-
-/* ===============================
-   MODAL HEADER FIX (LTR + RTL)
-================================ */
-
-.modal-content {
-  position: relative;
-}
-
-/* Close button */
-.modal-content .close {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  font-size: 22px;
-  line-height: 1;
-  cursor: pointer;
-  z-index: 10;
-}
-
-/* RTL: move close button to left */
-body.rtl .modal-content .close {
-  right: auto;
-  left: 16px;
-}
-
-/* Reserve space so text never overlaps */
-.modal-content h2 {
-  padding-right: 36px; /* space for ❌ */
-}
-
-body.rtl .modal-content h2 {
-  padding-right: 0;
-  padding-left: 36px; /* space for ❌ in RTL */
-}
-
-/* Tighten Arabic line height slightly */
-body.rtl .modal-content h2 {
-  line-height: 1.35;
-}
-
-
-.selected-country {
-  min-width: 110px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-
-.selected-country {
-  color: white;
-  font-weight: 500;
-}
-
-
-.phone-group {
-  display: flex;
-  gap: 12px;
-}
-
-.country-selector {
-  min-width: 110px;
-}
-
-.selected-country {
-  background: #e5e5e5;
-  border-radius: 12px;
-  padding: 14px 12px;
-  font-size: 14px;
-  font-weight: 500;
-  color: #111;
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-
-.country-selector {
-  flex-shrink: 0;
-}
-
-
-.selected-country {
-  color: #111 !important;
-  min-width: 110px;
-}
-
-
-.hero-sub {
-  font-size: 19px;
-  line-height: 1.6;
-  color: #d9e7e2;
-  margin-bottom: 34px;
 }

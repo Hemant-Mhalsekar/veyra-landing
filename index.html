@@ -9,76 +9,68 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="google" content="notranslate">
-
-  <!-- Add these -->
   <meta name="description" content="VEYRA - Pure freeze-dried fruit snacks. No sugar, no preservatives. Perfect for gym, office, and family.">
   <meta name="keywords" content="freeze-dried fruit, healthy snacks, Kuwait, no sugar snacks">
-  
+
   <!-- Open Graph -->
   <meta property="og:title" content="VEYRA – Premium Freeze-Dried Fruit">
   <meta property="og:description" content="Pure, crispy fruit for performance and everyday living">
   <meta property="og:image" content="assets/product.png">
   <meta property="og:url" content="https://veyra.com">
-  
+
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  
+
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="assets/veyra_logo.jpg">
-
 
   <title>VEYRA – Freeze-Dried Fruit</title>
   <link rel="stylesheet" href="style.css" />
 
   <!-- Meta Pixel Code -->
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '1205290478428348');
-fbq('track', 'PageView');
-</script>
-<noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=1205290478428348&ev=PageView&noscript=1"
-/></noscript>
-<!-- End Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1205290478428348');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1205290478428348&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
 </head>
 
 <body>
 
 <!-- LANGUAGE TOGGLE -->
-<button id="langToggle" class="lang-toggle">العربية</button>
+<button id="langToggle" class="lang-toggle" aria-label="Toggle language">العربية</button>
 
 <!-- ================= PAGE CONTENT (ANIMATED) ================= -->
 <div id="langRoot" class="lang-transition active">
 
   <div class="launch-timer" id="launchTimer">
-  <div class="timer-label" id="timerLabel">
-    Early access closes in
+    <div class="timer-label" id="timerLabel">Early access closes in</div>
+    <div class="timer-digits" id="timerDigits">48 : 00 : 00</div>
   </div>
-  <div class="timer-digits" id="timerDigits">
-    48 : 00 : 00
-  </div>
-</div>
 
+  <!-- ================= HERO ================= -->
+  <header class="hero reveal">
+    <div class="hero-container">
 
-<!-- ================= HERO ================= -->
-<header class="hero reveal">
-  <div class="hero-container">
-
-    <div class="hero-left mobile-stack">
-      <div class="hero-content">
-        <span class="hero-eyebrow">FREEZE-DRIED FRUIT · KUWAIT</span>
+      <div class="hero-left mobile-stack">
+        <div class="hero-content">
+          <span class="hero-eyebrow">FREEZE-DRIED FRUIT · KUWAIT</span>
 
           <h1 class="hero-title">
-            Most “healthy” snacks<br />
+            Most "healthy" snacks<br />
             are sugar in disguise.<br />
-            <span class="gold-underline">This isn’t.</span>
+            <span class="gold-underline">This isn't.</span>
           </h1>
 
           <p class="hero-sub">
@@ -86,226 +78,184 @@ src="https://www.facebook.com/tr?id=1205290478428348&ev=PageView&noscript=1"
             and care about what goes into their body.
           </p>
 
+          <button class="cta-btn" id="waitlistBtn">
+            Get 10% Discount on Early Access
+          </button>
 
+          <div class="cta-subtext">
+            Limited first batch. Early access closes soon.
+          </div>
 
-        <button class="cta-btn" id="waitlistBtn">
-          Get 10% Discount on Early Access
-        </button>
-
-        <div class="cta-subtext">
-          Limited first batch. Early access closes soon.
+          <ul class="hero-points">
+            <li>100% Real Fruit</li>
+            <li>No Added Sugar</li>
+            <li>No Preservatives</li>
+          </ul>
         </div>
-        <ul class="hero-points">
-          <li>100% Real Fruit</li>
-          <li>No Added Sugar</li>
-          <li>No Preservatives</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="hero-image-wrapper mobile-center reveal">
-      <img src="assets/product.png" alt="VEYRA Freeze-Dried Fruit" />
-    </div>
-
-
-  </div>
-</header>
-
-<!-- ================= SNACK PROBLEM ================= -->
-<section class="snack-problem reveal">
-  <div class="snack-container">
-
-    <div class="snack-hero mobile-stack">
-      <div class="snack-text">
-        <h2>
-          Real fruit. Zero nonsense.<br />
-          Built for real life.
-        </h2>
-
-        <p>
-          Freeze-dried fruit snacks for gym days, workdays,
-          and everything in between.
-        </p>
-
-        <small class="snack-note">
-          Real fruit. No sugar. No compromises.
-        </small>
       </div>
 
-      <div class="snack-products mobile-center reveal">
-        <img src="assets/product-red.png" alt="VEYRA Apple" />
-        <img src="assets/product-green.png" alt="VEYRA Kiwi" />
-        <img src="assets/product-yellow.png" alt="VEYRA Pineapple" />
-        <img src="assets/product-orange.png" alt="VEYRA Mango" />
-        <img src="assets/product-dark.png" alt="VEYRA Banana" />
+      <div class="hero-image-wrapper mobile-center reveal">
+        <img src="assets/product.png" alt="VEYRA Freeze-Dried Fruit" />
       </div>
 
     </div>
+  </header>
 
-    <div class="snack-divider"></div>
+  <!-- ================= SNACK PROBLEM ================= -->
+  <section class="snack-problem reveal">
+    <div class="snack-container">
 
-    <div class="snack-problems reveal">
-      <h3>The Snack Problem No One Talks About</h3>
-
-      <div class="problem-grid mobile-grid">
-        <div class="problem-item reveal">
-            <video
-              class="problem-video"
-              src="assets/problem-sugar.mp4"
-              autoplay
-              muted
-              loop
-              playsinline
-            ></video>
-
-            <p>Snacks marketed as healthy,<br />loaded with sugar.</p>
-        </div>
-
-
-        <div class="problem-item reveal">
-          <video
-            class="problem-video"
-            src="assets/problem-crash.mp4"
-            autoplay
-            muted
-            loop
-            playsinline
-          ></video>
-
-          <p>Energy that spikes…<br />then crashes.</p>
-        </div>
-
-
-        <div class="problem-item reveal">
-          <video
-            class="problem-video"
-            src="assets/problem-messy.mp4"
-            autoplay
-            muted
-            loop
-            playsinline
-          ></video>
-
-          <p>Messy, inconvenient food<br />you stop carrying.</p>
-        </div>
-
-    </div>
-
-          <p class="snack-footer">
-            <span class="brand-word">VEYRA</span> exists because snacking shouldn’t punish your body.
+      <div class="snack-hero mobile-stack">
+        <div class="snack-text">
+          <h2>
+            Real fruit. Zero nonsense.<br />
+            Built for real life.
+          </h2>
+          <p>
+            Freeze-dried fruit snacks for gym days, workdays,
+            and everything in between.
           </p>
+          <small class="snack-note">Real fruit. No sugar. No compromises.</small>
+        </div>
 
-
-  </div>
-</section>
-
-<!-- ================= USE CASES ================= -->
-<section class="use-cases reveal">
-  <div class="use-container">
-
-    <div class="use-cards mobile-stack">
-      <div class="use-card reveal">
-        <img src="assets/use-gym.jpeg" alt="" />
-        <h4>For the Gym</h4>
-        <p>Fast fuel. No bloating. No crash.</p>
+        <div class="snack-products mobile-center reveal">
+          <img src="assets/product-red.png"    alt="VEYRA Apple" />
+          <img src="assets/product-green.png"  alt="VEYRA Kiwi" />
+          <img src="assets/product-yellow.png" alt="VEYRA Pineapple" />
+          <img src="assets/product-orange.png" alt="VEYRA Mango" />
+          <img src="assets/product-dark.png"   alt="VEYRA Banana" />
+        </div>
       </div>
 
-      <div class="use-card reveal">
-        <img src="assets/use-desk.jpeg" alt="" />
-        <h4>At Your Desk</h4>
-        <p>Clean energy without killing focus.</p>
+      <div class="snack-divider"></div>
+
+      <div class="snack-problems reveal">
+        <h3>The Snack Problem No One Talks About</h3>
+
+        <div class="problem-grid mobile-grid">
+          <div class="problem-item reveal">
+            <video class="problem-video" src="assets/problem-sugar.mp4"
+              autoplay muted loop playsinline></video>
+            <p>Snacks marketed as healthy,<br />loaded with sugar.</p>
+          </div>
+
+          <div class="problem-item reveal">
+            <video class="problem-video" src="assets/problem-crash.mp4"
+              autoplay muted loop playsinline></video>
+            <p>Energy that spikes…<br />then crashes.</p>
+          </div>
+
+          <div class="problem-item reveal">
+            <video class="problem-video" src="assets/problem-messy.mp4"
+              autoplay muted loop playsinline></video>
+            <p>Messy, inconvenient food<br />you stop carrying.</p>
+          </div>
+        </div>
+
+        <p class="snack-footer">
+          <span class="brand-word">VEYRA</span> exists because snacking shouldn't punish your body.
+        </p>
       </div>
 
-      <div class="use-card reveal">
-        <img src="assets/use-go.jpeg" alt="" />
-        <h4>On the Go</h4>
-        <p>A snack you don’t have to justify.</p>
-      </div>
     </div>
-    <div class="fruit-transform mobile-center reveal">
+  </section>
 
-      <video
-        class="transform-main-video"
-        src="assets/transform-process.mp4"
-        autoplay
-        muted
-        loop
-        playsinline
-      ></video>
+  <!-- ================= USE CASES ================= -->
+  <section class="use-cases reveal">
+    <div class="use-container">
+
+      <div class="use-cards mobile-stack">
+        <div class="use-card reveal">
+          <img src="assets/use-gym.jpeg" alt="Person at the gym" />
+          <h4>For the Gym</h4>
+          <p>Fast fuel. No bloating. No crash.</p>
+        </div>
+
+        <div class="use-card reveal">
+          <img src="assets/use-desk.jpeg" alt="Person at their desk" />
+          <h4>At Your Desk</h4>
+          <p>Clean energy without killing focus.</p>
+        </div>
+
+        <div class="use-card reveal">
+          <img src="assets/use-go.jpeg" alt="Person on the go" />
+          <h4>On the Go</h4>
+          <p>A snack you don't have to justify.</p>
+        </div>
+      </div>
+
+      <div class="fruit-transform mobile-center reveal">
+        <video class="transform-main-video" src="assets/transform-process.mp4"
+          autoplay muted loop playsinline></video>
+      </div>
+
+      <p class="transform-text">
+        Same fruit. <span>Smarter form.</span>
+      </p>
 
     </div>
+  </section>
 
+  <!-- ================= EARLY ACCESS ================= -->
+  <section class="early-access reveal" id="email-waitlist">
+    <div class="early-container">
 
-    <p class="transform-text">
-      Same fruit. <span>Smarter form.</span>
-    </p>
+      <h3>Early members get rewarded.</h3>
 
-  </div>
-</section>
+      <ul class="early-benefits">
+        <li>✔ First batch access</li>
+        <li>✔ Priority stock before sell-out</li>
+        <li>✔ 10% launch-only pricing</li>
+      </ul>
 
-<!-- ================= EARLY ACCESS ================= -->
-<section class="early-access reveal" id="email-waitlist">
-  <div class="early-container">
-
-    <h3>Early members get rewarded.</h3>
-
-    <ul class="early-benefits">
-      <li>✔ First batch access</li>
-      <li>✔ Priority stock before sell-out</li>
-      <li>✔ 10% launch-only pricing</li>
-    </ul>
-
-    <button class="cta-btn whatsapp-btn" id="openWhatsappForm">
-      <span class="whatsapp-icon">
-        <img src="assets/whatsapp.png" alt="WhatsApp" />
-      </span>
-      <span class="cta-text">Get 10% Early Access</span>
-    </button>
-
-
-    <div class="divider"></div>
-
-    <p class="email-text">Prefer email updates?</p>
-
-    <form class="email-form mobile-stack">
-      <input
-        type="email"
-        id="emailWaitlistInput"
-        placeholder="Enter your email"
-        required
-      />
-      <button type="submit" class="email-submit-btn">
-        Get 10% Early Access
+      <button class="cta-btn whatsapp-btn" id="openWhatsappForm">
+        <span class="whatsapp-icon">
+          <img src="assets/whatsapp.png" alt="WhatsApp" />
+        </span>
+        <span class="cta-text">Get 10% Early Access</span>
       </button>
-    </form>
 
-    <small class="trust-text">
-      No spam. One launch email.
-    </small>
+      <div class="divider"></div>
 
-  </div>
-</section>
+      <p class="email-text">Prefer email updates?</p>
 
-<!-- ================= FOOTER ================= -->
-<footer class="site-footer reveal">
-  <div class="footer-container">
+      <form class="email-form mobile-stack">
+        <input
+          type="email"
+          id="emailWaitlistInput"
+          placeholder="Enter your email"
+          required
+        />
+        <button type="submit" class="email-submit-btn">
+          Get 10% Early Access
+        </button>
+      </form>
 
-    <div class="footer-top mobile-stack">
-      <span>Launching soon in Kuwait</span>
-      <span class="dot">•</span>
-      <span>Fulfilled locally</span>
-      <span class="dot">•</span>
-      <a href="mailto:teamveyraco@gmail.com">teamveyraco@gmail.com</a>
+      <small class="trust-text">No spam. One launch email.</small>
+
     </div>
+  </section>
 
-    <div class="footer-bottom mobile-stack">
-      <a href="#">Privacy Policy</a>
-      <span class="dot">•</span>
-      <a href="#">Terms of Service</a>
+  <!-- ================= FOOTER ================= -->
+  <footer class="site-footer reveal">
+    <div class="footer-container">
+
+      <div class="footer-top mobile-stack">
+        <span>Launching soon in Kuwait</span>
+        <span class="dot">•</span>
+        <span>Fulfilled locally</span>
+        <span class="dot">•</span>
+        <a href="mailto:teamveyraco@gmail.com">teamveyraco@gmail.com</a>
+      </div>
+
+      <div class="footer-bottom mobile-stack">
+        <a href="#">Privacy Policy</a>
+        <span class="dot">•</span>
+        <a href="#">Terms of Service</a>
+      </div>
+
     </div>
-
-  </div>
-</footer>
+  </footer>
 
 </div>
 <!-- ================= END langRoot ================= -->
@@ -326,15 +276,12 @@ src="https://www.facebook.com/tr?id=1205290478428348&ev=PageView&noscript=1"
       <li></li>
     </ul>
 
-
     <form class="waitlist-phone-form">
-
       <div class="phone-group">
         <div class="country-selector" id="countrySelectorModal">
           <div class="selected-country" id="selectedCountryModal" data-code="+965">
             KW +965
           </div>
-
           <div class="country-dropdown" id="countryDropdownModal">
             <input type="text" class="country-search" placeholder="Search country">
             <ul class="country-list">
@@ -356,7 +303,6 @@ src="https://www.facebook.com/tr?id=1205290478428348&ev=PageView&noscript=1"
       <button type="submit" class="email-submit-btn">
         Get 10% Discount on Early Access
       </button>
-
     </form>
 
   </div>
@@ -388,7 +334,7 @@ src="https://www.facebook.com/tr?id=1205290478428348&ev=PageView&noscript=1"
             <input class="country-search" placeholder="Search country..." />
             <ul class="country-list">
               <li data-code="+965" data-label="🇰🇼 +965">🇰🇼 Kuwait</li>
-              <li data-code="+91" data-label="🇮🇳 +91">🇮🇳 India</li>
+              <li data-code="+91"  data-label="🇮🇳 +91">🇮🇳 India</li>
               <li data-code="+971" data-label="🇦🇪 +971">🇦🇪 UAE</li>
             </ul>
           </div>
@@ -409,7 +355,7 @@ src="https://www.facebook.com/tr?id=1205290478428348&ev=PageView&noscript=1"
       </button>
 
       <small class="form-note">
-        We’ll only message you for launch updates.
+        We'll only message you for launch updates.
       </small>
 
     </form>
@@ -419,8 +365,8 @@ src="https://www.facebook.com/tr?id=1205290478428348&ev=PageView&noscript=1"
 <!-- SUCCESS DIALOG -->
 <div class="success-dialog" id="successDialog">
   <div class="success-card">
-    <h3>🎉 You’re on the list!</h3>
-    <p>We’ll notify you as soon as VEYRA launches.</p>
+    <h3>🎉 You're on the list!</h3>
+    <p>We'll notify you as soon as VEYRA launches.</p>
     <button id="closeSuccessDialog">Awesome</button>
   </div>
 </div>
@@ -440,9 +386,3 @@ src="https://www.facebook.com/tr?id=1205290478428348&ev=PageView&noscript=1"
 <script src="script.js"></script>
 </body>
 </html>
-
-
-
-
-
-
